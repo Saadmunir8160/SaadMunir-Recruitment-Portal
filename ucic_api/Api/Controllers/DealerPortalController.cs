@@ -1,0 +1,419 @@
+using Application.Commands.Dealer;
+using Application.Commands.Dealer.DailyLimits;
+using Application.DTOs.Dealer;
+using Application.Queries.Dealer;
+using Application.Queries.Dealer.DailyLimits;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Api.Controllers
+{
+    [Route("api/DealerPortal")]
+    [ApiController]
+    [Authorize(Roles = "Dealer")]
+    public class DealerPortalController : ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public DealerPortalController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        #region Profile Management
+
+        /// <summary>
+        /// Get current dealer's profile information including user details
+        /// </summary>
+        [HttpGet("Profile")]
+        public async Task<ActionResult> GetProfile()
+        {
+            var result = await _mediator.Send(new GetDealerProfileQuery());
+            
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Change dealer password
+        /// </summary>
+        [HttpPost("Profile/change-password")]
+        public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var command = new ChangeDealerPasswordCommand 
+            { 
+                CurrentPassword = request.CurrentPassword,
+                NewPassword = request.NewPassword,
+                ConfirmPassword = request.ConfirmPassword
+            };
+            
+            var result = await _mediator.Send(command);
+            
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Upload document for dealer verification
+        /// </summary>
+        // [HttpPost("Profile/upload-document")]
+        // public async Task<ActionResult> UploadDocument([FromForm] IFormFile file, [FromForm] string documentType)
+        // {
+        //     if (file == null)
+        //         return BadRequest("File is required");
+
+        //     if (string.IsNullOrEmpty(documentType))
+        //         return BadRequest("Document type is required");
+
+        //     var command = new UploadDocumentCommand { File = file, DocumentType = documentType };
+        //     var result = await _mediator.Send(command);
+            
+        //     return Ok(result);
+        // }
+
+        /// <summary>
+        /// Delete uploaded document
+        /// </summary>
+        // [HttpDelete("Profile/document/{documentType}")]
+        // public async Task<ActionResult> DeleteDocument(string documentType)
+        // {
+        //     var command = new DeleteDocumentCommand { DocumentType = documentType };
+        //     var result = await _mediator.Send(command);
+            
+        //     return Ok(new { message = result });
+        // }
+
+        /// <summary>
+        /// Update specific address (registered/billing/shipping)
+        /// </summary>
+        // [HttpPut("Profile/address/{addressType}")]
+        // public async Task<ActionResult> UpdateAddress(string addressType, [FromBody] UpdateAddressDTO address)
+        // {
+        //     if (!ModelState.IsValid)
+        //         return BadRequest(ModelState);
+
+        //     var command = new UpdateAddressCommand { AddressType = addressType, Address = address };
+        //     var result = await _mediator.Send(command);
+            
+        //     return Ok(new { message = result });
+        // }
+
+        /// <summary>
+        /// Verify bank account details
+        /// </summary>
+        // [HttpPost("Profile/verify-bank")]
+        // public async Task<ActionResult> VerifyBankDetails([FromBody] VerifyBankDetailsDTO bankDetails)
+        // {
+        //     if (!ModelState.IsValid)
+        //         return BadRequest(ModelState);
+
+        //     var command = new VerifyBankDetailsCommand { BankDetails = bankDetails };
+        //     var result = await _mediator.Send(command);
+            
+        //     return Ok(result);
+        // }
+
+        /// <summary>
+        /// Get profile completion percentage and missing fields
+        /// </summary>
+        // [HttpGet("Profile/completion-status")]
+        // public async Task<ActionResult<ProfileCompletionStatusDTO>> GetCompletionStatus()
+        // {
+        //     var result = await _mediator.Send(new GetProfileCompletionStatusQuery());
+        //     return Ok(result);
+        // }
+
+        /// <summary>
+        /// Submit profile for verification
+        /// </summary>
+        // [HttpPost("Profile/request-verification")]
+        // public async Task<ActionResult> RequestVerification()
+        // {
+        //     var result = await _mediator.Send(new RequestVerificationCommand());
+        //     return Ok(result);
+        // }
+
+        #endregion
+
+        #region Dashboard & Analytics
+
+        /// <summary>
+        /// Get dashboard statistics for dealer
+        /// </summary>
+        [HttpGet("Dashboard/stats")]
+        public async Task<ActionResult<DealerDashboardStatsDTO>> GetDashboardStats()
+        {
+            var result = await _mediator.Send(new GetDashboardStatsQuery());
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get recent orders for dashboard
+        /// </summary>
+        [HttpGet("Dashboard/recent-orders")]
+        public async Task<ActionResult<List<RecentOrderDTO>>> GetRecentOrders([FromQuery] int limit = 5)
+        {
+            var query = new GetRecentOrdersQuery { Limit = limit };
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get dealer notifications (mock implementation)
+        /// </summary>
+        [HttpGet("Dashboard/notifications")]
+        public async Task<ActionResult> GetNotifications(
+            [FromQuery] int limit = 10, 
+            [FromQuery] bool unreadOnly = false)
+        {
+            // Mock implementation - replace with actual query when notification system is implemented
+            var mockNotifications = new 
+            {
+                notifications = new[]
+                {
+                    new { id = 1, title = "Order Delivered", message = "Your order #ORD-240908001 has been delivered", isRead = false, createdAt = DateTime.UtcNow.AddHours(-2) },
+                    new { id = 2, title = "Payment Due", message = "Payment due for order #ORD-240908002", isRead = true, createdAt = DateTime.UtcNow.AddDays(-1) }
+                },
+                totalCount = 2,
+                unreadCount = 1
+            };
+            return Ok(mockNotifications);
+        }
+
+        /// <summary>
+        /// Mark notification as read (mock implementation)
+        /// </summary>
+        [HttpPut("Dashboard/notifications/{id}/mark-read")]
+        public async Task<ActionResult> MarkNotificationAsRead(int id)
+        {
+            // Mock implementation
+            return Ok(new { message = "Notification marked as read" });
+        }
+
+        /// <summary>
+        /// Mark all notifications as read (mock implementation)
+        /// </summary>
+        [HttpPut("Dashboard/notifications/mark-all-read")]
+        public async Task<ActionResult> MarkAllNotificationsAsRead()
+        {
+            // Mock implementation
+            return Ok(new { message = "All notifications marked as read" });
+        }
+
+        /// <summary>
+        /// Get monthly order summary for charts
+        /// </summary>
+        [HttpGet("Dashboard/monthly-summary")]
+        public async Task<ActionResult<List<MonthlySummaryDTO>>> GetMonthlySummary([FromQuery] int months = 12)
+        {
+            var query = new GetMonthlySummaryQuery { Months = months };
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get top ordered products
+        /// </summary>
+        [HttpGet("Dashboard/top-products")]
+        public async Task<ActionResult<List<TopProductDTO>>> GetTopProducts(
+            [FromQuery] int limit = 5, 
+            [FromQuery] string period = "month")
+        {
+            // Mock implementation - replace with actual query when DealerProduct relationships are established
+            var mockProducts = new List<TopProductDTO>
+            {
+                new() { ProductId = 101, ProductName = "Cement Bag 50kg", TotalQuantity = 250, TotalValue = 125000.00m, LastOrderDate = DateTime.UtcNow.AddDays(-2) },
+                new() { ProductId = 102, ProductName = "Steel Rods 12mm", TotalQuantity = 180, TotalValue = 98500.00m, LastOrderDate = DateTime.UtcNow.AddDays(-5) }
+            };
+            return Ok(mockProducts.Take(limit).ToList());
+        }
+
+        /// <summary>
+        /// Get payment summary for dealer
+        /// </summary>
+        [HttpGet("Dashboard/payment-summary")]
+        public async Task<ActionResult<PaymentSummaryDTO>> GetPaymentSummary()
+        {
+            // Mock implementation - replace with actual query
+            var mockSummary = new PaymentSummaryDTO
+            {
+                TotalOutstanding = 125000.00m,
+                OverdueAmount = 15000.00m,
+                CurrentMonthSpent = 245600.50m,
+                CreditLimit = 500000.00m,
+                AvailableCredit = 375000.00m,
+                NextPaymentDue = DateTime.UtcNow.AddDays(10)
+            };
+            return Ok(mockSummary);
+        }
+
+        /// <summary>
+        /// Get order trends for charts
+        /// </summary>
+        [HttpGet("Dashboard/order-trends")]
+        public async Task<ActionResult<OrderTrendsDTO>> GetOrderTrends([FromQuery] string period = "month")
+        {
+            // Mock implementation - replace with actual query
+            var mockTrends = new OrderTrendsDTO
+            {
+                Labels = new List<string> { "Week 1", "Week 2", "Week 3", "Week 4" },
+                OrderCounts = new List<int> { 12, 18, 15, 22 },
+                OrderValues = new List<decimal> { 125000, 189000, 156000, 234000 }
+            };
+            return Ok(mockTrends);
+        }
+
+        /// <summary>
+        /// Get category-wise spending
+        /// </summary>
+        [HttpGet("Dashboard/category-spending")]
+        public async Task<ActionResult<List<CategorySpendingDTO>>> GetCategorySpending([FromQuery] string period = "month")
+        {
+            // Mock implementation - replace with actual query
+            var mockSpending = new List<CategorySpendingDTO>
+            {
+                new() { Category = "Cement", Amount = 125000.00m, Percentage = 45.5 },
+                new() { Category = "Steel", Amount = 98500.00m, Percentage = 35.8 },
+                new() { Category = "Paint", Amount = 51200.00m, Percentage = 18.7 }
+            };
+            return Ok(mockSpending);
+        }
+
+        /// <summary>
+        /// Get delivery performance metrics
+        /// </summary>
+        [HttpGet("Dashboard/delivery-metrics")]
+        public async Task<ActionResult<DeliveryMetricsDTO>> GetDeliveryMetrics()
+        {
+            // Mock implementation - replace with actual query
+            var mockMetrics = new DeliveryMetricsDTO
+            {
+                OnTimeDeliveryRate = 92.5,
+                AverageDeliveryTime = 3.2,
+                DelayedDeliveries = 8,
+                UpcomingDeliveries = new List<UpcomingDeliveryDTO>
+                {
+                    new() { OrderNumber = "ORD-240908002", ExpectedDate = DateTime.UtcNow.AddDays(2), Status = "In Transit" }
+                }
+            };
+            return Ok(mockMetrics);
+        }
+
+        /// <summary>
+        /// Download dashboard report
+        /// </summary>
+        [HttpGet("Dashboard/download-report")]
+        public async Task<ActionResult> DownloadReport([FromQuery] string reportType = "monthly", [FromQuery] string format = "pdf")
+        {
+            // Mock implementation - replace with actual report generation
+            var mockContent = System.Text.Encoding.UTF8.GetBytes("Mock Report Content");
+            var contentType = format.ToLower() == "pdf" ? "application/pdf" : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            var fileName = $"dealer_report_{reportType}_{DateTime.Now:yyyyMMdd}.{format}";
+            
+            return File(mockContent, contentType, fileName);
+        }
+
+        /// <summary>
+        /// Get count of unread notifications (mock implementation)
+        /// </summary>
+        [HttpGet("Dashboard/notifications/unread-count")]
+        public async Task<ActionResult> GetUnreadNotificationCount()
+        {
+            // Mock implementation
+            var mockCount = new { unreadCount = 3 };
+            return Ok(mockCount);
+        }
+
+        #endregion
+
+        #region Products (Delegated to DealerProductsController)
+        // Product endpoints are handled by DealerProductsController
+        // These are just references for the specification
+        
+        // GET /api/Dealer/Products -> DealerProductsController.GetProducts()
+        // GET /api/Dealer/Products/{id} -> DealerProductsController.GetProductDetail()
+        // GET /api/Dealer/Products/categories -> DealerProductsController.GetCategories()
+        // POST /api/Dealer/Products/{id}/check-availability -> DealerProductsController.CheckProductAvailability()
+        
+        #endregion
+
+        #region Orders (Delegated to DealerOrderController)
+        // Order endpoints are handled by DealerOrderController
+        // These are just references for the specification
+        
+        // POST /api/DealerOrder/Create -> DealerOrderController.CreateDealerOrder()
+        // GET /api/DealerOrder/GetMyOrders -> DealerOrderController.GetMyDealerOrders()
+        // GET /api/DealerOrder/GetById/{id} -> DealerOrderController.GetDealerOrderById()
+        // DELETE /api/DealerOrder/Delete/{id} -> DealerOrderController.DeleteDealerOrder()
+        
+        #endregion
+
+        #region Daily Limits Management
+
+        /// <summary>
+        /// Get current dealer's daily order limits and usage
+        /// </summary>
+        [HttpGet("daily-limits")]
+        public async Task<ActionResult<DealerDailyLimitsDTO>> GetDailyLimits()
+        {
+            var result = await _mediator.Send(new GetDealerDailyLimitsQuery());
+            
+            if (result.Success)
+                return Ok(result.Data);
+            else
+                return BadRequest(result);
+        }
+
+        /// <summary>
+        /// Update current order quantities for real-time limit tracking
+        /// </summary>
+        [HttpPatch("current-order")]
+        public async Task<ActionResult<DealerDailyLimitsDTO>> UpdateCurrentOrderQuantities([FromBody] UpdateCurrentOrderQuantitiesCommand command)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _mediator.Send(command);
+            
+            if (result.Success)
+                return Ok(result.Data);
+            else
+                return BadRequest(result);
+        }
+
+        #endregion
+
+        #region Support (Delegated to DealerSupportController)
+        // Support endpoints are handled by DealerSupportController
+        // These are just references for the specification
+        
+        // POST /api/Dealer/Support/tickets -> DealerSupportController.CreateSupportTicket()
+        // GET /api/Dealer/Support/tickets -> DealerSupportController.GetSupportTickets()
+        // GET /api/Dealer/Support/tickets/{id} -> DealerSupportController.GetSupportTicketDetail()
+        // POST /api/Dealer/Support/tickets/{id}/messages -> DealerSupportController.AddMessageToTicket()
+        // PUT /api/Dealer/Support/tickets/{id}/status -> DealerSupportController.UpdateTicketStatus()
+        // GET /api/Dealer/Support/faqs -> DealerSupportController.GetFAQs()
+        // GET /api/Dealer/Support/faqs/categories -> DealerSupportController.GetFAQCategories()
+        // POST /api/Dealer/Support/faqs/{id}/feedback -> DealerSupportController.SubmitFAQFeedback()
+        // GET /api/Dealer/Support/contact-info -> DealerSupportController.GetSupportContactInfo()
+        // GET /api/Dealer/Support/attachments/{id}/download -> DealerSupportController.DownloadAttachment()
+        // GET /api/Dealer/Support/tickets/stats -> DealerSupportController.GetTicketStats()
+        // POST /api/Dealer/Support/request-callback -> DealerSupportController.RequestCallback()
+        // POST /api/Dealer/Support/feedback -> DealerSupportController.SubmitFeedback()
+        // GET /api/Dealer/Support/metadata -> DealerSupportController.GetSupportMetadata()
+        
+        #endregion
+    }
+}

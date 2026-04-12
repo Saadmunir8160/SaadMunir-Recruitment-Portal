@@ -1,0 +1,334 @@
+<div class="container py-4" style="background:#fafbfc; min-height:100vh;">
+  <div class="card-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h4 class="card-title mb-0">Order Detail</h4>
+        </div>
+    </div>
+</div>
+  <div class="row">
+    <!-- Main Content -->
+    <div class="col-xl-9 col-lg-8">
+      <!-- Order Header Card -->
+      <div class="card mb-4 shadow-sm border-0 rounded-4">
+        <div class="card-body">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <div>
+              <h4 class="fw-medium text-dark d-flex align-items-center gap-2 mb-1">
+                #{{ order?.trackingID }}
+                <span class="text-muted" *ngIf="order?.orderLnNumber">({{ order?.orderLnNumber }})</span>
+                <span class="badge bg-success-subtle text-success px-2 py-1 fs-13" *ngIf="order?.status === 'PaymentSubmitted'">Paid</span>
+              </h4>
+              <div class="text-muted small">
+                Order / Order Details / #{{ order?.trackingID }}<span *ngIf="order?.orderLnNumber"> ({{ order?.orderLnNumber }})</span> - {{ order?.createdDate | date:'medium' }}
+              </div>
+            </div>
+
+          </div>
+          <!-- Progress Bar -->
+          <div class="mt-4">
+            <h6 class="fw-medium text-dark mb-2">Progress</h6>
+            <div class="row row-cols-xxl-5 row-cols-md-2 row-cols-1">
+              <!-- Pending -->
+              <div class="col">
+                <div class="progress mt-3" style="height: 10px;">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                       [ngClass]="{
+                         'bg-success': order?.status !== 'Pending',
+                         'bg-warning': order?.status === 'Pending'
+                       }"
+                       role="progressbar" style="width: 100%"></div>
+                </div>
+                <div class="d-flex align-items-center gap-2 mt-2">
+                  <p class="mb-0">Payment Pending</p>
+                  <div class="spinner-border spinner-border-sm text-warning" role="status" *ngIf="order?.status === 'Pending'">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Payment Submitted -->
+              <div class="col">
+                <div class="progress mt-3" style="height: 10px;">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                       [ngClass]="{
+                         'bg-success': order?.status === 'PaymentConfirmed' || order?.status === 'Confirmed' || order?.status === 'Shipped',
+                         'bg-warning': order?.status === 'PaymentSubmitted',
+                         'bg-primary': order?.status === 'Pending'
+                       }"
+                       role="progressbar" style="width: 100%"></div>
+                </div>
+                <div class="d-flex align-items-center gap-2 mt-2">
+                  <p class="mb-0">Payment Review Pending</p>
+                  <div class="spinner-border spinner-border-sm text-warning" role="status" *ngIf="order?.status === 'PaymentSubmitted'">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Payment Confirmed -->
+              <div class="col">
+                <div class="progress mt-3" style="height: 10px;">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                       [ngClass]="{
+                         'bg-success': order?.status === 'PaymentConfirmed' || order?.status === 'Confirmed' || order?.status === 'Shipped',
+                         'bg-warning': order?.status === 'PaymentSubmitted',
+                         'bg-primary': order?.status === 'Pending'
+                       }"
+                       role="progressbar" style="width: 100%"></div>
+                </div>
+                <div class="d-flex align-items-center gap-2 mt-2">
+                  <p class="mb-0">Payment Confirmed</p>
+                </div>
+              </div>
+              <!-- Order Confirmed -->
+              <div class="col">
+                <div class="progress mt-3" style="height: 10px;">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                       [ngClass]="{
+                         'bg-success': order?.status === 'Confirmed' || order?.status === 'Shipped',
+                         'bg-warning': order?.status === 'PaymentConfirmed',
+                         'bg-primary': order?.status === 'Pending' || order?.status === 'PaymentSubmitted'
+                       }"
+                       role="progressbar" style="width: 100%"></div>
+                </div>
+                <div class="d-flex align-items-center gap-2 mt-2">
+                  <p class="mb-0">Order Confirmed</p>
+                  <div class="spinner-border spinner-border-sm text-warning" role="status" *ngIf="order?.status === 'PaymentConfirmed'">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Shipped -->
+              <div class="col">
+                <div class="progress mt-3" style="height: 10px;">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                       [ngClass]="{
+                         'bg-success': order?.status === 'Shipped',
+                         'bg-primary': order?.status !== 'Shipped'
+                       }"
+                       role="progressbar" style="width: 100%"></div>
+                </div>
+                <div class="d-flex align-items-center gap-2 mt-2">
+                  <p class="mb-0">Shipped</p>
+                  <div class="spinner-border spinner-border-sm text-warning" role="status" *ngIf="order?.status === 'Shipped'">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer d-flex flex-wrap align-items-end justify-content-end bg-light-subtle gap-2">
+          <p >
+
+          </p>
+          <div *ngIf="order?.status === 'PaymentConfirmed'" class="d-flex justify-content-end align-items-end gap-3">
+            <label for="dealerSelect" class="form-label fw-semibold">Select Dealer:</label>
+            <select
+              id="dealerSelect"
+              class="form-select w-auto"
+              style="min-width: 200px;"
+              [(ngModel)]="selectedDealerId"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <option [ngValue]="null" disabled>Select Dealer</option>
+              <option *ngFor="let dealer of dealers" [ngValue]="dealer.dealerId">
+                {{ dealer.name }}
+              </option>
+            </select>
+            <button class="btn btn-primary"
+                    (click)="verifyOrder()">
+              Confirm Order
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-primary" 
+                    *ngIf="order?.status === 'PaymentSubmitted'"
+                    (click)="verifyPayment()">Confirm Payment</button>
+          </div>
+        </div>
+      </div>
+      <!-- Product Table Card -->
+      <div class="card mb-4 shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-0 rounded-top-4">
+          <h5 class="card-title mb-0">Product</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table align-middle mb-0 table-hover table-centered">
+              <thead class="bg-light-subtle border-bottom">
+                <tr>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Number of Trucks</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of order?.orderItems">
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                        <img [src]="getImageUrl(item.productImage)" alt="" class="avatar-md">
+                      </div>
+                      <div>
+                        <span class="text-dark fw-medium fs-15">{{ item.productName }}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ item.quantity }}</td>
+                  <td>{{ item.numberOfTrucks }}</td>
+                  <td><img width="12" src="assets/images/currencyLogo.png" alt=""> {{ item.price | number:'1.2-2' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Order Timeline Card -->
+      <div class="card mb-4 shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-0 rounded-top-4">
+          <h5 class="card-title mb-0">Order Timeline</h5>
+        </div>
+        <div class="card-body">
+          <div class="position-relative ms-2">
+            <span class="position-absolute start-0 top-0 border border-dashed h-100"></span>
+            <div *ngFor="let event of timelineEvents" class="position-relative ps-4 mb-4">
+              <span class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle">
+                <iconify-icon [icon]="event.icon" [class]="event.status === 'current' ? 'text-warning' : 'text-success'"></iconify-icon>
+              </span>
+              <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                <div>
+                  <h6 class="mb-1 text-dark fw-medium fs-15">{{ event.title }}</h6>
+                  <p class="mb-0">{{ event.description }}</p>
+                </div>
+                <p class="mb-0">{{ event.date | date:'medium' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <div class="col-xl-3 col-lg-4">
+      <!-- Order Summary Card -->
+      <div class="card mb-4 shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-0 rounded-top-4">
+          <h5 class="card-title mb-0">Order Summary</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <tbody>
+                <tr>
+                  <td class="px-0">
+                    <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon icon="solar:clipboard-text-broken"></iconify-icon> Sub Total : </p>
+                  </td>
+                  <td class="text-end text-dark fw-medium px-0"><img width="12" src="assets/images/currencyLogo.png" alt=""> {{ calculateSubtotal() | number:'1.2-2' }}</td>
+                </tr>
+                <tr>
+                  <td class="px-0">
+                    <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon icon="solar:ticket-broken" class="align-middle"></iconify-icon> Discount : </p>
+                  </td>
+                  <td class="text-end text-dark fw-medium px-0 text-danger"><img width="12" src="assets/images/currencyLogo.png" alt=""> {{ order?.couponDiscount | number:'1.2-2' }}</td>
+                </tr>
+                <tr>
+                  <td class="px-0">
+                    <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon icon="solar:kick-scooter-broken" class="align-middle"></iconify-icon> Shipping Cost : </p>
+                  </td>
+                  <td class="text-end text-dark fw-medium px-0"><img width="12" src="assets/images/currencyLogo.png" alt=""> {{ order?.shipingCost | number:'1.2-2' }}</td>
+                </tr>
+                <tr>
+                  <td class="px-0">
+                    <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon icon="solar:calculator-minimalistic-broken" class="align-middle"></iconify-icon> Total VAT : </p>
+                  </td>
+                  <td class="text-end text-dark fw-medium px-0"><img width="12" src="assets/images/currencyLogo.png" alt=""> {{ order?.totalVat | number:'1.2-2' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer d-flex align-items-center justify-content-between bg-light-subtle">
+          <div>
+            <p class="fw-medium text-dark mb-0">Total Amount</p>
+          </div>
+          <div>
+            <p class="fw-medium text-dark mb-0"><img width="12" src="assets/images/currencyLogo.png" alt=""> {{ order?.totalPrice | number:'1.2-2' }}</p>
+          </div>
+        </div>
+      </div>
+      <!-- Payment Information Card -->
+      <div class="card mb-4 shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-0 rounded-top-4">
+          <h5 class="card-title mb-0">Payment Information</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div *ngIf="order?.paymentFilePath !== null">
+              <a [href]="getPaymentImageUrl(order?.paymentFilePath)" target="_blank" style="cursor: pointer;">
+                <img [src]="getPaymentImageUrl(order?.paymentFilePath)" alt="Payment Receipt" class="img-fluid" style="max-height: 200px; cursor: pointer;">
+              </a>
+            </div>
+            <div class="ms-auto">
+            </div>
+          </div>
+          <p class="text-dark mb-1 fw-medium">Transaction ID : <span class="text-muted fw-normal fs-13">{{ order?.paymentTransactionId || 'Not Paid Now' }}</span></p>
+          <p class="text-dark mb-1 fw-medium">Payment Date : <span class="text-muted fw-normal fs-13">{{ order?.paymentSubmittedDate | date:'medium' }}</span></p>
+        </div>
+      </div>
+      <!-- Customer Details Card -->
+      <div class="card mb-4 shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-0 rounded-top-4">
+          <h5 class="card-title mb-0">Customer Details</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between mt-3">
+            <h6 class="fw-bold">Customer Name: </h6><p class="mb-1">{{ order?.customerName }}</p>
+          </div>
+          <div class="d-flex justify-content-between mt-3">
+            <h6 class="fw-bold">Shipping Address: </h6><p class="mb-1">{{ order?.locationAddress }}</p>
+          </div>
+          <div class="d-flex justify-content-between mt-3">
+            <h6 class="fw-bold">Dealer Name: </h6><p class="mb-1">{{ order?.dealerName || '-' }}</p>
+          </div>
+          <div class="d-flex justify-content-between mt-3">
+            <h6 class="fw-bold">Dealer Code: </h6><p class="mb-1">{{ order?.dealerCode || '-' }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4 shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-0 rounded-top-4">
+          <h5 class="card-title mb-0">Shipping Details</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex align-items-center gap-2">
+            <div class="flex-shrink-0">
+              <iconify-icon icon="solar:user-circle-bold-duotone" class="text-primary fs-3"></iconify-icon>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="mb-0">{{ order?.user?.fullName }}</h6>
+              <small class="text-muted">{{ order?.shippingAddress?.addressLine1 }}</small>
+            </div>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="w-100 overflow-hidden" style="height: 300px;">
+            <iframe *ngIf="mapUrl" [src]="mapUrl" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mb-0">
+            <li class="d-flex align-items-center gap-2 mb-2">
+              <iconify-icon icon="solar:phone-calling-rounded-bold-duotone" class="fs-5 text-dark"></iconify-icon>
+              <span>{{ order?.user?.phoneNumber }}</span>
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <iconify-icon icon="solar:letter-unread-bold-duotone" class="fs-5 text-dark"></iconify-icon>
+              <span>{{ order?.user?.email }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  

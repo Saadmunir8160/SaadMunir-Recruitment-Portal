@@ -1,0 +1,261 @@
+.sidebar {
+  width: var(--bs-main-nav-width, 280px);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0;
+  z-index: 1000;
+  background-color: var(--bs-main-nav-bg, #262d34);
+  border-right: 1px solid var(--bs-main-nav-border-color, #2f3944);
+  transition: all .2s ease-in-out;
+  overflow: hidden; // Prevent any unwanted scrollbars on the sidebar container
+  box-sizing: border-box; // Include border in width calculation
+}
+
+// These styles are now handled globally in main-layout component
+
+.logo-box {
+  padding: 20px;
+  text-align: center;
+  min-height: 98px; // Consistent height for both states
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .logo-sm {
+    height: 40px; // Reasonable size for condensed mode
+    width: auto;
+    display: none;
+  }
+  
+  .logo-lg {
+    height: 98px;
+    width: 230px;
+    display: block;
+  }
+}
+
+.main-nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollbar {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem;
+  
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  &:hover::-webkit-scrollbar-thumb {
+    opacity: 1;
+  }
+  
+  // Hide scrollbar by default, show on hover
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  
+  &:hover {
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+}
+
+.navbar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-nav .nav-item {
+  margin-bottom: 8px;
+}
+
+.navbar-nav .nav-link.active {
+  background: none;
+  color: #ff6c2f;
+  border-radius: 0;
+  font-weight: 700;
+  border-left: 4px solid #ff6c2f;
+  margin-left: -4px;
+}
+
+.navbar-nav .nav-link:hover {
+  background: #232a31;
+  color: #ff6c2f;
+}
+
+.menu-title {
+  font-size: 11px;
+  color: #a0a4b8;
+  text-transform: uppercase;
+  margin: 18px 0 8px 0;
+  letter-spacing: 1px;
+}
+
+.navbar-nav .nav-link .nav-icon {
+  font-size: 20px;
+  margin-right: 12px;
+  display: inline-block;
+  line-height: 1;
+}
+
+.nav-item {
+  margin: 2px 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: var(--ct-menu-item);
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all .2s ease-in-out;
+  
+  &:hover, &.active {
+    color: var(--ct-menu-item-hover);
+    background-color: var(--ct-menu-item-hover-bg);
+  }
+  
+  .nav-icon {
+    font-size: 18px;
+    margin-right: 10px;
+    display: inline-block;
+    line-height: 1;
+  }
+}
+
+.menu-arrow {
+  &:after {
+    content: "\f0142";
+    font-family: "Material Design Icons";
+    display: inline-block;
+    margin-left: auto;
+    transition: transform .2s;
+  }
+  
+  &[aria-expanded="true"]:after {
+    transform: rotate(90deg);
+  }
+}
+
+.sub-navbar-nav {
+  list-style: none;
+  padding: 0 0 0 3.25rem;
+  margin: 0;
+}
+
+.sub-nav-link {
+  display: block;
+  padding: 8px 16px;
+  color: var(--ct-menu-item);
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all .2s;
+  
+  &:hover, &.active {
+    color: var(--ct-menu-item-hover);
+  }
+}
+
+// Condensed menu specific styles
+:host ::ng-deep html[data-menu-size=condensed] {
+  .sidebar {
+    overflow-x: hidden !important;
+  }
+  
+  .logo-box {
+    padding: 20px 10px; // Keep same vertical padding as expanded
+    min-height: 138px; // Same as expanded (98px + 40px padding)
+    
+    .logo-lg {
+      display: none;
+    }
+    .logo-sm {
+      display: block; // Show small logo in condensed mode
+      height: 40px;
+      width: auto;
+    }
+  }
+  
+  .nav-link {
+    justify-content: center;
+    padding: 12px 8px;
+    
+    .nav-text {
+      display: none;
+    }
+    
+    .nav-icon {
+      margin-right: 0;
+    }
+  }
+  
+  .main-nav .scrollbar {
+    padding: 1rem 0.25rem;
+    overflow-x: hidden !important;
+    
+    // Ensure consistent scrollbar behavior in condensed mode
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    &:hover::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+  
+  // Prevent any horizontal scrolling
+  .navbar-nav {
+    overflow-x: hidden;
+    margin-top: 0; // Ensure no extra margin
+  }
+}
+
+// Hover effect for condensed menu items
+:host ::ng-deep html[data-menu-size=condensed] .nav-item:hover {
+  .nav-link .nav-text {
+    display: block;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bs-secondary-bg);
+    padding: 8px 12px;
+    border-radius: 4px;
+    box-shadow: var(--bs-box-shadow-lg);
+    white-space: nowrap;
+    z-index: 1000;
+    margin-left: 8px;
+  }
+}
+
+// Dark mode support
+[data-bs-theme="dark"] {
+  .sidebar {
+    background-color: var(--ct-menu-bg-dark);
+    border-color: var(--ct-menu-border-dark);
+  }
+}

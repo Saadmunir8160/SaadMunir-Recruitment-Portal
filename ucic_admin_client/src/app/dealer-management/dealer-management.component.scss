@@ -1,0 +1,236 @@
+.dealer-management-container {
+  padding: 0;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Main Header Styles */
+.dealer-management-header {
+  background: white;
+  border-bottom: 1px solid #e3e6f0;
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  .header-content {
+    .breadcrumb-section {
+      margin-bottom: 8px;
+      
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: #6c757d;
+        
+        a {
+          color: #5a67d8;
+          text-decoration: none;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+        
+        span {
+          color: #6c757d;
+        }
+      }
+    }
+
+    .page-title-section {
+      .page-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0;
+        font-size: 28px;
+        font-weight: 600;
+        color: #2d3748;
+        
+        .material-icons {
+          color: #5a67d8;
+          font-size: 32px;
+        }
+      }
+
+      .page-subtitle {
+        margin: 4px 0 0 44px;
+        color: #6c757d;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 12px;
+    
+    .btn {
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      .material-icons {
+        font-size: 18px;
+      }
+      
+      &.btn-outline-primary {
+        background: white;
+        color: #5a67d8;
+        border: 1px solid #5a67d8;
+        
+        &:hover {
+          background: #5a67d8;
+          color: white;
+        }
+      }
+      
+      &.btn-primary {
+        background: #5a67d8;
+        color: white;
+        
+        &:hover {
+          background: #4c51bf;
+        }
+      }
+    }
+  }
+}
+
+/* Navigation Buttons Header */
+.dealer-nav-header {
+  background: white;
+  border-bottom: 2px solid #e3e6f0;
+  padding: 0 32px;
+  overflow-x: auto;
+
+  .nav-buttons {
+    display: flex;
+    gap: 0;
+    min-width: fit-content;
+    
+    .nav-button {
+      position: relative;
+      background: none;
+      border: none;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: #6c757d;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      
+      .material-icons {
+        font-size: 20px;
+      }
+      
+      .count-badge {
+        background: #e2e8f0;
+        color: #4a5568;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        min-width: 20px;
+        text-align: center;
+      }
+      
+      &:hover {
+        color: #5a67d8;
+        background: #f7fafc;
+        
+        .count-badge {
+          background: #e6fffa;
+          color: #5a67d8;
+        }
+      }
+      
+      &.active {
+        color: #5a67d8;
+        border-bottom-color: #5a67d8;
+        background: #f7fafc;
+        
+        .count-badge {
+          background: #5a67d8;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+/* Content Area */
+.dealer-content {
+  padding: 24px 32px;
+  background: #f8f9fa;
+  min-height: calc(100vh - 160px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dealer-management-header {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 20px;
+    
+    .header-actions {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  
+  .dealer-nav-header {
+    padding: 0 20px;
+    
+    .nav-buttons {
+      .nav-button {
+        padding: 12px 16px;
+        font-size: 14px;
+        
+        .material-icons {
+          font-size: 18px;
+        }
+        
+        span:not(.count-badge) {
+          display: none;
+        }
+      }
+    }
+  }
+  
+  .dealer-content {
+    padding: 16px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dealer-management-header {
+    .page-title-section {
+      .page-title {
+        font-size: 24px;
+        
+        .material-icons {
+          font-size: 28px;
+        }
+      }
+      
+      .page-subtitle {
+        margin-left: 40px;
+        font-size: 14px;
+      }
+    }
+  }
+}

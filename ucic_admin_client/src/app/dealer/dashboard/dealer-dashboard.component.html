@@ -1,0 +1,330 @@
+<div>
+  <!-- Welcome Section -->
+  <div class="welcome-section">
+    <div class="welcome-content">
+      <h1 class="welcome-title mb-0">{{ 'DEALER.DASHBOARD.WELCOME_TITLE' | translate }}</h1>
+      <!-- <p class="welcome-subtitle">{{ 'DEALER.DASHBOARD.WELCOME_SUBTITLE' | translate }}</p> -->
+    </div>
+    <!-- <div class="welcome-stats">
+      <div class="stat-item">
+        <i class="material-icons">local_shipping</i>
+        <div class="stat-content">
+          <span class="stat-value">{{ dashboardData?.nextDeliveryDate ? (dashboardData.nextDeliveryDate | date:'shortDate') : 'TBD' }}</span>
+          <span class="stat-label">{{ 'DEALER.DASHBOARD.NEXT_DELIVERY' | translate }}</span>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <!-- Key Metrics Cards -->
+  <div class="metrics-grid">
+    <div class="metric-card orders">
+      <div class="metric-icon">
+        <i class="material-icons">receipt_long</i>
+      </div>
+      <div class="metric-content">
+        <h3 class="metric-value">{{ dashboardData.totalOrders }}</h3>
+        <p class="metric-label">{{ 'DEALER.DASHBOARD.METRICS.TOTAL_ORDERS' | translate }}</p>
+        <span class="metric-trend">
+          <i class="material-icons">trending_up</i>
+          {{ 'DEALER.DASHBOARD.TRENDS.THIS_MONTH' | translate }}
+        </span>
+      </div>
+    </div>
+
+    <div class="metric-card pending">
+      <div class="metric-icon">
+        <i class="material-icons">hourglass_empty</i>
+      </div>
+      <div class="metric-content">
+        <h3 class="metric-value">{{ dashboardData.pendingOrders }}</h3>
+        <p class="metric-label">{{ 'DEALER.DASHBOARD.METRICS.PENDING_ORDERS' | translate }}</p>
+        <span class="metric-trend">
+          <i class="material-icons">schedule</i>
+          {{ 'DEALER.DASHBOARD.TRENDS.IN_PROGRESS' | translate }}
+        </span>
+      </div>
+    </div>
+
+    <div class="metric-card value">
+      <div class="metric-icon">
+        <!-- <i class="material-icons">attach_money</i> -->
+        <img width="25" height="25" src="assets/images/currencyLogo.png" alt="" style="filter: brightness(0) invert(1);">
+      </div>
+      <div class="metric-content">
+        <h3 class="metric-value d-flex align-items-center gap-1">
+          <span *ngIf="availableCredit === null">...</span>
+          <span *ngIf="availableCredit !== null">{{ availableCredit | number:'1.2-2' }}</span>
+        </h3>
+        <p class="metric-label">{{ 'DEALER.DASHBOARD.METRICS.LAST_ORDER_VALUE' | translate }}</p>
+        <span class="metric-trend">
+          <i class="material-icons">date_range</i>
+          {{ dashboardData?.lastOrderDate ? formatDate(dashboardData.lastOrderDate) : 'No recent orders' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- <div class="metric-card spent">
+      <div class="metric-icon">
+        <i class="material-icons">account_balance</i>
+      </div>
+      <div class="metric-content">
+        <h3 class="metric-value">${{ dashboardData.monthlySpent | number:'1.2-2' }}</h3>
+        <p class="metric-label">{{ 'DEALER.DASHBOARD.METRICS.MONTHLY_SPENDING' | translate }}</p>
+        <span class="metric-trend">
+          <i class="material-icons">calendar_month</i>
+          {{ 'DEALER.DASHBOARD.TRENDS.THIS_MONTH_LABEL' | translate }}
+        </span>
+      </div>
+    </div>
+
+    <div class="metric-card limits" *ngIf="dailyLimits">
+      <div class="metric-icon">
+        <i class="material-icons">warning</i>
+      </div>
+      <div class="metric-content">
+        <h3 class="metric-value">{{ dailyLimits.remainingTodayTons | number:'1.2-2' }}</h3>
+        <p class="metric-label">{{ 'DEALER.DASHBOARD.METRICS.REMAINING_TONS' | translate }}</p>
+        <span class="metric-trend">
+          <i class="material-icons">scale</i>
+          {{ dailyLimits.usedTodayTons | number:'1.2-2' }} / {{ dailyLimits.totalLimitTons | number:'1.2-2' }} {{ 'DEALER.DASHBOARD.TRENDS.USED' | translate }}
+        </span>
+        <div class="usage-progress">
+          <div class="progress-bar {{ getProgressBarClass(getUsagePercentage(dailyLimits.usedTodayTons, dailyLimits.totalLimitTons)) }}"
+               [style.width.%]="getUsagePercentage(dailyLimits.usedTodayTons, dailyLimits.totalLimitTons)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="metric-card bags" *ngIf="dailyLimits">
+      <div class="metric-icon">
+        <i class="material-icons">inventory_2</i>
+      </div>
+      <div class="metric-content">
+        <h3 class="metric-value">{{ dailyLimits.remainingTodayBags | number:'1.0-0' }}</h3>
+        <p class="metric-label">{{ 'DEALER.DASHBOARD.METRICS.REMAINING_BAGS' | translate }}</p>
+        <span class="metric-trend">
+          <i class="material-icons">production_quantity_limits</i>
+          {{ dailyLimits.usedTodayBags | number:'1.0-0' }} / {{ dailyLimits.totalLimitBags | number:'1.0-0' }} {{ 'DEALER.DASHBOARD.TRENDS.USED' | translate }}
+        </span>
+        <div class="usage-progress">
+          <div class="progress-bar {{ getProgressBarClass(getUsagePercentage(dailyLimits.usedTodayBags, dailyLimits.totalLimitBags)) }}"
+               [style.width.%]="getUsagePercentage(dailyLimits.usedTodayBags, dailyLimits.totalLimitBags)">
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content">
+    <!-- Additional Stats -->
+    <!-- <div class="additional-stats-section">
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="material-icons">shopping_bag</i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ dashboardData.totalProductsOrdered }}</div>
+            <div class="stat-label">{{ 'DEALER.DASHBOARD.METRICS.TOTAL_PRODUCTS_ORDERED' | translate }}</div>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="material-icons">attach_money</i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">${{ dashboardData.yearlySpent | number:'1.2-2' }}</div>
+            <div class="stat-label">{{ 'DEALER.DASHBOARD.METRICS.YEARLY_SPENDING' | translate }}</div>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="material-icons">trending_up</i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">${{ dashboardData.averageOrderValue | number:'1.2-2' }}</div>
+            <div class="stat-label">{{ 'DEALER.DASHBOARD.METRICS.AVERAGE_ORDER_VALUE' | translate }}</div>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="material-icons">local_shipping</i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ dashboardData.averageDeliveryTime }} {{ 'DEALER.DASHBOARD.TRENDS.DAYS' | translate }}</div>
+            <div class="stat-label">{{ 'DEALER.DASHBOARD.METRICS.AVERAGE_DELIVERY_TIME' | translate }}</div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Favorite Products -->
+    <!-- <div class="favorite-products-section" *ngIf="dashboardData.favoriteProducts && dashboardData.favoriteProducts.length > 0">
+      <h2 class="section-title">
+        <i class="material-icons">favorite</i>
+        {{ 'DEALER.DASHBOARD.SECTIONS.FAVORITE_PRODUCTS' | translate }}
+      </h2>
+      <div class="favorite-products-grid">
+        <div class="product-card" *ngFor="let product of dashboardData.favoriteProducts">
+          <div class="product-icon">
+            <i class="material-icons">inventory_2</i>
+          </div>
+          <div class="product-name">{{ product }}</div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Recent Orders -->
+    <div class="recent-orders-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="material-icons">history</i>
+          {{ 'DEALER.DASHBOARD.SECTIONS.RECENT_ORDERS' | translate }}
+        </h2>
+        <button class="btn btn-outline-primary" (click)="navigateTo('/dealer/orders')">
+          {{ 'DEALER.DASHBOARD.TABLE.VIEW_ALL_ORDERS' | translate }}
+        </button>
+      </div>
+      
+      <div class="table-container">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>{{ 'DEALER.DASHBOARD.TABLE.CUSTOMER_ORDER' | translate }}</th>
+                <th>{{ 'DEALER.DASHBOARD.TABLE.ERP_ORDER' | translate }}</th>
+                <th>{{ 'DEALER.DASHBOARD.TABLE.DATE' | translate }}</th>
+                <th>{{ 'DEALER.DASHBOARD.TABLE.STATUS' | translate }}</th>
+                <th>{{ 'DEALER.DASHBOARD.TABLE.DELIVERY_AREA' | translate }}</th>
+                <th>{{ 'DEALER.DASHBOARD.TABLE.DRIVER' | translate }}</th>
+                <th>{{ 'DEALER.DASHBOARD.TABLE.VEHICLE' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="order-row" *ngFor="let order of recentOrders">
+                <td class="order-number">
+                  <strong>{{ order.customerOrderNumber }}</strong>
+                </td>
+                <td>{{ order.lnOrderNumber }}</td>
+                <td class="order-date">{{ order?.date ? (order.date | date:'MMM dd, yyyy') : 'N/A' }}</td>
+                <td class="order-status">
+                  <span class="status-badge" [ngClass]="'status-' + order.status.toLowerCase()">
+                    @switch(parseText(order.status)){
+                      @case('inprocess'){
+                        {{ 'DEALER.DASHBOARD.STATUS.IN_PROCESS' | translate }}
+                      }
+                      @case('pending'){
+                        {{ 'DEALER.DASHBOARD.STATUS.PENDING' | translate }}
+                      }
+                      @case('delivered'){
+                        {{ 'DEALER.DASHBOARD.STATUS.DELIVERED' | translate }}
+                      }
+                      @default{
+                        {{ order.status }}
+                      }
+                    }
+                  </span>
+                </td>
+                <td class="shipping-address">
+                  <span class="material-icons">location_on</span>
+                  {{ order.deliveryAreaName }}{{ order.deliveryAreaCode ? ' (' + order.deliveryAreaCode + ')' : '' }}
+                </td>
+                <td>{{ order.driverName }}</td>
+                <td>{{ order.vehicleName }}</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <div class="no-orders" *ngIf="recentOrders.length === 0">
+            <div class="no-orders-icon">
+              <i class="material-icons">inbox</i>
+            </div>
+            <p>{{ 'DEALER.DASHBOARD.TABLE.NO_RECENT_ORDERS' | translate }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <!-- <div class="quick-actions-section">
+      <h2 class="section-title">
+        <i class="material-icons">flash_on</i>
+        {{ 'DEALER.DASHBOARD.SECTIONS.QUICK_ACTIONS' | translate }}
+      </h2>
+      <div class="quick-actions-grid">
+        <div class="action-card" 
+             *ngFor="let action of quickActions"
+             [class]="'action-' + action.color"
+             (click)="navigateTo(action.route)">
+          <div class="action-icon">
+            <i class="material-icons">{{ action.icon }}</i>
+          </div>
+          <div class="action-content">
+            <h4 class="action-title">{{ action.title | translate }}</h4>
+            <p class="action-description">{{ action.description | translate }}</p>
+          </div>
+          <div class="action-arrow">
+            <i class="material-icons">arrow_forward</i>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <!-- Current Cart Status -->
+  <!-- <div class="cart-status-section" *ngIf="dashboardData.cartItems > 0">
+    <div class="cart-status-card">
+      <div class="cart-icon">
+        <i class="material-icons">shopping_cart</i>
+        <span class="cart-badge">{{ dashboardData.cartItems }}</span>
+      </div>
+      <div class="cart-content">
+        <h4>{{ 'DEALER.DASHBOARD.CART_STATUS.ITEMS_IN_CART' | translate }}</h4>
+        <p>{{ dashboardData.cartItems }} {{ 'DEALER.DASHBOARD.CART_STATUS.ITEMS_READY' | translate }}</p>
+      </div>
+      <div class="cart-actions">
+        <button class="btn btn-outline-primary" (click)="navigateTo('/dealer/shop/cart')">
+          {{ 'DEALER.DASHBOARD.CART_STATUS.VIEW_CART' | translate }}
+        </button>
+        <button class="btn btn-success" (click)="navigateTo('/dealer/shop/cart')">
+          {{ 'DEALER.DASHBOARD.CART_STATUS.CHECKOUT' | translate }}
+        </button>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- Support Information -->
+  <div class="support-info-section">
+    <div class="support-card">
+      <div class="support-content">
+        <h3>{{ 'DEALER.DASHBOARD.SUPPORT.NEED_HELP' | translate }}</h3>
+        <p>{{ 'DEALER.DASHBOARD.SUPPORT.SUPPORT_MESSAGE' | translate }}</p>
+        <div class="support-contacts">
+          <div class="contact-item">
+            <i class="material-icons">phone</i>
+            <span style="direction: ltr;">+966 9200 26267</span>
+          </div>
+          <div class="contact-item">
+            <i class="material-icons">email</i>
+            <span>info&#64;unitedcement.com.sa</span>
+          </div>
+          <!-- <div class="contact-item">
+            <i class="material-icons">access_time</i>
+            <span>{{ 'DEALER.DASHBOARD.SUPPORT.BUSINESS_HOURS' | translate }}</span>
+          </div> -->
+        </div>
+      </div>
+      <div class="support-actions">
+        <button class="btn btn-primary" (click)="navigateTo('/dealer/support')">
+          {{ 'DEALER.DASHBOARD.SUPPORT.CONTACT_SUPPORT' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

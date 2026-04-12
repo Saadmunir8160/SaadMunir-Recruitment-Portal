@@ -1,0 +1,214 @@
+<div class="dealer-vehicles-container">
+  <!-- Header Section -->
+  <!-- <div class="dealer-vehicles-header">
+    <div class="header-content">
+      <h2 class="section-title">
+        <i class="material-icons">local_shipping</i>
+        Vehicles Management
+      </h2>
+      <p class="section-subtitle">View and manage all vehicles across the system</p>
+    </div>
+  </div> -->
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="row g-3">
+      <!-- Search -->
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Search</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="searchTerm"
+          placeholder=" license plate..."
+          (keyup.enter)="onSearch()"
+        />
+      </div>
+
+      <!-- Dealer Filter -->
+      <!-- <div class="col-md-2">
+        <label class="form-label fw-semibold">Dealer</label>
+        <select class="form-select" [(ngModel)]="selectedDealerId" (change)="onSearch()">
+          <option [value]="null">All Dealers</option>
+          <option *ngFor="let dealer of dealers" [value]="dealer.dealerId">
+            {{ dealer.dealerName }}
+          </option>
+        </select>
+      </div> -->
+
+      <!-- Vehicle Type Filter -->
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Vehicle Type</label>
+        <select class="form-select" [(ngModel)]="selectedVehicleType" (change)="onSearch()">
+          <option *ngFor="let type of vehicleTypes" [value]="type.value">
+            {{ type.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Status Filter -->
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Status</label>
+        <select class="form-select" [(ngModel)]="selectedStatus" (change)="onSearch()">
+          <option *ngFor="let status of statusOptions" [ngValue]="status.value">
+            {{ status.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="col-md-2">
+        <label class="form-label">&nbsp;</label>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary flex-fill" (click)="onSearch()">
+            <i class="material-icons">filter_list</i>
+            Apply Filters
+          </button>
+          <button class="btn btn-outline-secondary flex-fill" (click)="onClearFilters()">
+            <i class="material-icons">clear</i>
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Summary -->
+  <div class="results-summary" *ngIf="!loading">
+    <span class="text-muted">
+      Showing {{ vehicles.length }} of {{ totalRecords }} vehicles
+    </span>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="text-center py-4" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-2 text-muted">Loading dealer vehicles...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-danger" *ngIf="error">
+    <i class="material-icons">error</i>
+    {{ error }}
+  </div>
+
+  <!-- Vehicles Table -->
+  <div class="vehicles-table" *ngIf="!loading && !error">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 border">
+            <thead class="table-header">
+              <tr>
+              <th>License Plate</th>
+              <th>Type & Capacity</th>
+              <th>Status</th>
+              <th>Created Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let vehicle of vehicles" class="vehicle-row">
+              <td>
+                <span class="license-plate">{{ vehicle.licensePlate }}</span>
+              </td>
+              <td>
+                <div class="type-capacity">
+                  <span class="badge" [ngClass]="getVehicleTypeClass(vehicle.vehicleType)">
+                    {{ vehicle.vehicleType }}
+                  </span>
+                  <div class="capacity mt-1">
+                    <small class="text-muted">
+                      <i class="fas fa-weight-hanging fa-sm me-1"></i>
+                      {{ formatCapacity(vehicle.capacity) }}
+                    </small>
+                  </div>
+                </div>
+              </td>
+              
+              <td>
+                <span class="badge" [ngClass]="getStatusClass(vehicle.isActive)">
+                  {{ getStatusText(vehicle.isActive) }}
+                </span>
+              </td>
+              <td>
+                <span>{{ formatDate(vehicle.createdDate) }}</span>
+                <small class="text-muted d-block">Modified: {{ formatDate(vehicle.modifiedDate) }}</small>
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <button
+                    class="action-btn btn-view"
+                    (click)="viewVehicleDetails(vehicle)"
+                    title="View Details"
+                  >
+                    <i class="material-icons">visibility</i>
+                  </button>
+                  <button
+                    class="action-btn btn-edit"
+                    (click)="editVehicle(vehicle)"
+                    title="Edit Vehicle"
+                  >
+                    <i class="material-icons">edit</i>
+                  </button>
+                  <button
+                    class="action-btn btn-delete"
+                    (click)="deleteVehicle(vehicle)"
+                    title="Delete Vehicle"
+                  >
+                    <i class="material-icons">delete</i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="vehicles.length === 0">
+              <td colspan="9" class="text-center py-4">
+                <div class="no-data">
+                  <i class="fas fa-truck fa-3x text-muted mb-3"></i>
+                  <p class="text-muted">No vehicles found matching your criteria.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="card-footer" *ngIf="totalPages > 1">
+        <nav aria-label="Vehicles pagination">
+          <ul class="pagination justify-content-center mb-0">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            </li>
+            
+            <li 
+              *ngFor="let page of [].constructor(totalPages); let i = index"
+              class="page-item"
+              [class.active]="currentPage === i + 1"
+            >
+              <button class="page-link" (click)="onPageChange(i + 1)">
+                {{ i + 1 }}
+              </button>
+            </li>
+            
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <button class="page-link" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </li>
+          </ul>
+        </nav>
+        
+        <div class="pagination-info text-center mt-2">
+          <small class="text-muted">
+            Page {{ currentPage }} of {{ totalPages }} ({{ totalRecords }} total vehicles)
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

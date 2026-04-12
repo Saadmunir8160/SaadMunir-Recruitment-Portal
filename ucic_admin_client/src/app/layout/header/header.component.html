@@ -1,0 +1,84 @@
+<!-- ========== Topbar Start ========== -->
+<header class="topbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="d-flex align-items-center">
+                <!-- Menu Toggle Button -->
+                <div class="topbar-item">
+                    <button type="button" class="button-toggle-menu me-2" (click)="toggleMenu()" title="Toggle Menu">
+                        <span class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Welcome Message with Username -->
+                <div class="topbar-item welcome-section">
+                    <h4 class="fw-bold topbar-button pe-none mb-0">
+                        <span class="welcome-text">Welcome,</span>
+                        <span class="username-text text-primary ms-1" [title]="fullName">{{ fullName }}</span>
+                    </h4>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-1">
+
+                <!-- Theme Color (Light/Dark) -->
+
+
+                <!-- Notification -->
+
+
+                <!-- Theme Setting -->
+
+
+                <!-- Activity -->
+
+
+                <!-- User -->
+                <div class="dropdown topbar-item" [class.show]="isDropdownOpen">
+                    <button type="button" class="topbar-button" (click)="toggleDropdown()"
+                        [attr.aria-expanded]="isDropdownOpen">
+                        <span class="d-flex align-items-center">
+                            <div class="avatar-sm">
+                                <span class="avatar-title bg-soft-primary text-primary fs-20 rounded-circle">
+                                    <iconify-icon icon="solar:user-circle-bold-duotone"></iconify-icon>
+                                </span>
+                            </div>
+                        </span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end" [class.show]="isDropdownOpen">
+                        <!-- item-->
+                        <h6 class="dropdown-header">Welcome!</h6>
+                        <a class="dropdown-item" href="pages-profile.html">
+                            <iconify-icon icon="solar:user-circle-bold-duotone"
+                                class="text-muted fs-18 align-middle me-1"></iconify-icon>
+                            <span class="align-middle">Profile</span>
+                        </a>
+                        <a class="dropdown-item" href="apps-chat.html">
+                            <iconify-icon icon="solar:chat-round-dots-bold-duotone"
+                                class="text-muted fs-18 align-middle me-1"></iconify-icon>
+                            <span class="align-middle">Messages</span>
+                        </a>
+                        <a class="dropdown-item" (click)="changePassword()">
+                            <iconify-icon icon="solar:lock-password-bold-duotone"
+                                class="text-muted fs-18 align-middle me-1"></iconify-icon>
+                            <span class="align-middle">Change Password</span>
+                        </a>
+                        <div class="dropdown-divider my-1"></div>
+                        <a class="dropdown-item" (click)="logout()">
+                            <iconify-icon icon="solar:logout-3-bold-duotone"
+                                class="text-danger fs-18 align-middle me-1"></iconify-icon>
+                            <span class="align-middle text-danger">Logout</span>
+                        </a>
+                    </div>
+                </div>
+
+
+                <!-- App Search-->
+            </div>
+        </div>
+    </div>
+</header>

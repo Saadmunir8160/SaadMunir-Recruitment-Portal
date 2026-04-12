@@ -1,0 +1,55 @@
+﻿<mat-toolbar color="primary" class="navbar">
+  <a routerLink="/jobs" class="brand">
+    <mat-icon>work_outline</mat-icon>
+    <span class="brand-text">UCIC Careers</span>
+  </a>
+
+  <span class="toolbar-spacer"></span>
+
+  <nav class="nav-links">
+    <a mat-button routerLink="/jobs" routerLinkActive="active-link">
+      <mat-icon>search</mat-icon>
+      <span>Jobs</span>
+    </a>
+
+    @if (authService.isLoggedIn()) {
+      <a mat-button routerLink="/my-applications" routerLinkActive="active-link">
+        <mat-icon>assignment</mat-icon>
+        <span>My Applications</span>
+      </a>
+      <a mat-button routerLink="/profile" routerLinkActive="active-link">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </a>
+    }
+  </nav>
+
+  @if (authService.isLoggedIn()) {
+    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="user-btn">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <div class="user-info">
+        <strong>{{ authService.getFullName() }}</strong>
+        <small>Candidate</small>
+      </div>
+      <mat-divider></mat-divider>
+      <button mat-menu-item routerLink="/profile">
+        <mat-icon>person</mat-icon>
+        <span>My Profile</span>
+      </button>
+      <button mat-menu-item routerLink="/my-applications">
+        <mat-icon>assignment</mat-icon>
+        <span>My Applications</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="onLogout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  } @else {
+    <a mat-stroked-button routerLink="/login" class="login-btn">Login</a>
+    <a mat-flat-button routerLink="/signup" color="accent" class="signup-btn">Sign Up</a>
+  }
+</mat-toolbar>

@@ -1,0 +1,106 @@
+﻿<div class="page-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1>Find Your Next Opportunity</h1>
+    <p>Browse open positions at UCIC and apply today</p>
+
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-icon matPrefix>search</mat-icon>
+      <mat-label>Search jobs by title, department, or location...</mat-label>
+      <input matInput [(ngModel)]="searchTerm" (keyup.enter)="searchJobs()">
+      <button mat-icon-button matSuffix (click)="searchJobs()" *ngIf="searchTerm">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="spinner-overlay">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  }
+
+  <!-- Job Cards Grid -->
+  @if (!loading && jobs.length > 0) {
+    <div class="jobs-grid">
+      @for (job of jobs; track job.vacancyId) {
+        <mat-card class="job-card" (click)="viewJob(job.vacancyId)">
+          <mat-card-content>
+            <div class="job-header">
+              <h3 class="job-title">{{ job.jobTitle }}</h3>
+              <mat-chip-set>
+                <mat-chip class="work-type-chip" [highlighted]="true">
+                  {{ getWorkType(job.workType) }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+
+            <div class="job-meta">
+              @if (job.departmentName) {
+                <span class="meta-item">
+                  <mat-icon>business</mat-icon>
+                  {{ job.departmentName }}
+                </span>
+              }
+              @if (job.location) {
+                <span class="meta-item">
+                  <mat-icon>location_on</mat-icon>
+                  {{ job.location }}
+                </span>
+              }
+              <span class="meta-item">
+                <mat-icon>laptop</mat-icon>
+                {{ getWorkLocation(job.workLocation) }}
+              </span>
+            </div>
+
+            @if (job.salaryRangeMin || job.salaryRangeMax) {
+              <div class="salary-range">
+                <mat-icon>payments</mat-icon>
+                @if (job.salaryRangeMin && job.salaryRangeMax) {
+                  <span>{{ job.salaryRangeMin | number }} - {{ job.salaryRangeMax | number }} {{ job.currency }}</span>
+                } @else if (job.salaryRangeMin) {
+                  <span>From {{ job.salaryRangeMin | number }} {{ job.currency }}</span>
+                } @else {
+                  <span>Up to {{ job.salaryRangeMax | number }} {{ job.currency }}</span>
+                }
+              </div>
+            }
+
+            <div class="job-footer">
+              <span class="positions">
+                <mat-icon>group</mat-icon>
+                {{ job.numberOfPositions }} position(s)
+              </span>
+              @if (job.closingDate) {
+                <span class="deadline" [class.closing-soon]="isClosingSoon(job.closingDate)">
+                  <mat-icon>schedule</mat-icon>
+                  Closes {{ job.closingDate | date:'mediumDate' }}
+                </span>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+
+    <mat-paginator
+      [length]="totalCount"
+      [pageSize]="pageSize"
+      [pageIndex]="pageNumber - 1"
+      [pageSizeOptions]="[6, 12, 24]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  }
+
+  <!-- Empty State -->
+  @if (!loading && jobs.length === 0) {
+    <div class="empty-state">
+      <mat-icon>work_off</mat-icon>
+      <h3>No open positions</h3>
+      <p>Check back later for new opportunities!</p>
+    </div>
+  }
+</div>

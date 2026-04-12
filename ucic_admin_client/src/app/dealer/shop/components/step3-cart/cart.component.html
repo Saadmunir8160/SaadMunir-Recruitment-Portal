@@ -1,0 +1,316 @@
+<div class="cart-container">
+  <!-- Shopping Progress -->
+  <app-shop-progress [currentStep]="1" *ngIf="cartItems.length > 0"></app-shop-progress>
+  
+  <!-- <div class="cart-header">
+    <h2 class="page-title">
+      <i class="material-icons">shopping_cart</i>
+      Sales
+    </h2>
+    <p class="page-subtitle">Review your selected items</p>
+  </div> -->
+
+  <!-- Empty Cart State -->
+  <div class="empty-cart" *ngIf="cartItems.length === 0">
+    <div class="empty-cart-icon">
+      <i class="material-icons">shopping_cart</i>
+    </div>
+    <h3>{{ 'DEALER.SHOP.CART.EMPTY_CART.TITLE' | translate }}</h3>
+    <p>{{ 'DEALER.SHOP.CART.EMPTY_CART.MESSAGE' | translate }}</p>
+    <p class="empty-cart-hint">
+      <i class="material-icons">info</i>
+      {{ 'DEALER.SHOP.CART.EMPTY_CART.HINT' | translate }}
+    </p>
+  </div>
+
+  <!-- Cart Items -->
+  <div class="cart-content" *ngIf="cartItems.length > 0">
+    <div class="cart-items-section">
+      <div class="section-header">
+        <h3>{{ 'DEALER.SHOP.CART.ORDER_LINES' | translate }} ({{ cartSummary.itemCount }})</h3>
+        <div class="header-actions">
+          <button class="btn btn-outline-danger btn-sm" (click)="clearCart()">
+            <i class="material-icons">delete</i>
+            {{ 'DEALER.SHOP.CART.CLEAR_CART' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Desktop Table View -->
+      <div class="cart-table-container d-none d-md-block">
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>{{ 'DEALER.SHOP.CART.TABLE.PRODUCT' | translate }}</th>
+              <th>{{ 'DEALER.SHOP.CART.TABLE.QUANTITY' | translate }}</th>
+              <th>{{ 'DEALER.SHOP.CART.TABLE.TOTAL' | translate }}</th>
+              <!-- <th>{{ 'DEALER.SHOP.CART.TABLE.TRUCKS' | translate }}</th> -->
+              <th>{{ 'DEALER.SHOP.CART.TABLE.ACTIONS' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cartItems" class="cart-item-row">
+              <td>
+                <div class="product-info">
+                  <!-- <div class="product-icon-container">
+                    <i class="material-icons product-icon">inventory</i>
+                  </div> -->
+                  <div class="product-details">
+                    <h5>{{ item.name }}</h5>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <!-- BAG Unit - Truck-based System -->
+                <div class="quantity-unit-display" *ngIf="item.unit === 'BAG'">
+                  <div class="bags-per-truck-selection">
+                    <small class="text-muted d-block mb-2">{{ 'DEALER.SHOP.CART.TABLE.BAGS_PER_TRUCK' | translate }}:</small>
+                    <div class="btn-group btn-group-sm" style="direction: ltr;" role="group">
+                      <input type="radio" 
+                             class="btn-check" 
+                             [id]="'bags500-cart-' + item.id"
+                             [name]="'bagsPerTruck-cart-' + item.id"
+                             [checked]="getItemBagsPerTruck(item) === 500"
+                             (change)="setItemBagsPerTruck(item, 500)">
+                      <label class="btn btn-outline-primary btn-sm" [for]="'bags500-cart-' + item.id">500</label>
+                      
+                      <input type="radio" 
+                             class="btn-check" 
+                             [id]="'bags600-cart-' + item.id"
+                             [name]="'bagsPerTruck-cart-' + item.id"
+                             [checked]="getItemBagsPerTruck(item) === 600"
+                             (change)="setItemBagsPerTruck(item, 600)">
+                      <label class="btn btn-outline-primary btn-sm" [for]="'bags600-cart-' + item.id">600</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Direct Input Units (TON, EA, TRK, PCS) -->
+                <div class="quantity-unit-display" *ngIf="isDirectInputUnit(item.unit)">
+                  <div class="input-group input-group-sm" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 120px; direction: ltr;">
+                    <button class="btn btn-outline-secondary btn-sm" type="button"
+                            (click)="decrementQuantity(item)"
+                            [disabled]="item.quantity <= getMinQuantity(item.unit)"
+                            style="width: 30px; flex-shrink: 0;">
+                      <i class="material-icons small">remove</i>
+                    </button>
+                    <input type="number" 
+                           class="form-control text-center" 
+                           [value]="item.quantity" 
+                           (change)="onQuantityChange(item.id, $event)"
+                           [min]="getMinQuantity(item.unit)" 
+                           [max]="getMaxQuantity(item.unit)"
+                           [step]="getStepValue(item.unit)"
+                           style="width: 60px; flex-shrink: 0;">
+                    <button class="btn btn-outline-secondary btn-sm" type="button"
+                            (click)="incrementQuantity(item)"
+                            [disabled]="item.quantity >= getMaxQuantity(item.unit)"
+                            style="width: 30px; flex-shrink: 0;">
+                      <i class="material-icons small">add</i>
+                    </button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span class="unit-display">
+                  {{ getTotalQuantityDisplay(item) }}
+                </span>
+              </td>
+              <!-- <td>
+                <div class="trucks-cell" *ngIf="item.unit === 'BAG'">
+                  <div class="input-group input-group-sm" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 120px;">
+                    <button class="btn btn-outline-secondary btn-sm" type="button" 
+                            [disabled]="getItemTrucks(item) <= 1"
+                            (click)="decreaseItemTrucks(item)" 
+                            style="width: 30px; flex-shrink: 0;">
+                      <i class="material-icons small">remove</i>
+                    </button>
+                    <input type="number" class="form-control text-center" 
+                           [value]="getItemTrucks(item)"
+                           (input)="onItemTrucksChange(item, $event)"
+                           min="1" max="100" 
+                           style="width: 60px; flex-shrink: 0;">
+                    <button class="btn btn-outline-secondary btn-sm" type="button" 
+                            [disabled]="getItemTrucks(item) >= 100"
+                            (click)="increaseItemTrucks(item)" 
+                            style="width: 30px; flex-shrink: 0;">
+                      <i class="material-icons small">add</i>
+                    </button>
+                  </div>
+                </div>
+                
+                <span class="trucks-count" *ngIf="isDirectInputUnit(item.unit)">
+                  N/A
+                </span>
+              </td> -->
+              <td>
+                <button class="btn btn-outline-danger btn-sm" 
+                        (click)="removeItem(item.id)">
+                  <i class="material-icons">delete</i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Card View -->
+      <div class="cart-items-mobile d-block d-md-none">
+        <div class="cart-item-card" *ngFor="let item of cartItems">
+          <div class="item-header">
+            <div class="product-icon-container">
+              <i class="material-icons product-icon">inventory</i>
+            </div>
+            <div class="item-info">
+              <h5>{{ item.name }}</h5>
+              <span class="unit-info">{{ item.quantity }} {{ item.unit }}</span>
+            </div>
+            <button class="btn btn-outline-danger btn-sm" 
+                    (click)="removeItem(item.id)">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+          
+          <div class="item-controls">
+            
+            <!-- BAG Unit - Mobile Truck System -->
+            <div class="bags-control-section" *ngIf="item.unit === 'BAG'">
+              <div class="bags-per-truck-mobile">
+                <label>{{ 'DEALER.SHOP.CART.TABLE.BAGS_PER_TRUCK' | translate }}:</label>
+                <div class="btn-group btn-group-sm" role="group">
+                  <input type="radio" 
+                         class="btn-check" 
+                         [id]="'mobile-bags500-' + item.id"
+                         [name]="'mobile-bagsPerTruck-' + item.id"
+                         [checked]="getItemBagsPerTruck(item) === 500"
+                         (change)="setItemBagsPerTruck(item, 500)">
+                  <label class="btn btn-outline-primary btn-sm" [for]="'mobile-bags500-' + item.id">500</label>
+                  
+                  <input type="radio" 
+                         class="btn-check" 
+                         [id]="'mobile-bags600-' + item.id"
+                         [name]="'mobile-bagsPerTruck-' + item.id"
+                         [checked]="getItemBagsPerTruck(item) === 600"
+                         (change)="setItemBagsPerTruck(item, 600)">
+                  <label class="btn btn-outline-primary btn-sm" [for]="'mobile-bags600-' + item.id">600</label>
+                </div>
+              </div>
+              
+              <div class="trucks-control-mobile">
+                <label>{{ 'DEALER.SHOP.CART.MOBILE.NUMBER_OF_TRUCKS' | translate }}:</label>
+                <div class="input-group input-group-sm" style="display: flex !important; flex-direction: row !important;">
+                  <button class="btn btn-outline-secondary" type="button" 
+                          [disabled]="getItemTrucks(item) <= 1"
+                          (click)="decreaseItemTrucks(item)">
+                    <i class="material-icons small">remove</i>
+                  </button>
+                  <input type="number" class="form-control text-center" 
+                         [value]="getItemTrucks(item)"
+                         (input)="onItemTrucksChange(item, $event)"
+                         min="1" max="100"
+                         style="width: 60px;">
+                  <button class="btn btn-outline-secondary" type="button" 
+                          [disabled]="getItemTrucks(item) >= 100"
+                          (click)="increaseItemTrucks(item)">
+                    <i class="material-icons small">add</i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Direct Input Units - Mobile (TON, EA, TRK, PCS) -->
+            <div class="direct-input-control-section" *ngIf="isDirectInputUnit(item.unit)">
+              <div class="quantity-section">
+                <label>{{ 'DEALER.SHOP.CART.MOBILE.QUANTITY' | translate }} ({{ item.unit }}):</label>
+                <div class="input-group input-group-sm" style="display: flex !important; flex-direction: row !important;">
+                  <button class="btn btn-outline-secondary btn-sm" type="button"
+                          (click)="decrementQuantity(item)"
+                          [disabled]="item.quantity <= getMinQuantity(item.unit)">
+                    <i class="material-icons small">remove</i>
+                  </button>
+                  <input type="number" 
+                         class="form-control text-center" 
+                         [value]="item.quantity" 
+                         (change)="onQuantityChange(item.id, $event)"
+                         [min]="getMinQuantity(item.unit)" 
+                         [max]="getMaxQuantity(item.unit)"
+                         [step]="getStepValue(item.unit)"
+                         style="width: 60px;">
+                  <button class="btn btn-outline-secondary btn-sm" type="button"
+                          (click)="incrementQuantity(item)"
+                          [disabled]="item.quantity >= getMaxQuantity(item.unit)">
+                    <i class="material-icons small">add</i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="item-summary">
+              <div class="total-quantity">
+                {{ 'DEALER.SHOP.CART.TABLE.TOTAL' | translate }}: {{ getTotalQuantityDisplay(item) }}
+              </div>
+              <div class="trucks">
+                <ng-container *ngIf="item.unit === 'BAG'">
+                  {{ 'DEALER.SHOP.CART.TABLE.TRUCKS' | translate }}: {{ getItemTrucks(item) }}
+                </ng-container>
+                <ng-container *ngIf="isDirectInputUnit(item.unit)">
+                  {{ 'DEALER.SHOP.CART.TABLE.TRUCKS' | translate }}: N/A
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="order-summary-section">
+      <div class="summary-card">
+        <h3>{{ 'DEALER.SHOP.CHECKOUT.ORDER_SUMMARY.TITLE' | translate }}</h3>
+        
+        <!-- <div class="summary-row">
+          <span>{{ 'DEALER.SHOP.CART.SUMMARY.TOTAL_ITEMS' | translate }}:</span>
+          <span class="amount">{{ cartSummary.itemCount }} {{ 'DEALER.SHOP.CART.SUMMARY.PRODUCTS' | translate }}</span>
+        </div> -->
+        
+        <div class="summary-row" *ngIf="cartSummary.totalBags > 0">
+          <span>{{ 'DEALER.SHOP.CART.SUMMARY.TOTAL_BAGS' | translate }}:</span>
+          <span class="amount">{{ cartSummary.totalBags }} {{ 'DEALER.SHOP.CART.SUMMARY.BAGS' | translate }}</span>
+        </div>
+        
+        <div class="summary-row" *ngIf="cartSummary.totalTons > 0">
+          <span>{{ 'DEALER.SHOP.CART.SUMMARY.TOTAL_TONS' | translate }}:</span>
+          <span class="amount">{{ cartSummary.totalTons }} {{ 'DEALER.SHOP.CART.SUMMARY.TONS' | translate }}</span>
+        </div>
+        
+        <hr>
+        
+        <!-- <div class="summary-row total-row" *ngIf="cartSummary.totalBags > 0">
+          <span>{{ 'DEALER.SHOP.CART.SUMMARY.TRUCKS_NEEDED' | translate }}:</span>
+          <span class="amount total-amount">{{ calculateTrucksForBags(cartSummary.totalBags) }} {{ 'DEALER.SHOP.CART.SUMMARY.TRUCKS' | translate }}</span>
+        </div> -->
+
+        <div class="summary-actions">
+          <!-- <button class="btn btn-outline-primary w-100 mb-2" (click)="continueShopping()">
+            <i class="material-icons">arrow_back</i>
+            Continue Shopping
+          </button> -->
+          
+          <button class="btn btn-primary w-100 fs-19" 
+                  [disabled]="!canProceedToCheckout()"
+                  [attr.title]="!canProceedToCheckout() ? 'Add products to cart before proceeding to checkout' : 'Proceed to checkout'"
+                  (click)="proceedToCheckout()">
+            {{ 'DEALER.SHOP.CART.SUMMARY.PROCEED_CHECKOUT' | translate }}
+            <i class="material-icons">{{ backArrowIcon }}</i>
+          </button>
+          
+          <!-- Helper text when checkout is disabled -->
+          <small class="text-muted mt-2" *ngIf="!canProceedToCheckout()">
+            <i class="material-icons small">info</i>
+            {{ getCheckoutDisabledMessage() }}
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

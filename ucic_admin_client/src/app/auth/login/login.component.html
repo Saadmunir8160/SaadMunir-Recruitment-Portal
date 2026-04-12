@@ -1,0 +1,42 @@
+<div class="login-container">
+  <div class="login-background-image" style="background-image: url('assets/images/loginPageBackground.jpg');"></div>
+  <div class="login-overlay"></div>
+  <div class="login-wrapper">
+    <div class="login-logo">
+      <img src="assets/images/login-logo.png" alt="Business Partner Portal Logo" class="logo-image" />
+    </div>
+
+    <p class="welcome-subtitle">Sign in to continue to your account</p>
+
+    <form (submit)="login()" class="login-form">
+      <div class="form-group">
+        <input type="email" id="email" [(ngModel)]="email" class="form-input" placeholder="Username or Email Address"
+          name="email" required [disabled]="isLoading" />
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" [(ngModel)]="password" class="form-input" placeholder="Password"
+          name="password" required [disabled]="isLoading" />
+      </div>
+
+      <button type="submit" class="login-button" [disabled]="isLoading">
+        <span *ngIf="!isLoading">Login</span>
+        <span *ngIf="isLoading" class="spinner"></span>
+      </button>
+
+      <p *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </p>
+    </form>
+
+    <div class="login-links">
+
+    </div>
+  </div>
+</div>
+<svg width="0" height="0" style="position: absolute; visibility: hidden;">
+  <filter id="blue-logo-filter">
+    <feFlood flood-color="#181998" result="flood" />
+    <feComposite in="flood" in2="SourceAlpha" operator="in" />
+  </filter>
+</svg>

@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Edit Role</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label for="roleName" class="form-label">Role Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="roleName"
+                    formControlName="roleName"
+                    placeholder="Enter role name"
+                    [class.is-invalid]="roleForm.get('roleName')?.invalid && roleForm.get('roleName')?.touched"
+                  >
+                  <div class="invalid-feedback" *ngIf="roleForm.get('roleName')?.errors?.['required']">
+                    Role name is required
+                  </div>
+                  <div class="invalid-feedback" *ngIf="roleForm.get('roleName')?.errors?.['minlength']">
+                    Role name must be at least 3 characters long
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary" [disabled]="!roleForm.valid || loading">
+                  <iconify-icon icon="solar:check-circle-bold-duotone" class="me-1"></iconify-icon>
+                  {{ loading ? 'Saving...' : 'Update' }}
+                </button>
+                <button type="button" class="btn btn-light ms-2" (click)="onCancel()">
+                  <iconify-icon icon="solar:arrow-left-bold-duotone" class="me-1"></iconify-icon>
+                  Back
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

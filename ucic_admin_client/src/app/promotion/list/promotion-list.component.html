@@ -1,0 +1,104 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h4 class="card-title mb-0">Promotions List</h4>
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-primary" [routerLink]="['/admin/promotion/create']">
+                <iconify-icon icon="solar:add-circle-bold-duotone" class="me-1"></iconify-icon>
+                Add Promotion
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3 align-items-center">
+            <div class="col-md-6">
+              <div class="search-box position-relative">
+                <input type="text" class="form-control ps-4" 
+                       [(ngModel)]="searchTerm" 
+                       (ngModelChange)="onSearch()" 
+                       placeholder="Search promotions...">
+                <iconify-icon icon="solar:magnifer-linear" class="search-widget-icon position-absolute top-50 end-0 translate-middle-y me-3"></iconify-icon>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+              <div class="d-flex align-items-center custom-page-size">
+                <label for="pageSize" class="me-2 mb-0 fw-semibold text-secondary">Show:</label>
+                <select id="pageSize" class="form-select form-select-sm stylish-select" 
+                        [(ngModel)]="pageSize" 
+                        (ngModelChange)="onPageSizeChange($event)"
+                        style="width: 80px;">
+                  <option *ngFor="let size of pageSizeOptions" [ngValue]="size === 'All' ? 0 : size">{{ size === 'All' ? 'All' : size }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-centered table-nowrap mb-0 align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Code</th>
+                  <th>Coverage Area</th>
+                  <th>Discount %</th>
+                  <th>Valid From</th>
+                  <th>Valid To</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="loading">
+                  <td colspan="6" class="text-center">
+                    <div class="d-flex justify-content-center align-items-center py-3">
+                      <div class="spinner-border spinner-border-sm me-2" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                      Loading...
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngFor="let promotion of filteredPromotions; trackBy: trackByPromotionId">
+                  <td>{{promotion.code}}</td>
+                  <td>{{ getCoverageAreaName(promotion.coverageAreaId) }}</td>
+                  <td>{{promotion.discountPercentage}}%</td>
+                  <td>{{promotion.validFrom | date:'medium'}}</td>
+                  <td>{{promotion.validTo | date:'medium'}}</td>
+                  <td class="text-end">
+                    <button class="btn btn-sm btn-primary me-1" [routerLink]="['/admin/promotion/edit', promotion.promotionId]">
+                      <iconify-icon icon="solar:pen-2-bold-duotone"></iconify-icon>
+                    </button>
+                    <button class="btn btn-sm btn-danger" (click)="deletePromotion(promotion.promotionId)">
+                      <iconify-icon icon="solar:trash-bin-minimalistic-bold-duotone"></iconify-icon>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="!loading && filteredPromotions.length === 0">
+                  <td colspan="6" class="text-center py-4">
+                    <p class="text-muted mb-0">No promotions found.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <app-pagination
+            *ngIf="!loading && totalCount > 0"
+            [currentPage]="currentPage"
+            [totalPages]="totalPages"
+            [hasPreviousPage]="currentPage > 1"
+            [hasNextPage]="currentPage < totalPages"
+            [pageSize]="pageSize"
+            [totalCount]="totalCount"
+            (pageChange)="goToPage($event)">
+          </app-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

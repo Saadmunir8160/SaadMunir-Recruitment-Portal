@@ -1,0 +1,247 @@
+@if (isLoading) {
+  <div class="loading-overlay">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+}
+
+@if (!isLoading && application) {
+  <div class="application-detail">
+
+    <!-- Header -->
+    <div class="detail-header">
+      <button mat-icon-button (click)="goBack()" matTooltip="Back">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-info">
+        <h2>{{ application.candidateName }}</h2>
+        <span class="status-chip" [ngClass]="getStatusClass(application.status)">
+          {{ getStatusLabel(application.status) }}
+        </span>
+      </div>
+      <span class="spacer"></span>
+      <button mat-stroked-button (click)="viewCandidate()">
+        <mat-icon>person</mat-icon> View Candidate
+      </button>
+    </div>
+
+    <!-- Application Info -->
+    <mat-card appearance="outlined" class="info-card">
+      <mat-card-header>
+        <mat-card-title>Application Information</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Application ID</label>
+            <p>#{{ application.applicationId }}</p>
+          </div>
+          <div class="info-item">
+            <label>Vacancy</label>
+            <p class="vacancy-link" (click)="viewVacancy()">{{ application.vacancyTitle }}</p>
+          </div>
+          <div class="info-item">
+            <label>Applied On</label>
+            <p>{{ application.applicationDate | date:'mediumDate' }}</p>
+          </div>
+          <div class="info-item">
+            <label>Assigned Recruiter</label>
+            <p>{{ application.assignedRecruiterName || 'Unassigned' }}</p>
+          </div>
+          <div class="info-item">
+            <label>Auto-Matched</label>
+            <p>{{ application.isAutoMatched ? 'Yes' : 'No' }}</p>
+          </div>
+          <div class="info-item">
+            <label>Match Score</label>
+            <div class="score-display">
+              <mat-progress-bar mode="determinate" [value]="application.matchScore" [color]="getScoreColor(application.matchScore)"></mat-progress-bar>
+              <strong [class.high-score]="application.matchScore >= 70" [class.low-score]="application.matchScore < 40">{{ application.matchScore }}%</strong>
+            </div>
+          </div>
+          @if (application.rejectionReason) {
+            <div class="info-item full-width">
+              <label>Rejection Reason ({{ application.rejectionPhase }})</label>
+              <p class="rejection-text">{{ application.rejectionReason }}</p>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Tabs: Match Breakdown, Screening, Status Update -->
+    <mat-tab-group class="detail-tabs" animationDuration="200ms">
+
+      <!-- Match Breakdown Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-label-icon">analytics</mat-icon> Match Breakdown
+        </ng-template>
+        <div class="tab-body">
+          @if (matchResult) {
+            <div class="match-grid">
+              @for (item of matchBreakdownItems; track item.label) {
+                <div class="match-item">
+                  <span class="match-label">{{ item.label }}</span>
+                  <mat-progress-bar mode="determinate" [value]="item.value" color="primary"></mat-progress-bar>
+                  <span class="match-value">{{ item.value }}%</span>
+                </div>
+              }
+            </div>
+            <mat-divider></mat-divider>
+            <div class="match-explanation">
+              <h4>AI Explanation</h4>
+              <p>{{ matchResult.matchExplanation || 'No explanation available.' }}</p>
+            </div>
+            @if (application.status === 2) {
+              <div class="override-action">
+                <mat-divider></mat-divider>
+                <p class="override-hint">
+                  <mat-icon inline>info</mat-icon>
+                  This candidate was auto-rejected by AI. You can manually move them to Screening.
+                </p>
+                <button mat-flat-button color="accent" [disabled]="isUpdating" (click)="overrideToScreening()">
+                  <mat-icon>redo</mat-icon> Override — Move to Screening
+                </button>
+              </div>
+            }
+          } @else {
+            <div class="empty-state">
+              <mat-icon>psychology</mat-icon>
+              <p>No match result available</p>
+              <button mat-stroked-button (click)="loadMatchResult()">Load Match Result</button>
+            </div>
+          }
+        </div>
+      </mat-tab>
+
+      <!-- Screening Tasks Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-label-icon">checklist</mat-icon> Screening Tasks
+        </ng-template>
+        <div class="tab-body">
+          @if (screeningTasks.length > 0) {
+            <table mat-table [dataSource]="screeningTasks" class="full-width">
+              <ng-container matColumnDef="taskDescription">
+                <th mat-header-cell *matHeaderCellDef>Task</th>
+                <td mat-cell *matCellDef="let t">{{ t.taskDescription }}</td>
+              </ng-container>
+              <ng-container matColumnDef="assignedToName">
+                <th mat-header-cell *matHeaderCellDef>Assigned To</th>
+                <td mat-cell *matCellDef="let t">{{ t.assignedToName }}</td>
+              </ng-container>
+              <ng-container matColumnDef="deadline">
+                <th mat-header-cell *matHeaderCellDef>Deadline</th>
+                <td mat-cell *matCellDef="let t">{{ t.deadline | date:'mediumDate' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let t">
+                  <span class="task-status" [class.done]="t.status === 2" [class.pending]="t.status === 0">
+                    {{ getTaskStatusLabel(t.status) }}
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="notes">
+                <th mat-header-cell *matHeaderCellDef>Notes</th>
+                <td mat-cell *matCellDef="let t">{{ t.notes || '—' }}</td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="screeningColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: screeningColumns;"></tr>
+            </table>
+          } @else {
+            <div class="empty-state">
+              <mat-icon>task</mat-icon>
+              <p>No screening tasks yet</p>
+            </div>
+          }
+        </div>
+      </mat-tab>
+
+      <!-- Interviews Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-label-icon">event</mat-icon> Interviews
+        </ng-template>
+        <div class="tab-body">
+          @if (interviews.length > 0) {
+            <table mat-table [dataSource]="interviews" class="full-width">
+              <ng-container matColumnDef="interviewType">
+                <th mat-header-cell *matHeaderCellDef>Type</th>
+                <td mat-cell *matCellDef="let i">
+                  <span class="type-chip">{{ getInterviewTypeLabel(i.interviewType) }}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="interviewMode">
+                <th mat-header-cell *matHeaderCellDef>Mode</th>
+                <td mat-cell *matCellDef="let i">{{ getInterviewModeLabel(i.interviewMode) }}</td>
+              </ng-container>
+              <ng-container matColumnDef="scheduledDate">
+                <th mat-header-cell *matHeaderCellDef>Scheduled</th>
+                <td mat-cell *matCellDef="let i">{{ i.scheduledDate | date:'medium' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef>Location</th>
+                <td mat-cell *matCellDef="let i">{{ i.location || '—' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="interviewerName">
+                <th mat-header-cell *matHeaderCellDef>Interviewer</th>
+                <td mat-cell *matCellDef="let i">{{ i.interviewerName || '—' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let i">
+                  <span class="status-chip" [ngClass]="getInterviewStatusClass(i.status)">
+                    {{ getInterviewStatusLabel(i.status) }}
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="candidateConfirmed">
+                <th mat-header-cell *matHeaderCellDef>Confirmed</th>
+                <td mat-cell *matCellDef="let i">
+                  <mat-icon [class.confirmed]="i.candidateConfirmed" [class.not-confirmed]="!i.candidateConfirmed">
+                    {{ i.candidateConfirmed ? 'check_circle' : 'cancel' }}
+                  </mat-icon>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="interviewColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: interviewColumns;"></tr>
+            </table>
+          } @else {
+            <div class="empty-state">
+              <mat-icon>event_busy</mat-icon>
+              <p>No interviews scheduled yet</p>
+            </div>
+          }
+        </div>
+      </mat-tab>
+
+      <!-- Status Update Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-label-icon">update</mat-icon> Update Status
+        </ng-template>
+        <div class="tab-body status-tab">
+          <mat-form-field appearance="outline" class="status-select">
+            <mat-label>New Status</mat-label>
+            <mat-select [(value)]="newStatus">
+              @for (s of availableStatuses; track s.value) {
+                <mat-option [value]="s.value">{{ s.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Reason / Notes (optional)</mat-label>
+            <textarea matInput [(ngModel)]="statusReason" rows="3"></textarea>
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="updateStatus()"
+                  [disabled]="newStatus === null || isUpdating">
+            @if (isUpdating) { <mat-spinner diameter="18" class="inline-spinner"></mat-spinner> }
+            Update Status
+          </button>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+}

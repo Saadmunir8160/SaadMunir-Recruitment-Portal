@@ -1,0 +1,16 @@
+.footer {
+  background-color: var(--ct-topbar-bg);
+  border-top: 1px solid var(--ct-topbar-border);
+  padding: 1rem 0;
+  color: var(--ct-body-color);
+  font-size: 0.875rem;
+  text-align: center;
+  position: relative;
+  z-index: 1020;
+}
+
+.container-fluid {
+  max-width: 100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}

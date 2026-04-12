@@ -1,0 +1,184 @@
+:root {
+  --bs-main-nav-width: 280px;
+  --bs-main-nav-width-sm: 75px;
+  --bs-topbar-height: 100px;
+}
+
+.wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  background: var(--bs-main-nav-bg, #262d34);
+  z-index: 1045;
+  width: 280px; // Default width, will be overridden by data-menu-size
+  margin: 0;
+  padding: 0;
+}
+
+.main-content {
+  margin-left: 280px; // Default margin, will be overridden by data-menu-size
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--ct-body-bg);
+  padding: 0;
+}
+
+// These styles are now handled in the global ::ng-deep section above
+
+.topbar {
+  height: var(--bs-topbar-height);
+  background: var(--ct-topbar-bg);
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+.page-content {
+  flex: 1 0 auto;
+  padding: 2rem 1.5rem;
+  background: var(--ct-body-bg);
+  min-height: 0;
+}
+
+.card {
+  box-shadow: 0 2px 16px rgba(44, 62, 80, 0.08);
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  width: 100%;
+  margin: 0 auto;
+  max-width: none;
+}
+
+.footer {
+  margin-left: 0;
+}
+
+@media (max-width: 1140px) {
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .footer {
+    margin-left: 0;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Main content area */
+.content {
+  width: 80%;
+  /* Takes remaining space */
+  margin-left: 20%;
+  /* Pushes content to the right */
+  padding: 20px;
+  background: #f4f4f4;
+  /* Light background */
+  height: 100vh;
+  overflow-y: auto;
+  /* Enables scrolling */
+}
+
+// Global overrides for menu toggle functionality
+::ng-deep {
+  // Base styles for smooth transitions
+  .sidebar, .main-nav, .main-content, .topbar {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  // Prevent horizontal scrolling during transitions
+  body {
+    overflow-x: hidden;
+  }
+  
+  // Prevent layout jumps during transition
+  html.menu-transitioning {
+    .sidebar, .main-content, .topbar {
+      transition-duration: 0.2s;
+    }
+    
+    // Prevent scrolling during transition
+    body {
+      overflow-x: hidden;
+    }
+  }
+  
+  // Condensed state - icon only sidebar
+  html[data-menu-size=condensed] {
+    .sidebar {
+      width: 75px !important;
+      min-width: 75px !important;
+      max-width: 75px !important;
+      border-right: none !important;
+      box-sizing: border-box !important;
+    }
+    
+    .main-content {
+      margin-left: 75px !important;
+      padding-left: 0 !important;
+      border-left: none !important;
+    }
+    
+    .page-content {
+      margin-left: 0 !important; // Override global CSS that adds margin
+      padding-left: 0 !important;
+    }
+    
+    .topbar {
+      margin-left: 0 !important;
+      padding-left: 0 !important; // Override global CSS that adds padding
+    }
+  }
+  
+  // Expanded state - full sidebar
+  html[data-menu-size=expanded] {
+    .sidebar {
+      width: 280px !important;
+      min-width: 280px !important;
+      max-width: 280px !important;
+      border-right: 1px solid var(--bs-main-nav-border-color, #2f3944) !important;
+      box-sizing: border-box !important;
+    }
+    
+    .main-content {
+      margin-left: 280px !important;
+      padding-left: 0 !important;
+      border-left: none !important;
+    }
+    
+    .page-content {
+      margin-left: 0 !important; // Override global CSS
+      padding-left: 0 !important;
+    }
+    
+    .topbar {
+      margin-left: 0 !important;
+      padding-left: 0 !important; // Override global CSS
+    }
+  }
+}
+
+// Dark mode support
+[data-bs-theme="dark"] {
+  .main-content {
+    background-color: var(--ct-body-bg-dark);
+  }
+}

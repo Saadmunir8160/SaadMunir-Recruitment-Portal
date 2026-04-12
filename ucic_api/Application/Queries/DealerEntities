@@ -1,0 +1,41 @@
+using Application.DTOs;
+using Domain.Entities;
+using Domain.Repositories.Query.Base;
+using MediatR;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Application.Queries.DealerOrderItem
+{
+    public class GetAllDealerOrderItemsQuery : IRequest<Response<List<DealerOrderItemDTO>>>
+    {
+        public int PageNumber { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
+    }
+
+    public class GetAllDealerOrderItemsQueryHandler : IRequestHandler<GetAllDealerOrderItemsQuery, Response<List<DealerOrderItemDTO>>>
+    {
+        private readonly IQueryRepository<DealerOrderItem> _repository;
+        public GetAllDealerOrderItemsQueryHandler(IQueryRepository<DealerOrderItem> repository)
+        {
+            _repository = repository;
+        }
+        public async Task<Response<List<DealerOrderItemDTO>>> Handle(GetAllDealerOrderItemsQuery request, CancellationToken cancellationToken)
+        {
+            var all = await _repository.GetAllAsync();
+            var paged = all.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize).ToList();
+            var result = paged.Select(d => new DealerOrderItemDTO
+            {
+                OrderItemID = d.OrderItemID,
+                DealerOrderID = d.DealerOrderID,
+                DealerProductID = d.DealerProductID,
+                Product_LnCode = d.Product_LnCode,
+                ProductDescription = d.ProductDescription,
+                Quantity = d.Quantity
+            }).ToList();
+            return new Response<List<DealerOrderItemDTO>> { Success = true, Data = result, Message = "Dealer order items retrieved successfully." };
+        }
+    }
+}

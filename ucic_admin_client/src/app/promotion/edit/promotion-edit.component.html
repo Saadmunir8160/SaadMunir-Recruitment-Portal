@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Edit Promotion</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="promotionForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="code" class="form-label">Promotion Code *</label>
+                  <input type="text" class="form-control" id="code" formControlName="code" placeholder="Enter promotion code" [ngClass]="{'is-invalid': promotionForm.get('code')?.invalid && promotionForm.get('code')?.touched}">
+                  <div class="invalid-feedback" *ngIf="promotionForm.get('code')?.errors?.['required']">Promotion code is required</div>
+                  <div class="invalid-feedback" *ngIf="promotionForm.get('code')?.errors?.['maxlength']">Promotion code cannot exceed 50 characters</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="coverageAreaId" class="form-label">Coverage Area *</label>
+                  <select class="form-select" id="coverageAreaId" formControlName="coverageAreaId" [ngClass]="{'is-invalid': promotionForm.get('coverageAreaId')?.invalid && promotionForm.get('coverageAreaId')?.touched}">
+                    <option value="">Select Coverage Area</option>
+                    <option *ngFor="let area of coverageAreas" [value]="area.coverageAreaId">{{area.name}}</option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="promotionForm.get('coverageAreaId')?.errors?.['required']">Coverage area is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="discountPercentage" class="form-label">Discount Percentage *</label>
+                  <input type="number" class="form-control" id="discountPercentage" formControlName="discountPercentage" placeholder="Enter discount percentage" [ngClass]="{'is-invalid': promotionForm.get('discountPercentage')?.invalid && promotionForm.get('discountPercentage')?.touched}">
+                  <div class="invalid-feedback" *ngIf="promotionForm.get('discountPercentage')?.errors?.['required']">Discount percentage is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="validFrom" class="form-label">Valid From *</label>
+                  <input type="datetime-local" class="form-control" id="validFrom" formControlName="validFrom" [ngClass]="{'is-invalid': promotionForm.get('validFrom')?.invalid && promotionForm.get('validFrom')?.touched}">
+                  <div class="invalid-feedback" *ngIf="promotionForm.get('validFrom')?.errors?.['required']">Valid from date is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="validTo" class="form-label">Valid To *</label>
+                  <input type="datetime-local" class="form-control" id="validTo" formControlName="validTo" [ngClass]="{'is-invalid': promotionForm.get('validTo')?.invalid && promotionForm.get('validTo')?.touched}">
+                  <div class="invalid-feedback" *ngIf="promotionForm.get('validTo')?.errors?.['required']">Valid to date is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary" [disabled]="promotionForm.invalid || loading">
+                  <iconify-icon icon="solar:pen-2-bold-duotone" class="me-1"></iconify-icon>
+                  {{ loading ? 'Saving...' : 'Save Changes' }}
+                </button>
+                <button type="button" class="btn btn-light ms-2" (click)="onCancel()" [disabled]="loading">
+                  <iconify-icon icon="solar:trash-bin-minimalistic-bold-duotone" class="me-1"></iconify-icon>
+                  Back
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

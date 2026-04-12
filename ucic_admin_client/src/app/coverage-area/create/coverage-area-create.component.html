@@ -1,0 +1,50 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Create Coverage Area</h4>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="coverageAreaForm" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter coverage area name">
+                                    <div class="invalid-feedback" *ngIf="coverageAreaForm.get('name')?.hasError('required')">
+                                        Name is required
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="coverageAreaForm.get('name')?.hasError('maxlength')">
+                                        Name cannot exceed 100 characters
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="arabicName" class="form-label">Arabic Name</label>
+                                    <input type="text" class="form-control" id="arabicName" formControlName="arabicName" placeholder="Enter coverage area name in Arabic">
+                                    <div class="invalid-feedback" *ngIf="coverageAreaForm.get('arabicName')?.hasError('maxlength')">
+                                        Arabic name cannot exceed 100 characters
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary" [disabled]="!coverageAreaForm.valid">
+                                    <iconify-icon icon="solar:check-circle-bold-duotone" class="me-1"></iconify-icon>
+                                    Create
+                                </button>
+                                <button type="button" class="btn btn-light ms-2" (click)="back()">
+                                    <iconify-icon icon="solar:arrow-left-bold-duotone" class="me-1"></iconify-icon>
+                                    Back
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

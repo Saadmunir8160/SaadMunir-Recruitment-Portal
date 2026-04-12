@@ -1,0 +1,180 @@
+<div class="products-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <i class="material-icons">inventory</i>
+        {{ 'DEALER.PRODUCTS.TITLE' | translate }}
+      </h1>
+      <p class="page-subtitle">{{ 'DEALER.PRODUCTS.SUBTITLE' | translate }}</p>
+    </div>
+  </div>
+
+  <!-- Filter Section -->
+  <div class="filter-section">
+    <div class="filter-controls">
+      <div class="search-box">
+        <i class="material-icons search-icon">search</i>
+        <input type="text" 
+               class="search-input"
+               [(ngModel)]="searchTerm"
+               (ngModelChange)="onSearchChange()"
+               [placeholder]="'DEALER.PRODUCTS.SEARCH.PLACEHOLDER' | translate">
+      </div>
+      
+      <select class="status-filter" 
+              [(ngModel)]="selectedCategory"
+              (ngModelChange)="onCategoryChange()">
+        <option value="">{{ 'DEALER.PRODUCTS.FILTERS.ALL_CATEGORIES' | translate }}</option>
+        <option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </option>
+      </select>
+      
+      <select class="status-filter" 
+              [(ngModel)]="sortBy"
+              (ngModelChange)="onSortChange()">
+        <option value="name">{{ 'DEALER.PRODUCTS.FILTERS.SORT_NAME' | translate }}</option>
+        <option value="newest">{{ 'DEALER.PRODUCTS.FILTERS.SORT_NEWEST' | translate }}</option>
+      </select>
+      
+      <div class="page-size-control">
+        <label for="pageSize">{{ 'DEALER.PRODUCTS.FILTERS.SHOW' | translate }}:</label>
+        <select id="pageSize" 
+                class="page-size-select"
+                [(ngModel)]="pageSize" 
+                (ngModelChange)="onPageSizeChange($event)">
+          <option *ngFor="let size of pageSizeOptions" [ngValue]="size === 'All' ? 0 : size">{{ size }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Info -->
+  <div class="results-info">
+    <span class="results-count">
+      {{ 'DEALER.PRODUCTS.RESULTS.SHOWING' | translate }} {{ paginatedProducts.length }} {{ 'DEALER.PRODUCTS.RESULTS.OF' | translate }} {{ totalCount }} {{ 'DEALER.PRODUCTS.RESULTS.PRODUCTS' | translate }}
+      <span *ngIf="currentPage > 1 || totalPages > 1"> ({{ 'DEALER.PRODUCTS.RESULTS.PAGE' | translate }} {{ currentPage }} {{ 'DEALER.PRODUCTS.RESULTS.OF' | translate }} {{ totalPages }})</span>
+    </span>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">{{ 'DEALER.PRODUCTS.LOADING.LOADING' | translate }}</span>
+    </div>
+    <p>{{ 'DEALER.PRODUCTS.LOADING.MESSAGE' | translate }}</p>
+  </div>
+
+  <!-- Products Table -->
+  <div class="products-table-container" *ngIf="!loading">
+    <div class="table-responsive">
+      <table class="table table-hover products-table">
+        <thead class="table-dark">
+          <tr>
+            <th width="50">{{ 'DEALER.PRODUCTS.TABLE.ID' | translate }}</th>
+            <th width="200">{{ 'DEALER.PRODUCTS.TABLE.PRODUCT_NAME' | translate }}</th>
+            <th width="120">{{ 'DEALER.PRODUCTS.TABLE.PRODUCT_CODE' | translate }}</th>
+            <th width="120">{{ 'DEALER.PRODUCTS.TABLE.LN_CODE' | translate }}</th>
+            <th width="300">{{ 'DEALER.PRODUCTS.TABLE.DESCRIPTION' | translate }}</th>
+            <th width="80">{{ 'DEALER.PRODUCTS.TABLE.UNIT' | translate }}</th>
+            <th width="80">{{ 'DEALER.PRODUCTS.TABLE.STATUS' | translate }}</th>
+            <th width="120">{{ 'DEALER.PRODUCTS.TABLE.CREATED_DATE' | translate }}</th>
+            <th width="100">{{ 'DEALER.PRODUCTS.TABLE.ACTIONS' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of paginatedProducts">
+            <td>{{ product.dealerProductID }}</td>
+            
+            <!-- Product Name -->
+            <td>
+              <div class="product-name-cell">
+                <h6 class="product-name mb-0">{{ product.productName }}</h6>
+              </div>
+            </td>
+            
+            <!-- Product Code -->
+            <td>
+              <span class="product-code">{{ product.erpItemCode || product.ERPItemCode || product.productCode || 'N/A' }}</span>
+            </td>
+            
+            <!-- LN Code -->
+            <td>
+              <span class="ln-code">{{ product.itemDescription || product.ItemDescription || product.product_LnCode || 'N/A' }}</span>
+            </td>
+            
+            <!-- Description -->
+            <td>
+              <div class="description-cell">
+                <p class="product-description mb-0" *ngIf="product.description">
+                  {{ product.description }}
+                </p>
+                <span class="text-muted" *ngIf="!product.description">{{ 'DEALER.PRODUCTS.TABLE.NO_DESCRIPTION' | translate }}</span>
+              </div>
+            </td>
+            
+            <!-- Unit -->
+            <td>
+              <span class="product-unit" *ngIf="product.unit">
+                <i class="material-icons small">scale</i>
+                {{ product.unit }}
+              </span>
+              <span class="text-muted" *ngIf="!product.unit">N/A</span>
+            </td>
+            
+            <!-- Status -->
+            <td>
+              <span class="badge" 
+                    [class]="product.isActive ? 'bg-success' : 'bg-secondary'">
+                {{ product.isActive ? ('DEALER.PRODUCTS.TABLE.ACTIVE' | translate) : ('DEALER.PRODUCTS.TABLE.INACTIVE' | translate) }}
+              </span>
+            </td>
+            
+            <!-- Created Date -->
+            <td>
+              <small class="text-muted" *ngIf="product.createdDate">
+                {{ product.createdDate | date:'short' }}
+              </small>
+              <span class="text-muted" *ngIf="!product.createdDate">N/A</span>
+            </td>
+            
+            <!-- Actions -->
+            <td>
+              <div class="action-buttons">
+                <button class="btn btn-primary btn-sm" 
+                        (click)="viewProductDetails(product.dealerProductID)"
+                        [title]="'DEALER.PRODUCTS.TABLE.VIEW_DETAILS' | translate">
+                  <i class="material-icons">visibility</i>
+                  {{ 'DEALER.PRODUCTS.TABLE.DETAILS' | translate }}
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-section" *ngIf="!loading && totalPages > 1">
+    <app-pagination 
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      [hasPreviousPage]="currentPage > 1"
+      [hasNextPage]="currentPage < totalPages"
+      [pageSize]="pageSize"
+      [totalCount]="totalCount"
+      (pageChange)="goToPage($event)">
+    </app-pagination>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && filteredProducts.length === 0">
+    <i class="material-icons">search_off</i>
+    <h3>{{ 'DEALER.PRODUCTS.EMPTY_STATE.TITLE' | translate }}</h3>
+    <p>{{ 'DEALER.PRODUCTS.EMPTY_STATE.MESSAGE' | translate }}</p>
+    <button class="btn btn-primary" (click)="clearFilters()">
+      {{ 'DEALER.PRODUCTS.EMPTY_STATE.SHOW_ALL' | translate }}
+    </button>
+  </div>
+</div>

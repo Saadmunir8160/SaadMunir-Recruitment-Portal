@@ -1,0 +1,1069 @@
+{
+  "DEALER": {
+    "TITLE": "UCIC Customer Portal",
+    "NAVIGATION": {
+      "DASHBOARD": "Dashboard",
+      "PRODUCTS": "Products",
+      "ORDERS": "Orders",
+      "MY_ORDERS": "My Orders",
+      "DELIVERY_ADDRESSES": "Delivery Addresses",
+      "DRIVERS": "Drivers",
+      "VEHICLES": "Vehicles",
+      "PROFILE": "My Profile",
+      "SUPPORT": "Support",
+      "LOGOUT": "Logout"
+    },
+    "DASHBOARD": {
+      "WELCOME_TITLE": "Welcome to UCIC Customer Portal",
+      "WELCOME_SUBTITLE": "Manage your cement orders and track deliveries",
+      "NEXT_DELIVERY": "Next Delivery",
+      "METRICS": {
+        "TOTAL_ORDERS": "Total Orders",
+        "PENDING_ORDERS": "Pending Orders",
+        "LAST_ORDER_VALUE": "Available Credit",
+        "MONTHLY_SPENDING": "Monthly Spending",
+        "REMAINING_TONS": "Remaining Tons",
+        "REMAINING_BAGS": "Remaining Bags",
+        "TOTAL_PRODUCTS_ORDERED": "Total Products Ordered",
+        "YEARLY_SPENDING": "Yearly Spending",
+        "AVERAGE_ORDER_VALUE": "Average Order Value",
+        "AVERAGE_DELIVERY_TIME": "Avg. Delivery Time"
+      },
+      "TRENDS": {
+        "THIS_MONTH": "+2 this month",
+        "IN_PROGRESS": "In progress",
+        "THIS_MONTH_LABEL": "This month",
+        "USED": "used",
+        "DAYS": "days"
+      },
+      "SECTIONS": {
+        "FAVORITE_PRODUCTS": "Your Favorite Products",
+        "RECENT_ORDERS": "Recent Orders",
+        "QUICK_ACTIONS": "Quick Actions"
+      },
+      "TABLE": {
+        "ORDER": "Order",
+        "CUSTOMER_ORDER": "Coupon",
+        "ERP_ORDER": "ERP Order",
+        "DATE": "Date",
+        "STATUS": "Status",
+        "DELIVERY_AREA": "Delivery Area",
+        "DRIVER": "Driver",
+        "VEHICLE": "Vehicle",
+        "ITEMS": "Items",
+        "TOTAL": "Total",
+        "BAGS": "bags",
+        "VIEW_ALL_ORDERS": "View All Orders",
+        "NO_RECENT_ORDERS": "No recent orders found"
+      },
+      "QUICK_ACTIONS": {
+        "BROWSE_PRODUCTS": "Browse Products",
+        "BROWSE_PRODUCTS_DESC": "Explore our cement catalog",
+        "VIEW_CART": "View Cart",
+        "VIEW_CART_DESC": "Review items in your cart",
+        "ORDER_HISTORY": "Order History",
+        "ORDER_HISTORY_DESC": "View past orders",
+        "CONTACT_SUPPORT": "Contact Support",
+        "CONTACT_SUPPORT_DESC": "Get help from our team"
+      },
+      "CART_STATUS": {
+        "ITEMS_IN_CART": "You have items in your cart",
+        "ITEMS_READY": "item(s) ready for checkout",
+        "VIEW_CART": "View Cart",
+        "CHECKOUT": "Checkout"
+      },
+      "SUPPORT": {
+        "NEED_HELP": "Need Help?",
+        "SUPPORT_MESSAGE": "Our support team is ready to assist you.",
+        "CONTACT_SUPPORT": "Contact Support",
+        "BUSINESS_HOURS": "Monday - Friday: 8:00 AM - 6:00 PM"
+      },
+      "STATUS": {
+        "PENDING": "PENDING",
+        "IN_PROCESS": "IN PROCESS",
+        "DELIVERED": "DELIVERED"
+      }
+    },
+    "PRODUCTS": {
+      "TITLE": "Products Catalog",
+      "SUBTITLE": "Browse available customer products",
+      "SEARCH": {
+        "LABEL": "Search Products",
+        "PLACEHOLDER": "Search by name, code, or description..."
+      },
+      "FILTERS": {
+        "CATEGORY": "Category",
+        "ALL_CATEGORIES": "All Categories",
+        "SORT_BY": "Sort By",
+        "SORT_NAME": "Name",
+        "SORT_NEWEST": "Newest",
+        "SHOW": "Show",
+        "CLEAR": "Clear"
+      },
+      "RESULTS": {
+        "SHOWING": "Showing",
+        "OF": "of",
+        "PRODUCTS": "products",
+        "PAGE": "Page"
+      },
+      "TABLE": {
+        "ID": "ID",
+        "PRODUCT_NAME": "Product Name",
+        "PRODUCT_CODE": "Product Code",
+        "LN_CODE": "LN Code",
+        "DESCRIPTION": "Description",
+        "UNIT": "Unit",
+        "STATUS": "Status",
+        "CREATED_DATE": "Created Date",
+        "ACTIONS": "Actions",
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive",
+        "NO_DESCRIPTION": "No description available",
+        "DETAILS": "Details",
+        "VIEW_DETAILS": "View Details"
+      },
+      "EMPTY_STATE": {
+        "TITLE": "No products found",
+        "MESSAGE": "Try adjusting your search criteria or clear filters to see all products.",
+        "SHOW_ALL": "Show All Products"
+      },
+      "LOADING": {
+        "MESSAGE": "Loading products...",
+        "LOADING": "Loading..."
+      },
+      "MEASUREMENT": {
+        "TONS": "tons",
+        "BAGS": "bags",
+        "KG": "kg"
+      }
+    },
+    "ORDER_HISTORY": {
+      "TITLE": "Order Overview",
+      "SUBTITLE": "View and track your past orders",
+      "NEW_ORDER": "New Order",
+      "SEARCH": {
+        "PLACEHOLDER": "Search by coupon number or products..."
+      },
+      "FILTERS": {
+        "ALL_STATUS": "All Status",
+        "PENDING": "Pending",
+        "IN_PROCESS": "In Process",
+        "MODIFIED": "Modified",
+        "CANCELED": "Canceled",
+        "BLOCKED": "Blocked",
+        "LOADING": "Loading",
+        "DELIVERED": "Delivered",
+        "INVOICED": "Invoiced",
+        "CLOSED": "Closed",
+        "PROCESSING": "Processing", 
+        "SHIPPED": "Shipped",
+        "CANCELLED": "Cancelled",
+        "ALL_TIME": "All Time",
+        "LAST_7_DAYS": "Last 7 Days",
+        "LAST_30_DAYS": "Last 30 Days",
+        "LAST_3_MONTHS": "Last 3 Months",
+        "LAST_YEAR": "Last Year"
+      },
+      "PAGINATION": {
+        "SHOW": "Show",
+        "PER_PAGE": "per page",
+        "SHOWING": "Showing",
+        "TO": "to",
+        "OF": "of",
+        "ORDERS": "orders"
+      },
+      "LOADING": {
+        "LOADING": "Loading...",
+        "MESSAGE": "Loading your order history..."
+      },
+      "ERROR": {
+        "TITLE": "Error Loading Orders",
+        "RETRY": "Retry"
+      },
+      "TABLE": {
+        "CUSTOMER_ORDER": "Coupon",
+        "LN_ORDER": "ERP Order",
+        "DATE": "Date",
+        "ITEMS": "Items",
+        "STATUS": "Status",
+        "ADDRESS": "Delivery Area",
+        "DRIVER": "Driver",
+        "ACTIONS": "Actions",
+        "VEHICLE": "Vehicle"
+      },
+      "ORDER_PREFIX": "Order #",
+      "ITEMS_TEXT": "items",
+      "STATUS": {
+        "PENDING": "Pending",
+        "IN_PROCESS": "In Process",
+        "MODIFIED": "Modified",
+        "CANCELED": "Canceled",
+        "BLOCKED": "Blocked",
+        "LOADING": "Loading",
+        "DELIVERED": "Delivered",
+        "INVOICED": "Invoiced",
+        "CLOSED": "Closed",
+        "PROCESSING": "Processing",
+        "SHIPPED": "Shipped",
+        "CANCELLED": "Cancelled"
+      },
+      "ACTIONS": {
+        "VIEW_DETAILS": "View Details",
+        "DOWNLOAD_PDF": "Loading Report",
+        "HIDE_ITEMS": "Hide Items",
+        "SHOW_ITEMS": "Show Items",
+        "REORDER": "Reorder",
+        "DELIVERY_NOTE": "Delivery Note"
+      },
+      "ITEM_DETAILS": {
+        "ORDER_ITEMS": "Order Items",
+        "QTY": "Qty",
+        "SPECIAL_INSTRUCTIONS": "Special Instructions",
+        "TRACKING": "Tracking"
+      },
+      "EMPTY_STATE": {
+        "TITLE": "No Orders Found",
+        "FILTERED_MESSAGE": "Try adjusting your search criteria or filters.",
+        "NO_ORDERS_MESSAGE": "You haven't placed any orders yet.",
+        "START_SHOPPING": "Create New Order"
+      },
+      "STATS": {
+        "TOTAL_ORDERS": "Total Orders",
+        "DELIVERED": "Delivered"
+      }
+    },
+    "DRIVERS": {
+      "TITLE": "Drivers Management",
+      "SUBTITLE": "Manage your delivery drivers",
+      "ADD_DRIVER": "Add Driver",
+      "SEARCH": {
+        "PLACEHOLDER": "Search drivers..."
+      },
+      "FILTERS": {
+        "ALL_STATUS": "All Status",
+        "ACTIVE": "Active", 
+        "INACTIVE": "Inactive"
+      },
+      "PAGINATION": {
+        "SHOW": "Show",
+        "ALL": "All"
+      },
+      "LOADING": {
+        "MESSAGE": "Loading drivers..."
+      },
+      "EMPTY_STATE": {
+        "NO_DRIVERS_TITLE": "No Drivers Found",
+        "NO_DRIVERS_MESSAGE": "Get started by adding your first driver",
+        "ADD_FIRST_DRIVER": "Add First Driver",
+        "NO_MATCH_TITLE": "No Matching Drivers",
+        "NO_MATCH_MESSAGE": "Try adjusting your search criteria"
+      },
+      "TABLE": {
+        "NAME": "Name",
+        "USERNAME": "Username",
+        "PHONE": "Phone",
+        "EMAIL": "Email",
+        "LICENSE_ID": "License ID",
+        "IQAMA_NUMBER": "Iqama Number",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "STATUS": {
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive"
+      },
+      "ACTIONS": {
+        "EDIT": "Edit Driver",
+        "DEACTIVATE": "Deactivate Driver",
+        "ACTIVATE": "Activate Driver", 
+        "DELETE": "Delete Driver"
+      },
+      "DELETE_MODAL": {
+        "TITLE": "Confirm Delete",
+        "MESSAGE": "Are you sure you want to delete driver",
+        "WARNING": "This action cannot be undone.",
+        "CANCEL": "Cancel",
+        "DELETE": "Delete"
+      },
+      "EDIT": {
+        "TITLE": "Edit Driver",
+        "SUBTITLE": "Update editable driver information (Iqama Number, License Number, Status)",
+        "BACK_TO_DRIVERS": "Back to Drivers",
+        "DRIVER_INFORMATION": "Driver Information",
+        "FORM": {
+          "FULL_NAME": "Full Name",
+          "EMAIL": "Email",
+          "PHONE_NUMBER": "Phone Number",
+          "IQAMA_NUMBER": "Iqama Number",
+          "LICENSE_NUMBER": "License Number",
+          "STATUS": "Status",
+          "PLACEHOLDERS": {
+            "FULL_NAME": "Enter full name",
+            "EMAIL": "Enter email address",
+            "PHONE_NUMBER": "Enter phone number",
+            "IQAMA_NUMBER": "Enter Iqama number",
+            "LICENSE_NUMBER": "Enter license number"
+          },
+          "STATUS_OPTIONS": {
+            "ACTIVE": "Active",
+            "INACTIVE": "Inactive"
+          },
+          "ERRORS": {
+            "FULL_NAME_REQUIRED": "Full name is required",
+            "EMAIL_REQUIRED": "Email is required",
+            "EMAIL_INVALID": "Please enter a valid email",
+            "PHONE_REQUIRED": "Phone number is required"
+          },
+          "CANCEL": "Cancel",
+          "UPDATE_DRIVER": "Update Driver",
+          "UPDATING": "Updating..."
+        },
+        "LOADING": {
+          "MESSAGE": "Loading driver information..."
+        }
+      },
+      "CREATE": {
+        "TITLE": "Add New Driver",
+        "SUBTITLE": "Add a new driver to your fleet",
+        "BACK_TO_DRIVERS": "Back to Drivers",
+        "USER_INFORMATION": "User Information",
+        "DRIVER_INFORMATION": "Driver Information",
+        "FORM": {
+          "FULL_NAME": "Full Name",
+          "USERNAME": "Username",
+          "EMAIL": "Email",
+          "PHONE_NUMBER": "Phone Number",
+          "PASSWORD": "Password",
+          "CONFIRM_PASSWORD": "Confirm Password",
+          "IQAMA_NUMBER": "Iqama Number",
+          "LICENSE_NUMBER": "License Number",
+          "PLACEHOLDERS": {
+            "FULL_NAME": "Enter full name",
+            "USERNAME": "Enter username",
+            "EMAIL": "Enter email address",
+            "PHONE_NUMBER": "Enter phone number",
+            "PASSWORD": "Enter password",
+            "CONFIRM_PASSWORD": "Confirm password",
+            "IQAMA_NUMBER": "Enter Iqama number",
+            "LICENSE_NUMBER": "Enter license number"
+          },
+          "ERRORS": {
+            "FULL_NAME_REQUIRED": "Full name is required",
+            "USERNAME_REQUIRED": "Username is required",
+            "EMAIL_REQUIRED": "Email is required",
+            "EMAIL_INVALID": "Please enter a valid email",
+            "PHONE_REQUIRED": "Phone number is required",
+            "PASSWORD_REQUIRED": "Password is required",
+            "PASSWORD_MIN_LENGTH": "Password must be at least 6 characters",
+            "CONFIRM_PASSWORD_REQUIRED": "Password confirmation is required",
+            "PASSWORD_MISMATCH": "Passwords do not match"
+          },
+          "CANCEL": "Cancel",
+          "ADD_DRIVER": "Add Driver",
+          "ADDING": "Adding..."
+        },
+        "SUCCESS_MESSAGE": "Driver created successfully!",
+        "ERROR_MESSAGE": "Failed to create driver. Please try again."
+      }
+    },
+    "VEHICLES": {
+      "TITLE": "Vehicles Management",
+      "SUBTITLE": "Manage your delivery vehicles",
+      "ADD_VEHICLE": "Add Vehicle",
+      "SEARCH": {
+        "PLACEHOLDER": "Search vehicles..."
+      },
+      "FILTERS": {
+        "ALL_STATUS": "All Status",
+        "ACTIVE": "Active", 
+        "INACTIVE": "Inactive",
+        "ALL_TYPES": "All Types",
+        "TRUCK": "Truck",
+        "VAN": "Van",
+        "PICKUP": "Pickup",
+        "TRAILER": "Trailer"
+      },
+      "PAGINATION": {
+        "SHOW": "Show",
+        "ALL": "All"
+      },
+      "LOADING": {
+        "MESSAGE": "Loading vehicles..."
+      },
+      "EMPTY_STATE": {
+        "NO_VEHICLES_TITLE": "No Vehicles Found",
+        "NO_VEHICLES_MESSAGE": "Get started by adding your first vehicle",
+        "ADD_FIRST_VEHICLE": "Add First Vehicle",
+        "NO_MATCH_TITLE": "No Matching Vehicles",
+        "NO_MATCH_MESSAGE": "Try adjusting your search criteria"
+      },
+      "TABLE": {
+        "PLATE_NUMBER": "Plate Number",
+        "TYPE": "Type",
+        "CAPACITY": "Capacity",
+        "REGISTRATION_DATE": "Registration Date",
+        "REGISTRATION_EXPIRY": "Registration Expiry",
+        "INSURANCE_EXPIRY": "Insurance Expiry",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "STATUS": {
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive"
+      },
+      "TYPES": {
+        "TRUCK": "Truck",
+        "VAN": "Van",
+        "PICKUP": "Pickup",
+        "TRAILER": "Trailer"
+      },
+      "ACTIONS": {
+        "VIEW": "View Vehicle",
+        "EDIT": "Edit Vehicle",
+        "DEACTIVATE": "Deactivate Vehicle",
+        "ACTIVATE": "Activate Vehicle", 
+        "DELETE": "Delete Vehicle"
+      },
+      "DELETE_MODAL": {
+        "TITLE": "Confirm Delete",
+        "MESSAGE": "Are you sure you want to delete vehicle",
+        "WARNING": "This action cannot be undone.",
+        "CANCEL": "Cancel",
+        "DELETE": "Delete"
+      },
+      "CREATE": {
+        "TITLE": "Add New Vehicle",
+        "SUBTITLE": "Add a new vehicle to your fleet",
+        "BACK_TO_VEHICLES": "Back to Vehicles",
+        "BASIC_INFORMATION": "Basic Information",
+        "IMPORTANT_DATES": "Important Dates",
+        "ADDITIONAL_INFORMATION": "Additional Information",
+        "FORM": {
+          "PLATE_NUMBER": "Plate Number",
+          "VEHICLE_TYPE": "Vehicle Type",
+          "CAPACITY": "Capacity (tons)",
+          "REGISTRATION_DATE": "Registration Date",
+          "REGISTRATION_EXPIRY_DATE": "Registration Expiry Date",
+          "INSURANCE_EXPIRY_DATE": "Insurance Expiry Date",
+          "LICENSE_ID": "License ID",
+          "LN_ID": "LN_ID",
+          "REGISTRATION_NUMBER": "Registration Number",
+          "VEHICLE_IS_ACTIVE": "Vehicle is active",
+          "SELECT_VEHICLE_TYPE": "Select vehicle type",
+          "TYPES": {
+            "TRUCK": "Truck",
+            "VAN": "Van",
+            "PICKUP": "Pickup",
+            "TRAILER": "Trailer"
+          },
+          "PLACEHOLDERS": {
+            "PLATE_NUMBER": "e.g., ABC-1234",
+            "CAPACITY": "e.g., 5.5",
+            "LICENSE_ID": "Optional license identifier",
+            "LN_ID": "Enter LN_ID",
+            "REGISTRATION_NUMBER": "Optional registration number"
+          },
+          "ERRORS": {
+            "PLATE_NUMBER_REQUIRED": "Plate number is required",
+            "PLATE_NUMBER_MAX_LENGTH": "Plate number cannot exceed 20 characters",
+            "VEHICLE_TYPE_REQUIRED": "Vehicle type is required",
+            "CAPACITY_REQUIRED": "Capacity is required",
+            "CAPACITY_MIN": "Capacity must be at least 0.1 tons",
+            "CAPACITY_MAX": "Capacity cannot exceed 100 tons",
+            "REGISTRATION_DATE_REQUIRED": "Registration date is required",
+            "REGISTRATION_EXPIRY_DATE_REQUIRED": "Registration expiry date is required",
+            "INSURANCE_EXPIRY_DATE_REQUIRED": "Insurance expiry date is required",
+            "LICENSE_ID_MAX_LENGTH": "License ID cannot exceed 50 characters",
+            "REGISTRATION_NUMBER_MAX_LENGTH": "Registration number cannot exceed 50 characters"
+          },
+          "CANCEL": "Cancel",
+          "CREATE_VEHICLE": "Create Vehicle",
+          "CREATING": "Creating..."
+        }
+      },
+      "EDIT": {
+        "TITLE": "Edit Vehicle",
+        "SUBTITLE": "Update vehicle information",
+        "BACK_TO_VEHICLES": "Back to Vehicles",
+        "LOADING": {
+          "MESSAGE": "Loading vehicle information..."
+        },
+        "FORM": {
+          "UPDATE_VEHICLE": "Update Vehicle",
+          "UPDATING": "Updating..."
+        }
+      }
+    },
+    "PROFILE": {
+      "TITLE": "Customer Profile",
+      "SUBTITLE": "View your customer information and manage account settings",
+      "DEALER_INFORMATION": "Customer Information",
+      "CHANGE_PASSWORD": "Change Password",
+      "BASIC_INFORMATION": "Basic Information",
+      "FINANCIAL_INFORMATION": "Financial Information",
+      "USER_ACCOUNT_DETAILS": "User Account Details",
+      "ACCOUNT_INFORMATION": "Account Information",
+      "DEALER_NAME": "Customer Name",
+      "DEALER_CODE": "Customer Code",
+      "LN_ID": "LN Code",
+      "STATUS": "Status",
+      "VERIFIED": "Verified",
+      "NOT_VERIFIED": "Not Verified",
+      "CREDIT_LIMIT": "Credit Limit",
+      "CURRENT_BALANCE": "Current Balance",
+      "AVAILABLE_CREDIT": "Available Credit",
+      "FULL_NAME": "Full Name",
+      "EMAIL": "Email",
+      "PHONE_NUMBER": "Phone Number",
+      "USERNAME": "Username",
+      "ROLES": "Roles",
+      "CREATED_AT": "Created At",
+      "LAST_UPDATED": "Last Updated",
+      "NOT_AVAILABLE": "N/A",
+      "LOADING": {
+        "MESSAGE": "Loading customer profile..."
+      },
+      "RETRY": "Retry",
+      "CHANGE_PASSWORD_DIALOG": {
+        "TITLE": "Change Password",
+        "CURRENT_PASSWORD": "Current Password",
+        "NEW_PASSWORD": "New Password",
+        "CONFIRM_PASSWORD": "Confirm New Password",
+        "PLACEHOLDERS": {
+          "CURRENT_PASSWORD": "Enter current password",
+          "NEW_PASSWORD": "Enter new password",
+          "CONFIRM_PASSWORD": "Confirm new password"
+        },
+        "ERRORS": {
+          "CURRENT_PASSWORD_REQUIRED": "Current password is required",
+          "NEW_PASSWORD_MIN_LENGTH": "Password must be at least 8 characters long",
+          "PASSWORDS_MISMATCH": "Passwords do not match"
+        },
+        "CANCEL": "Cancel",
+        "CHANGE_PASSWORD": "Change Password",
+        "CHANGING": "Changing..."
+      }
+    },
+    "SUPPORT": {
+      "TITLE": "Support Center",
+      "SUBTITLE": "Get help with your orders, products, and account",
+      "TABS": {
+        "CONTACT_SUPPORT": "Contact Support",
+        "MY_TICKETS": "My Tickets",
+        "FAQ": "FAQ"
+      },
+      "CONTACT": {
+        "CREATE_TICKET": "Create Support Ticket",
+        "CONTACT_INFORMATION": "Contact Information",
+        "PHONE_SUPPORT": "Phone Support",
+        "PHONE_HOURS": "Mon-Fri: 9:00 AM - 6:00 PM",
+        "EMAIL_SUPPORT": "Customer service email",
+        "EMAIL_RESPONSE": "Response within 24 hours",
+        "LIVE_CHAT": "Live Chat",
+        "CHAT_DESCRIPTION": "Chat with our support team",
+        "START_CHAT": "Start Chat",
+        "WHATSAPP": "WhatsApp",
+        "OPEN_WHATSAPP": "Open WhatsApp",
+        "QUICK_LINKS": "Quick Links",
+        "QUICK_LINKS_ITEMS": {
+          "TRACK_ORDER": "Track Order",
+          "DOWNLOAD_INVOICE": "Download Invoice",
+          "RETURN_EXCHANGE": "Return/Exchange",
+          "UPDATE_PROFILE": "Update Profile"
+        },
+        "FORM": {
+          "SUBJECT": "Subject",
+          "CATEGORY": "Category",
+          "SELECT_CATEGORY": "Select category",
+          "PRIORITY": "Priority",
+          "DESCRIPTION": "Description",
+          "ATTACHMENTS": "Attachments",
+          "UPLOAD_FILES": "Upload files (Max 5MB each)",
+          "SUBMIT_TICKET": "Submit Ticket",
+          "PLACEHOLDERS": {
+            "SUBJECT": "Brief description of your issue",
+            "DESCRIPTION": "Please provide detailed information about your issue..."
+          },
+          "CATEGORIES": {
+            "ORDER_ISSUES": "Order Issues",
+            "PRODUCT_INQUIRY": "Product Inquiry",
+            "PAYMENT": "Payment",
+            "SHIPPING": "Shipping",
+            "ACCOUNT": "Request for Quantity Statement",
+            "STATEMENT": "Request for Account Statement",
+            "TECHNICAL": "Technical",
+            "OTHER": "Other"
+          },
+          "PRIORITIES": {
+            "LOW": "Low",
+            "MEDIUM": "Medium",
+            "HIGH": "High",
+            "URGENT": "Urgent"
+          }
+        }
+      },
+      "TICKETS": {
+        "TITLE": "My Support Tickets",
+        "NEW_TICKET": "New Ticket",
+        "SEARCH_PLACEHOLDER": "Search tickets by subject, description, or ticket ID...",
+        "FILTERS": {
+          "STATUS": "Status",
+          "PRIORITY": "Priority", 
+          "CATEGORY": "Category",
+          "ALL_STATUS": "All Status",
+          "ALL_PRIORITY": "All Priority",
+          "ALL_CATEGORIES": "All Categories",
+          "CLEAR_FILTERS": "Clear Filters"
+        },
+        "TABLE": {
+          "TICKET_NUMBER": "Ticket #",
+          "SUBJECT": "Subject",
+          "CATEGORY": "Category",
+          "PRIORITY": "Priority",
+          "STATUS": "Status",
+          "CREATED": "Created",
+          "LAST_UPDATED": "Last Updated",
+          "ACTION": "Action",
+          "VIEW_DETAILS": "View Details"
+        },
+        "STATUS": {
+          "OPEN": "Open",
+          "IN_PROGRESS": "In Progress",
+          "RESOLVED": "Resolved",
+          "CLOSED": "Closed"
+        },
+        "EMPTY_STATES": {
+          "NO_TICKETS_TITLE": "No Support Tickets",
+          "NO_TICKETS_MESSAGE": "You haven't created any support tickets yet.",
+          "CREATE_FIRST_TICKET": "Create Your First Ticket",
+          "NO_RESULTS_TITLE": "No tickets found",
+          "NO_RESULTS_MESSAGE": "No tickets match your current search and filter criteria."
+        },
+        "PAGINATION": {
+          "SHOW": "Show",
+          "PER_PAGE": "per page",
+          "PREVIOUS": "Previous",
+          "NEXT": "Next",
+          "SHOWING": "Showing",
+          "TO": "to",
+          "OF": "of",
+          "TICKETS": "tickets"
+        }
+      },
+      "TICKET_DETAILS": {
+        "CLOSE": "Close details dialog",
+        "CATEGORY": "CATEGORY",
+        "CREATED": "CREATED",
+        "LAST_UPDATED": "LAST UPDATED",
+        "DESCRIPTION": "Description",
+        "CONVERSATION_HISTORY": "Conversation History",
+        "YOU_DEALER": "You (Dealer)",
+        "SUPPORT_TEAM": "Support Team",
+        "ATTACHMENTS": "Attachments",
+        "ADD_REPLY": "Add Reply",
+        "REPLY_PLACEHOLDER": "Type your reply here...",
+        "CANCEL": "Cancel",
+        "SEND_REPLY": "Send Reply",
+        "SENDING": "Sending...",
+        "TICKET_RESOLVED": "Ticket Resolved",
+        "TICKET_CLOSED": "Ticket Closed",
+        "RESOLVED_MESSAGE": "This ticket has been resolved by our support team. No further replies can be added.",
+        "CLOSED_MESSAGE": "This ticket has been closed. No further replies can be added."
+      },
+      "FAQ": {
+        "TITLE": "Frequently Asked Questions",
+        "SEARCH_PLACEHOLDER": "Search FAQs...",
+        "ALL_CATEGORIES": "All",
+        "QUESTIONS": {
+          "HOW_TO_TRACK_ORDER": "How can I track my order?",
+          "RETURN_POLICY": "What is your return policy?",
+          "PART_COMPATIBILITY": "How do I know if a part is compatible with my vehicle?",
+          "SHIPPING_CHARGES": "What are your shipping charges?",
+          "PAYMENT_METHODS": "What payment methods do you accept?",
+          "ORDER_CANCELLATION": "Can I cancel my order?"
+        },
+        "ANSWERS": {
+          "HOW_TO_TRACK_ORDER": "You can track your order by logging into your account and visiting the Order History section. Click on the \"Track\" button next to your order to see real-time updates.",
+          "RETURN_POLICY": "We accept returns within 30 days of delivery for unused items in original packaging. Please contact our support team to initiate a return.",
+          "PART_COMPATIBILITY": "Each product page includes a compatibility checker. Enter your vehicle details (make, model, year) to verify compatibility. You can also contact our technical team for assistance.",
+          "SHIPPING_CHARGES": "Shipping charges vary based on order value and location. Orders above ₹5000 qualify for free shipping. You can view exact charges during checkout.",
+          "PAYMENT_METHODS": "We accept credit cards, debit cards, net banking, UPI, and digital wallets. Cash on delivery is available for selected locations.",
+          "ORDER_CANCELLATION": "You can cancel your order within 24 hours of placing it if it hasn't been shipped yet. Go to Order History and click 'Cancel Order'."
+        }
+      }
+    },
+    "ADDRESSES": {
+      "TITLE": "Delivery Addresses Management",
+      "SUBTITLE": "Manage your delivery addresses for orders",
+      "ADD_NEW": "Add New Address",
+      "DELETE": "Delete Address",
+      "SET_DEFAULT": "Set as Default",
+      "SEARCH_PLACEHOLDER": "Search addresses...",
+      "SHOW": "Show",
+      "LOADING": {
+        "MESSAGE": "Loading addresses..."
+      },
+      "EMPTY_STATE": {
+        "TITLE": "No Addresses Found",
+        "MESSAGE": "Add your first address to get started with orders",
+        "ADD_FIRST": "Add First Address"
+      },
+      "NO_MATCH": {
+        "TITLE": "No Matching Addresses",
+        "MESSAGE": "Try adjusting your search criteria"
+      },
+      "FILTERS": {
+        "ALL_STATUS": "All Status",
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive"
+      },
+      "TABLE": {
+        "ADDRESS_LINE_1": "Address Line 1",
+        "ADDRESS_LINE_2": "Address Line 2",
+        "CITY": "City",
+        "STATE": "State",
+        "POSTAL_CODE": "Postal Code",
+        "COUNTRY": "Country",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "STATUS": {
+        "ACTIVE": "ACTIVE",
+        "INACTIVE": "INACTIVE"
+      },
+      "ACTIONS": {
+        "EDIT": "Edit Address",
+        "DELETE": "Delete Address"
+      },
+      "PAGINATION": {
+        "SHOWING": "Showing",
+        "TO": "to",
+        "OF": "of",
+        "RESULTS": "results"
+      },
+      "FORM": {
+        "ADDRESS_NAME": "Address Name",
+        "ADDRESS_LINE_1": "Address Line 1",
+        "ADDRESS_LINE_2": "Address Line 2",
+        "CITY": "City",
+        "STATE_PROVINCE": "State/Province",
+        "POSTAL_CODE": "Postal Code",
+        "COUNTRY": "Country",
+        "PHONE": "Phone Number",
+        "ACTIVE_ADDRESS": "Active Address",
+        "SAVE": "Save Address",
+        "CANCEL": "Cancel",
+        "CREATE_ADDRESS": "Create Address",
+        "CREATING": "Creating...",
+        "UPDATE_ADDRESS": "Update Address",
+        "UPDATING": "Updating...",
+        "PLACEHOLDERS": {
+          "STREET_ADDRESS": "Enter street address",
+          "APARTMENT_SUITE": "Apartment, suite, etc. (optional)",
+          "CITY": "Enter city",
+          "STATE_PROVINCE": "Enter state or province",
+          "POSTAL_CODE": "Enter postal code",
+          "COUNTRY": "Enter country"
+        },
+        "ERRORS": {
+          "ADDRESS_LINE_1_REQUIRED": "Address Line 1 is required",
+          "CITY_REQUIRED": "City is required",
+          "COUNTRY_REQUIRED": "Country is required"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Add New Address",
+        "SUBTITLE": "Create a new delivery address"
+      },
+      "EDIT": {
+        "TITLE": "Edit Address",
+        "SUBTITLE": "Update delivery address details",
+        "LOADING": "Loading address..."
+      }
+    },
+    "SHOP": {
+      "LOADING": {
+        "LOADING": "Loading..."
+      },
+      "PRODUCT_DETAILS": {
+        "LOADING": {
+          "MESSAGE": "Loading product details..."
+        },
+        "ERROR": {
+          "TITLE": "Product Not Found"
+        },
+        "PRODUCTS": "Products",
+        "BACK_TO_PRODUCTS": "Back to Products",
+        "PRODUCT_IMAGE": "Product Image",
+        "IMAGE_AVAILABLE_SOON": "Image will be available soon",
+        "CODE": "Code",
+        "LN": "LN",
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive",
+        "UNIT": "Unit",
+        "CREATED": "Created",
+        "MODIFIED": "Modified",
+        "NO_DESCRIPTION": "No description available for this product.",
+        "TABS": {
+          "DESCRIPTION": "Description",
+          "SPECIFICATIONS": "Specifications",
+          "PRODUCT_DESCRIPTION": "Product Description",
+          "PRODUCT_SPECIFICATIONS": "Product Specifications"
+        },
+        "SPECS": {
+          "UNIT_OF_MEASUREMENT": "Unit of Measurement",
+          "PRODUCT_CODE": "Product Code",
+          "LN_CODE": "LN Code",
+          "STATUS": "Status",
+          "CREATED_DATE": "Created Date",
+          "CREATED_BY": "Created By",
+          "LAST_MODIFIED": "Last Modified",
+          "MODIFIED_BY": "Modified By"
+        }
+      },
+      "CART": {
+        "TITLE": "Shopping Cart",
+        "SUBTITLE": "Review your selected items",
+        "ORDER_LINES": "Order Lines",
+        "ADD_PRODUCTS": "Add Products",
+        "CLEAR_CART": "Clear",
+        "ADD_ITEMS": "Add Items",
+        "CLEAR_CONFIRMATION": {
+          "TITLE": "Clear Cart?",
+          "MESSAGE": "Are you sure you want to remove all items from your cart? This action cannot be undone.",
+          "CANCEL": "Cancel",
+          "CONFIRM": "Clear Cart"
+        },
+        "EMPTY": {
+          "TITLE": "Your cart is empty",
+          "MESSAGE": "Add some products to get started!",
+          "BROWSE_PRODUCTS": "Browse Products"
+        },
+        "EMPTY_CART": {
+          "TITLE": "Your Cart is Empty",
+          "MESSAGE": "You haven't added any products to your cart yet.",
+          "HINT": "Visit Order screen to add products."
+        },
+        "TABLE": {
+          "PRODUCT": "Product",
+          "UNIT_PRICE": "Unit Price",
+          "QUANTITY": "Quantity",
+          "TOTAL": "Total",
+          "ACTIONS": "Actions",
+          "BAGS_PER_TRUCK": "Bags per Truck",
+          "TRUCKS": "Trucks",
+          "TONS": "Tons",
+          "REMOVE": "Remove"
+        },
+        "MOBILE": {
+          "NUMBER_OF_TRUCKS": "Number of Trucks",
+          "QUANTITY": "Quantity"
+        },
+        "SUMMARY": {
+          "TOTAL_ITEMS": "Total Items",
+          "TOTAL_BAGS": "Total Bags",
+          "TOTAL_TONS": "Total Tons",
+          "TRUCKS_NEEDED": "Trucks Needed (for bags)",
+          "PRODUCTS": "products",
+          "BAGS": "bags",
+          "TONS": "tons",
+          "TRUCKS": "trucks",
+          "SUBTOTAL": "Subtotal",
+          "TAX": "Tax",
+          "TOTAL": "Total",
+          "CONTINUE_SHOPPING": "Continue Shopping",
+          "PROCEED_CHECKOUT": "Proceed to Checkout"
+        }
+      },
+      "CHECKOUT": {
+        "TITLE": "Order Details",
+        "SUBTITLE": "Review your order and complete checkout",
+        "PAYMENT_INFO": "Payment Information",
+        "PLACE_ORDER": "Place Order",
+        "CONFIRM_ORDER": "Confirm Order",
+        "LOADING": {
+          "TITLE": "Loading Checkout Data",
+          "MESSAGE": "Please wait while we load your order information, daily limits, and available options...",
+          "DAILY_LIMITS": "Daily Limits",
+            "DELIVERY_ADDRESSES": "Delivery Addresses",
+            "DELIVERY_AREAS": "Loading delivery areas...",
+          "DRIVERS": "Drivers",
+          "VEHICLES": "Vehicles"
+        },
+        "DAILY_LIMIT": {
+          "TITLE": "Daily Order Limit",
+          "TONS_TITLE": "Daily Limits (Tons)",
+          "BAGS_TITLE": "Daily Limits (Bags)",
+          "TOTAL_LIMIT": "Total Limit",
+          "USED_TODAY": "Used Today",
+          "REMAINING": "Remaining",
+          "CURRENT_ORDER": "Current Order",
+          "TONS": "tons",
+          "BAGS": "bags",
+          "PRICING_NOTE": "Product pricing not implemented yet - orders will be processed with TBD pricing"
+        },
+        "ORDER_ITEMS": {
+          "TITLE": "Order Items",
+          "QTY": "Qty",
+          "UNIT": "Unit",
+          "AMOUNT": "Amount"
+        },
+        "ORDER_INFO": {
+          "TITLE": "Order Information",
+          "CUSTOMER_ORDER_NUMBER": "Coupon",
+          "OPTIONAL": "Optional",
+          "PLACEHOLDER": "Enter your custom order reference",
+          "AUTO_GENERATE_NOTE": "If left blank, a unique order number will be generated automatically."
+        },
+        "DELIVERY_ADDRESS": {
+          "TITLE": "Delivery Area"
+        },
+        "DELIVERY_AREA": {
+          "SELECT_AREA": "Select Area",
+          "SELECT_PLACEHOLDER": "Select delivery area..."
+        },
+        "DELIVERY_ASSIGNMENT": {
+          "TITLE": "Delivery Assignment",
+          "ASSIGN_DRIVER": "Assign Driver",
+          "NO_SPECIFIC_DRIVER": "No specific driver",
+          "ASSIGN_VEHICLE": "Assign Vehicle",
+          "NO_SPECIFIC_VEHICLE": "No specific vehicle",
+          "INFO_MESSAGE": "Delivery Assignment: You must either select a driver and vehicle from the dropdowns above, OR enter a transporter name below. If you select driver/vehicle, the transporter name becomes optional.",
+          "TRANSPORTER_NAME": "Transporter Name",
+          "TRANSPORTER_PLACEHOLDER": "Enter transporter company name if not using driver/vehicle",
+          "TRANSPORTER_REQUIRED": "Transporter name is required when driver and vehicle are not selected.",
+          "TRANSPORTER_NOTE": "Use this field if you want to specify an external transportation company instead of assigning a specific driver and vehicle."
+        },
+        "ADD_NEW": "Add New",
+        "ORDER_SUMMARY": {
+          "TITLE": "Order Summary",
+          "TOTAL_ITEMS": "Total Items",
+          "TOTAL_BAGS": "Total Bags",
+          "TOTAL_TONS": "Total Tons",
+          "ESTIMATED_TRUCKS": "Estimated Trucks",
+          "BACK_TO_CART": "Back",
+          "PLACE_ORDER": "Place Order",
+          "PLACING_ORDER": "Placing Order..."
+        },
+        "VALIDATION": {
+          "CART_EMPTY": "Cart is empty",
+          "SELECT_ADDRESS": "Please select a delivery address",
+          "SELECT_AREA": "Please select a delivery area",
+          "SELECT_DELIVERY_METHOD": "Please either select a driver and vehicle, or enter a transporter name",
+          "FILL_REQUIRED_FIELDS": "Please fill in all required fields",
+          "EXCEEDS_LIMITS": "Order exceeds daily limits",
+          "CHECK_ALL_FIELDS": "Please check all required fields and daily order limits",
+          "CUSTOMER_ORDER_REQUIRED":"Coupon is required"
+        },
+        "SUCCESS": {
+          "ORDER_PLACED": "Order placed successfully!"
+        },
+        "ERROR": {
+          "FAILED_TO_PLACE": "Failed to place order"
+        },
+        "UNKNOWN_DRIVER": "Unknown Driver"
+      },
+      "ADDRESS_SELECTOR": {
+        "LABEL": "Select Area",
+        "PLACEHOLDER": "Choose delivery area...",
+        "LOADING": "Loading addresses...",
+        "NO_MATCH": "No addresses found matching",
+        "NO_ADDRESSES": "No addresses available",
+        "DEFAULT": "Default",
+        "ADD_NEW": "Add New Address",
+        "CLEAR_SELECTION": "Clear Selection",
+        "DEFAULT_ADDRESS": "Default Address",
+        "ADD_NEW_TITLE": "Add New Address",
+        "SELECTED_ADDRESS": "Selected Delivery Address",
+        "CREATING": "Creating...",
+        "CREATE_ADDRESS": "Create Address",
+        "FORM": {
+          "ADDRESS_LINE_1_PLACEHOLDER": "e.g., 123 Main Street",
+          "ADDRESS_LINE_2_PLACEHOLDER": "Apartment, suite, unit, building, floor, etc.",
+          "SAUDI_ARABIA": "Saudi Arabia"
+        }
+      },
+      "PROGRESS": {
+        "TITLE": "Order Details",
+        "SUBTITLE": "Review and manage your cart items",
+        "STEPS": {
+          "ADD_ITEMS": "Add Items",
+          "CHECKOUT": "Checkout"
+        }
+      },
+      "PRODUCT_SEARCH_POPUP": {
+        "TITLE": "Please Select Item Code",
+        "SEARCH_PLACEHOLDER": "Search by product name, code, or LN code...",
+        "LOADING": "Loading products...",
+        "NO_RESULTS": "No products found",
+        "NO_RESULTS_SUBTITLE": "Try adjusting your search terms or category filter",
+        "TABLE": {
+          "PRODUCT_NAME": "Product Name",
+          "PRODUCT_CODE": "Product Code",
+          "LN_CODE": "LN Code",
+          "DESCRIPTION": "Description"
+        },
+        "CLICK_TO_ADD": "Click to add",
+        "TO_CART": "to cart",
+        "LOAD_MORE": "Load More Products",
+        "CANCEL": "Cancel",
+        "DONE": "Done"
+      },
+      "NAVIGATION": {
+        "PREVIOUS": "Previous",
+        "NEXT": "Next",
+        "ITEMS_IN_CART": "items in cart"
+      },
+      "NOTIFICATIONS": {
+        "PRODUCT_ADDED": "{{productName}} added to cart successfully!",
+        "ADD_FAILED": "Failed to add product to cart. Please try again."
+      }
+    }
+  },
+  "ADMIN": {
+    "DEALER_ORDERS": {
+      "DETAILS": {
+        "TITLE": "Dealer Order Details",
+        "LOADING": "Loading...",
+        "LOADING_MESSAGE": "Loading order details...",
+        "ORDER_INFO": "Order Information",
+        "PORTAL_ORDER_NUMBER": "Portal Order Number",
+        "LN_ORDER_NUMBER": "LN Order Number",
+        "CUSTOMER_ORDER_NUMBER": "Coupon",
+        "DEALER": "Dealer",
+        "TRANSPORTER": "Transporter",
+        "ORDER_DATE": "Order Date",
+        "CREATED_DATE": "Created Date",
+        "STATUS": "Status",
+        "NA": "N/A",
+        "UNKNOWN": "Unknown",
+        "ORDER_ITEMS": "Order Items",
+        "ITEM_ID": "Item ID",
+        "PRODUCT": "Product",
+        "QUANTITY": "Quantity",
+        "UNIT_PRICE": "Unit Price",
+        "TOTAL_PRICE": "Total Price",
+        "NOTES": "Notes",
+        "UNKNOWN_PRODUCT": "Unknown Product",
+        "NO_ITEMS": "No items in this order",
+        "TOTAL": "Total",
+        "ADDITIONAL_DETAILS": "Additional Details",
+        "DRIVER": "Driver",
+        "VEHICLE": "Vehicle",
+        "AREA": "Area",
+        "MODIFIED_DATE": "Modified Date",
+        "ACTIVE_STATUS": "Active Status",
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive",
+        "CLOSE": "Close",
+        "DOWNLOAD_PDF": "Download PDF",
+        "FIELD": "Field",
+        "VALUE": "Value",
+        "GENERATED_ON": "Generated on",
+        "AT": "at",
+        "PAGE": "Page",
+        "OF": "of"
+      }
+    }
+  }
+}

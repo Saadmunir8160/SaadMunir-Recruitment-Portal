@@ -1,0 +1,26 @@
+﻿.footer {
+  background: #1e293b;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.separator {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  &:hover { color: white; }
+}

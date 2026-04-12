@@ -1,0 +1,176 @@
+﻿<div class="page-container">
+  @if (loading) {
+    <div class="spinner-overlay">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  }
+
+  @if (!loading && application) {
+    <button mat-button (click)="goBack()" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+      Back to My Applications
+    </button>
+
+    <!-- Header Card -->
+    <mat-card class="header-card">
+      <mat-card-content>
+        <div class="header-row">
+          <div>
+            <h1>{{ application.vacancyTitle }}</h1>
+            <div class="header-meta">
+              <span class="meta-item">
+                <mat-icon>calendar_today</mat-icon>
+                Applied {{ application.applicationDate | date:'mediumDate' }}
+              </span>
+              @if (application.assignedRecruiterName) {
+                <span class="meta-item">
+                  <mat-icon>person</mat-icon>
+                  Recruiter: {{ application.assignedRecruiterName }}
+                </span>
+              }
+            </div>
+          </div>
+          <span class="status-badge" [ngClass]="getStatusClass(application.status)">
+            {{ getStatusLabel(application.status) }}
+          </span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="detail-grid">
+      <!-- Progress Timeline -->
+      <mat-card class="timeline-card">
+        <mat-card-content>
+          <h3><mat-icon>timeline</mat-icon> Application Progress</h3>
+          <div class="progress-steps">
+            @for (step of progressSteps; track step.label) {
+              <div class="step" [class.active]="step.active" [class.completed]="step.completed">
+                <div class="step-dot">
+                  @if (step.completed) {
+                    <mat-icon>check</mat-icon>
+                  }
+                </div>
+                <div class="step-info">
+                  <span class="step-label">{{ step.label }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- AI Match Result -->
+      @if (matchResult) {
+        <mat-card [class.match-card-success]="matchResult.isMatch" [class.match-card-fail]="!matchResult.isMatch">
+          <mat-card-content>
+            <h3>
+              <mat-icon>psychology</mat-icon>
+              AI Match Result
+            </h3>
+
+            <div class="overall-score" [class.match]="matchResult.isMatch" [class.no-match]="!matchResult.isMatch">
+              <div class="score-circle">{{ matchResult.overallScore | number:'1.0-0' }}%</div>
+              <div>
+                <span class="score-verdict">{{ matchResult.isMatch ? 'Matched' : 'Not Matched' }}</span>
+                @if (matchResult.matchExplanation) {
+                  <p class="score-explanation">{{ matchResult.matchExplanation }}</p>
+                }
+              </div>
+            </div>
+
+            <div class="score-breakdown">
+              @for (item of matchBreakdown; track item.label) {
+                <div class="score-item">
+                  <span class="score-label">{{ item.label }}</span>
+                  <mat-progress-bar [color]="getScoreColor(item.value)" mode="determinate" [value]="item.value"></mat-progress-bar>
+                  <span class="score-value">{{ item.value | number:'1.0-0' }}%</span>
+                </div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+
+      <!-- Interviews -->
+      @if (application.interviews && application.interviews.length > 0) {
+        <mat-card>
+          <mat-card-content>
+            <h3><mat-icon>event</mat-icon> Interviews</h3>
+            @for (interview of application.interviews; track interview.interviewId) {
+              <div class="interview-item">
+                <div class="interview-header">
+                  <span class="interview-type">{{ interview.interviewTypeName }}</span>
+                  <span class="interview-status" [ngClass]="'interview-' + interview.statusName?.toLowerCase()">
+                    {{ interview.statusName }}
+                  </span>
+                </div>
+                <div class="interview-details">
+                  <span class="detail-item">
+                    <mat-icon>calendar_today</mat-icon>
+                    {{ interview.scheduledDate | date:'medium' }}
+                  </span>
+                  <span class="detail-item">
+                    <mat-icon>videocam</mat-icon>
+                    {{ interview.interviewModeName }}
+                  </span>
+                  @if (interview.location) {
+                    <span class="detail-item">
+                      <mat-icon>location_on</mat-icon>
+                      {{ interview.location }}
+                    </span>
+                  }
+                  @if (interview.interviewerName) {
+                    <span class="detail-item">
+                      <mat-icon>person</mat-icon>
+                      {{ interview.interviewerName }}
+                    </span>
+                  }
+                </div>
+                @if (!interview.candidateConfirmed) {
+                  <div class="confirm-notice">
+                    <mat-icon>info</mat-icon>
+                    Awaiting your confirmation
+                  </div>
+                }
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+
+      <!-- Screening Tasks -->
+      @if (application.screeningTasks && application.screeningTasks.length > 0) {
+        <mat-card>
+          <mat-card-content>
+            <h3><mat-icon>fact_check</mat-icon> Screening Tasks</h3>
+            @for (task of application.screeningTasks; track task.screeningTaskId) {
+              <div class="task-item">
+                <div class="task-info">
+                  @if (task.taskDescription) {
+                    <span class="task-desc">{{ task.taskDescription }}</span>
+                  }
+                  <span class="task-status">{{ task.statusName }}</span>
+                </div>
+                @if (task.deadline) {
+                  <span class="task-deadline">
+                    <mat-icon>schedule</mat-icon>
+                    Due: {{ task.deadline | date:'mediumDate' }}
+                  </span>
+                }
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+
+    </div>
+  }
+
+  @if (!loading && !application) {
+    <div class="empty-state">
+      <mat-icon>error_outline</mat-icon>
+      <h3>Application not found</h3>
+      <a mat-raised-button color="primary" routerLink="/my-applications">Back to Applications</a>
+    </div>
+  }
+</div>

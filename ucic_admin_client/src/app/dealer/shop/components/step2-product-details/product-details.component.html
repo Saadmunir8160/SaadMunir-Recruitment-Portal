@@ -1,0 +1,226 @@
+<div>
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="loading-content">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">{{ 'DEALER.SHOP.LOADING.LOADING' | translate }}</span>
+      </div>
+      <p>{{ 'DEALER.SHOP.PRODUCT_DETAILS.LOADING.MESSAGE' | translate }}</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="!isLoading && error">
+    <div class="error-content">
+      <i class="material-icons">error_outline</i>
+      <h2>{{ 'DEALER.SHOP.PRODUCT_DETAILS.ERROR.TITLE' | translate }}</h2>
+      <p>{{ error }}</p>
+      <button class="btn btn-primary" (click)="goBack()">
+        <i class="material-icons">arrow_back</i>
+        {{ 'DEALER.SHOP.PRODUCT_DETAILS.BACK_TO_PRODUCTS' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Product Details -->
+  <div class="product-content" *ngIf="!isLoading && !error && product">
+    <!-- Header with Back Button -->
+    <div class="page-header">
+      <div class="breadcrumb-section">
+        <nav class="breadcrumb-nav">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a (click)="goBack()" class="breadcrumb-link">
+                <i class="material-icons">store</i>
+                {{ 'DEALER.SHOP.PRODUCT_DETAILS.PRODUCTS' | translate }}
+              </a>
+            </li>
+            <li class="breadcrumb-item active">{{ product.productName }}</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline-primary" (click)="goBack()">
+          <i class="material-icons">arrow_back</i>
+          {{ 'DEALER.SHOP.PRODUCT_DETAILS.BACK_TO_PRODUCTS' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Main Section -->
+    <div class="row">
+      <!-- Left Column: Product Image -->
+      <div class="col-md-6">
+        <div class="product-image-card">
+          <div class="image-container">
+            <div class="product-image-placeholder">
+              <i class="material-icons product-image-icon">inventory_2</i>
+              <span class="image-placeholder-text">{{ 'DEALER.SHOP.PRODUCT_DETAILS.PRODUCT_IMAGE' | translate }}</span>
+              <small class="text-muted">{{ 'DEALER.SHOP.PRODUCT_DETAILS.IMAGE_AVAILABLE_SOON' | translate }}</small>
+            </div>
+          </div>
+          <!-- Image gallery thumbnails placeholder (for future use) -->
+          <div class="image-thumbnails">
+            <div class="thumbnail-placeholder active">
+              <i class="material-icons">photo</i>
+            </div>
+            <div class="thumbnail-placeholder">
+              <i class="material-icons">photo</i>
+            </div>
+            <div class="thumbnail-placeholder">
+              <i class="material-icons">photo</i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Product Information -->
+      <div class="col-md-6">
+        <div class="product-info-card">
+          <div class="product-header">
+            <h1 class="product-title">{{ product.productName }}</h1>
+            <div class="product-meta">
+              <div class="product-codes">
+                <span class="product-code-badge" *ngIf="product.erpItemCode || product.ERPItemCode || product.productCode">
+                  <i class="material-icons">qr_code</i>
+                  {{ 'DEALER.SHOP.PRODUCT_DETAILS.CODE' | translate }}: {{ product.erpItemCode || product.ERPItemCode || product.productCode }}
+                </span>
+                <span class="product-ln-badge" *ngIf="product.itemDescription || product.ItemDescription || product.product_LnCode">
+                  <i class="material-icons">tag</i>
+                  {{ 'DEALER.SHOP.PRODUCT_DETAILS.LN' | translate }}: {{ product.itemDescription || product.ItemDescription || product.product_LnCode }}
+                </span>
+              </div>
+              <div class="product-status" *ngIf="product.isActive">
+                <span class="badge bg-success">
+                  <i class="material-icons">check_circle</i>
+                  {{ 'DEALER.SHOP.PRODUCT_DETAILS.ACTIVE' | translate }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Summary Details -->
+          <div class="product-summary">
+            <div class="summary-details">
+              <!-- <div class="detail-item">
+                <label>Product ID:</label>
+                <span>{{ product.dealerProductID }}</span>
+              </div> -->
+              
+              <div class="detail-item" *ngIf="product.unit">
+                <label>{{ 'DEALER.SHOP.PRODUCT_DETAILS.UNIT' | translate }}:</label>
+                <span class="unit-badge">
+                  <i class="material-icons">scale</i>
+                  {{ product.unit }}
+                </span>
+              </div>
+              
+              <!-- <div class="detail-item">
+                <label>Status:</label>
+                <span class="badge" [class]="product.isActive ? 'bg-success' : 'bg-secondary'">
+                  {{ product.isActive ? 'Active' : 'Inactive' }}
+                </span>
+              </div> -->
+              
+              <div class="detail-item" *ngIf="product.createdDate">
+                <label>{{ 'DEALER.SHOP.PRODUCT_DETAILS.CREATED' | translate }}:</label>
+                <span class="text-muted">{{ product.createdDate | date:'short' }}</span>
+              </div>
+
+              <div class="detail-item" *ngIf="product.modifiedDate">
+                <label>{{ 'DEALER.SHOP.PRODUCT_DETAILS.MODIFIED' | translate }}:</label>
+                <span class="text-muted">{{ product.modifiedDate | date:'short' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description and Specifications Section (Full Width) -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <!-- Product Details Tabs -->
+          <div class="product-tabs">
+            <nav class="nav nav-tabs" role="tablist">
+              <button class="nav-link" 
+                      [class.active]="activeTab === 'description'"
+                      (click)="setActiveTab('description')">
+                {{ 'DEALER.SHOP.PRODUCT_DETAILS.TABS.DESCRIPTION' | translate }}
+              </button>
+              <button class="nav-link" 
+                      [class.active]="activeTab === 'specifications'"
+                      (click)="setActiveTab('specifications')">
+                {{ 'DEALER.SHOP.PRODUCT_DETAILS.TABS.SPECIFICATIONS' | translate }}
+              </button>
+            </nav>
+
+            <div class="tab-content">
+              <!-- Description Tab -->
+              <div class="tab-pane" [class.active]="activeTab === 'description'">
+                <div class="description-content">
+                  <h4>{{ 'DEALER.SHOP.PRODUCT_DETAILS.TABS.PRODUCT_DESCRIPTION' | translate }}</h4>
+                  <p *ngIf="product.description" class="product-description">
+                    {{ product.description }}
+                  </p>
+                  <p *ngIf="!product.description" class="text-muted">
+                    {{ 'DEALER.SHOP.PRODUCT_DETAILS.NO_DESCRIPTION' | translate }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Specifications Tab -->
+              <div class="tab-pane" [class.active]="activeTab === 'specifications'">
+                <div class="specifications-content">
+                  <h4>{{ 'DEALER.SHOP.PRODUCT_DETAILS.TABS.PRODUCT_SPECIFICATIONS' | translate }}</h4>
+                  <div class="specification-grid">
+                    <div class="spec-item" *ngIf="product.unit">
+                      <label>{{ 'DEALER.SHOP.PRODUCT_DETAILS.SPECS.UNIT_OF_MEASUREMENT' | translate }}:</label>
+                      <span>{{ product.unit }}</span>
+                    </div>
+                    
+                    <div class="spec-item" *ngIf="product.productCode">
+                      <label>{{ 'DEALER.SHOP.PRODUCT_DETAILS.SPECS.PRODUCT_CODE' | translate }}:</label>
+                      <span>{{ product.productCode }}</span>
+                    </div>
+                    
+                    <div class="spec-item" *ngIf="product.product_LnCode">
+                      <label>{{ 'DEALER.SHOP.PRODUCT_DETAILS.SPECS.LN_CODE' | translate }}:</label>
+                      <span>{{ product.product_LnCode }}</span>
+                    </div>
+                    
+                    <div class="spec-item">
+                      <label>{{ 'DEALER.SHOP.PRODUCT_DETAILS.SPECS.STATUS' | translate }}:</label>
+                      <span class="badge" [class]="product.isActive ? 'bg-success' : 'bg-secondary'">
+                        {{ product.isActive ? ('DEALER.SHOP.PRODUCT_DETAILS.ACTIVE' | translate) : ('DEALER.SHOP.PRODUCT_DETAILS.INACTIVE' | translate) }}
+                      </span>
+                    </div>
+                    
+                    <div class="spec-item" *ngIf="product.createdDate">
+                      <label>{{ 'DEALER.SHOP.PRODUCT_DETAILS.SPECS.CREATED_DATE' | translate }}:</label>
+                      <span>{{ product.createdDate | date:'medium' }}</span>
+                    </div>
+                    
+                    <div class="spec-item" *ngIf="product.createdBy">
+                      <label>{{ 'DEALER.SHOP.PRODUCT_DETAILS.SPECS.CREATED_BY' | translate }}:</label>
+                      <span>{{ product.createdBy }}</span>
+                    </div>
+                    
+                    <div class="spec-item" *ngIf="product.modifiedDate">
+                      <label>{{ 'DEALER.SHOP.PRODUCT_DETAILS.SPECS.LAST_MODIFIED' | translate }}:</label>
+                      <span>{{ product.modifiedDate | date:'medium' }}</span>
+                    </div>
+                    
+                    <div class="spec-item" *ngIf="product.modifiedBy">
+                      <label>{{ 'DEALER.SHOP.PRODUCT_DETAILS.SPECS.MODIFIED_BY' | translate }}:</label>
+                      <span>{{ product.modifiedBy }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,356 @@
+<div class="support-tickets-container">
+  <!-- Notification Toast -->
+  <div class="notification-container" *ngIf="notification">
+    <div class="alert alert-dismissible fade show" [class.alert-success]="notification.type === 'success'"
+      [class.alert-danger]="notification.type === 'error'" [class.alert-info]="notification.type === 'info'">
+      {{ notification.message }}
+      <button type="button" class="btn-close" (click)="dismissNotification()"></button>
+    </div>
+  </div>
+
+  <!-- Header Section -->
+  <!-- <div class="support-tickets-header">
+    <div class="header-content">
+      <h2 class="section-title">
+        <i class="material-icons">support_agent</i>
+        Support Tickets Management
+      </h2>
+      <p class="section-subtitle">View and manage all customer support tickets</p>
+    </div>
+  </div> -->
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Search</label>
+        <input type="text" class="form-control" placeholder="Search by subject, description, or ticket ID..."
+          [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Customer</label>
+        <select class="form-select" [(ngModel)]="selectedDealerId" (change)="onFilterChange()">
+          <option [ngValue]="null">All Customers</option>
+          <option [ngValue]="dealer.dealerId" *ngFor="let dealer of dealers">
+            {{dealer.dealerName || dealer.fullName || 'Customer ' + dealer.dealerId}}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Status</label>
+        <select class="form-select" [(ngModel)]="selectedStatus" (change)="onFilterChange()">
+          <option value="">All Status</option>
+          <option [value]="status.value" *ngFor="let status of statuses">
+            {{status.label}}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Priority</label>
+        <select class="form-select" [(ngModel)]="selectedPriority" (change)="onFilterChange()">
+          <option value="">All Priorities</option>
+          <option [value]="priority.value" *ngFor="let priority of priorities">
+            {{priority.label}}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Category</label>
+        <select class="form-select" [(ngModel)]="selectedCategory" (change)="onFilterChange()">
+          <option value="">All Categories</option>
+          <option [value]="category.value" *ngFor="let category of categories">
+            {{category.label}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row g-3 mt-2">
+      <div class="col-md-12">
+        <div class="d-flex gap-2 justify-content-end">
+          <button class="btn btn-primary" (click)="onSearch()">
+            <i class="material-icons">filter_list</i>
+            Apply Filters
+          </button>
+          <button class="btn btn-outline-secondary">
+            <i class="material-icons">clear</i>
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container text-center py-5" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-2 text-muted">Loading tickets...</p>
+  </div>
+
+  <!-- Results Info -->
+  <div class="results-info" *ngIf="!loading && tickets.length > 0">
+    <span>Showing {{ getDisplayStart() }} to {{ getDisplayEnd() }} of {{ totalItems }} tickets</span>
+  </div>
+
+  <!-- Tickets Table -->
+  <div class="table-container" *ngIf="!loading && tickets.length > 0">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 border">
+            <thead class="table-header">
+              <tr>
+                <th>ID</th>
+                <th>Subject</th>
+                <th>Customer</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ticket of tickets">
+                <td>
+                  <strong>#{{ ticket.ticketId }}</strong>
+                </td>
+                <td>
+                  <div class="ticket-subject">
+                    <strong>{{ ticket.title }}</strong>
+                    <p class="text-muted small mb-0">{{ ticket.description | slice:0:60 }}{{ ticket.description.length >
+                      60 ? '...' : '' }}</p>
+                  </div>
+                </td>
+                <td>
+                  <div class="dealer-info">
+                    <strong>{{ getDealerName(ticket.dealerId) }}</strong>
+                  </div>
+                </td>
+                <td>
+                  <span class="badge bg-secondary">{{ ticket.category }}</span>
+                </td>
+                <td>
+                  <span class="badge" [ngClass]="getPriorityClass(ticket.priority)">
+                    {{ ticket.priority }}
+                  </span>
+                </td>
+                <td>
+                  <span class="badge" [ngClass]="getStatusClass(ticket.status)">
+                    {{ ticket.status }}
+                  </span>
+                </td>
+                <td>{{ ticket.createdDate | date:'shortDate' }}</td>
+                <td>{{ ticket.updatedDate | date:'shortDate' }}</td>
+                <td>
+                  <div class="action-buttons">
+                    <button class="btn btn-sm btn-outline-primary" (click)="viewTicketDetails(ticket)" title="View Details">
+                      <i class="material-icons">visibility</i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-success" (click)="openResponseModal(ticket)" title="Add Response"
+                      [disabled]="ticket.status === 'Closed'">
+                      <i class="material-icons">chat</i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-info"
+                      *ngIf="ticket.status !== 'Resolved' && ticket.status !== 'Closed'" (click)="resolveTicket(ticket)"
+                      title="Resolve Ticket" [disabled]="loading">
+                      <i class="material-icons">check_circle</i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-warning" *ngIf="ticket.status === 'Resolved'"
+                      (click)="reopenTicket(ticket)" title="Reopen Ticket" [disabled]="loading">
+                      <i class="material-icons">restart_alt</i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="!loading && totalItems > 0" class="pagination-container">
+      <div class="pagination-info">
+        Showing {{ getDisplayStart() }} to {{ getDisplayEnd() }} of {{ totalItems }} results
+      </div>
+      <div class="pagination-controls">
+        <button 
+          class="btn-page" 
+          [disabled]="currentPage === 1"
+          (click)="goToPage(currentPage - 1)">
+          <i class="material-icons">chevron_left</i>
+        </button>
+        
+        <span class="page-info">{{ currentPage }} of {{ getTotalPages() }}</span>
+        
+        <button 
+          class="btn-page" 
+          [disabled]="currentPage === getTotalPages()"
+          (click)="goToPage(currentPage + 1)">
+          <i class="material-icons">chevron_right</i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+      <div class="empty-state text-center py-5" *ngIf="!loading && tickets.length === 0">
+        <iconify-icon icon="solar:ticket-sale-broken" style="font-size: 64px; color: #dee2e6;"></iconify-icon>
+        <h3 class="mt-3">No Support Tickets Found</h3>
+        <p class="text-muted">No tickets match your current search criteria.</p>
+        <button class="btn btn-outline-primary" (click)="clearFilters()">
+          <iconify-icon icon="solar:eraser-bold-duotone"></iconify-icon>
+          Clear Filters
+        </button>
+      </div>
+
+      <!-- Ticket Details Modal -->
+      <div class="modal-backdrop" *ngIf="showDetailsModal" (click)="closeDetailsModal()">
+        <div class="modal-container" (click)="$event.stopPropagation()" *ngIf="selectedTicket">
+          <div class="modal-header">
+            <div class="ticket-header-info">
+              <h3>{{ selectedTicket.title }}</h3>
+              <div class="ticket-badges">
+                <span class="ticket-number">Ticket #{{ selectedTicket.ticketId }}</span>
+                <span class="badge" [ngClass]="getStatusClass(selectedTicket.status)">
+                  {{ selectedTicket.status }}
+                </span>
+                <span class="badge" [ngClass]="getPriorityClass(selectedTicket.priority)">
+                  {{ selectedTicket.priority }}
+                </span>
+              </div>
+            </div>
+            <button class="close-btn" (click)="closeDetailsModal()">
+              <iconify-icon icon="solar:close-circle-bold-duotone"></iconify-icon>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <div class="ticket-info-section">
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>DEALER:</label>
+                  <span>{{ getDealerName(selectedTicket.dealerId) }}</span>
+                </div>
+                <div class="info-item">
+                  <label>CATEGORY:</label>
+                  <span>{{ selectedTicket.category }}</span>
+                </div>
+                <div class="info-item">
+                  <label>CREATED:</label>
+                  <span>{{ selectedTicket.createdDate | date:'MMM dd, yyyy HH:mm' }}</span>
+                </div>
+                <div class="info-item">
+                  <label>LAST UPDATED:</label>
+                  <span>{{ selectedTicket.updatedDate | date:'MMM dd, yyyy HH:mm' }}</span>
+                </div>
+                <div class="info-item" *ngIf="selectedTicket.resolvedDate">
+                  <label>RESOLVED:</label>
+                  <span>{{ selectedTicket.resolvedDate | date:'MMM dd, yyyy HH:mm' }}</span>
+                </div>
+                <div class="info-item" *ngIf="selectedTicket.assignedTo">
+                  <label>RESOLVED BY:</label>
+                  <span>{{ selectedTicket.assignedTo }}</span>
+                </div>
+              </div>
+
+              <div class="description-section">
+                <h4>Description</h4>
+                <div class="description-content">{{ selectedTicket.description }}</div>
+              </div>
+            </div>
+
+            <!-- Messages Section -->
+            <div class="messages-section" *ngIf="selectedTicket.responses && selectedTicket.responses.length > 0">
+              <h4>Conversation History</h4>
+              <div class="messages-container">
+                <div class="message-item" *ngFor="let message of selectedTicket.responses"
+                  [ngClass]="{'message-from-dealer': !message.isInternal, 'message-from-admin': message.isInternal}">
+                  <div class="message-header">
+                    <div class="sender-avatar" [ngClass]="message.isInternal ? 'admin-avatar' : 'dealer-avatar'">
+                      <iconify-icon
+                        [icon]="message.isInternal ? 'solar:user-id-bold-duotone' : 'solar:buildings-2-bold-duotone'"></iconify-icon>
+                    </div>
+                    <div class="sender-info">
+                      <span class="sender-name">{{ message.createdBy }}</span>
+                      <span class="message-time">{{ message.createdDate | date:'MMM dd, yyyy HH:mm' }}</span>
+                    </div>
+                  </div>
+                  <div class="message-content">
+                    <p>{{ message.message }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Admin Actions -->
+            <div class="admin-actions">
+              <button class="btn btn-primary me-2" (click)="openResponseModal(selectedTicket)">
+                <iconify-icon icon="solar:chat-round-dots-bold-duotone"></iconify-icon>
+                Add Response
+              </button>
+              <button class="btn btn-success me-2"
+                *ngIf="selectedTicket.status !== 'Resolved' && selectedTicket.status !== 'Closed'"
+                (click)="resolveTicket(selectedTicket)">
+                <iconify-icon icon="solar:check-circle-bold-duotone"></iconify-icon>
+                Resolve Ticket
+              </button>
+              <button class="btn btn-warning" *ngIf="selectedTicket.status === 'Resolved'"
+                (click)="reopenTicket(selectedTicket)">
+                <iconify-icon icon="solar:restart-bold-duotone"></iconify-icon>
+                Reopen Ticket
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Response Modal -->
+      <div class="modal-backdrop" *ngIf="showResponseModal" (click)="closeResponseModal()">
+        <div class="modal-container" (click)="$event.stopPropagation()">
+          <div class="modal-header">
+            <h3>Add Response</h3>
+            <button class="close-btn" (click)="closeResponseModal()">
+              <iconify-icon icon="solar:close-circle-bold-duotone"></iconify-icon>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="responseForm" (ngSubmit)="submitResponse()">
+              <div class="form-group mb-3">
+                <label class="form-label">Response Message *</label>
+                <textarea class="form-control" formControlName="message" rows="6"
+                  placeholder="Type your response here..."></textarea>
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-label">Update Status</label>
+                <select class="form-select" formControlName="status">
+                  <option value="">Keep Current Status</option>
+                  <option [value]="status.value" *ngFor="let status of statuses">
+                    {{status.label}}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" formControlName="isInternal" id="isInternal">
+                <label class="form-check-label" for="isInternal">
+                  Internal Note (Not visible to dealer)
+                </label>
+              </div>
+
+              <div class="modal-actions">
+                <button type="button" class="btn btn-secondary me-2" (click)="closeResponseModal()">
+                  Cancel
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="responseForm.invalid || submittingResponse">
+                  <span *ngIf="submittingResponse" class="spinner-border spinner-border-sm me-2"></span>
+                  {{ submittingResponse ? 'Sending...' : 'Send Response' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>

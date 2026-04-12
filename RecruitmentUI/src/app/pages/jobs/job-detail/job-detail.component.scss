@@ -1,0 +1,180 @@
+﻿.back-btn {
+  margin-bottom: 16px;
+  color: #64748b;
+}
+
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: start;
+}
+
+.job-header {
+  margin-bottom: 16px;
+
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 12px;
+  }
+}
+
+.chips-row {
+  margin-bottom: 8px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: #64748b;
+
+  mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    color: #94a3b8;
+  }
+}
+
+.closing-soon {
+  color: #dc2626 !important;
+  font-weight: 500;
+  mat-icon { color: #dc2626 !important; }
+}
+
+.salary-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #f0fdf4;
+  border-radius: 8px;
+  margin-bottom: 16px;
+
+  mat-icon {
+    color: #16a34a;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .salary-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  .salary-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #16a34a;
+  }
+}
+
+mat-divider {
+  margin: 16px 0;
+}
+
+.detail-section {
+  margin-top: 24px;
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1e293b;
+
+    mat-icon { color: #1976d2; }
+  }
+
+  .rich-text {
+    color: #475569;
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+}
+
+.apply-card {
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  p { color: #64748b; font-size: 0.9rem; margin-bottom: 16px; }
+
+  .login-prompt {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 12px;
+  }
+}
+
+.apply-btn {
+  height: 48px;
+  font-size: 1rem;
+
+  mat-icon { margin-right: 8px; }
+}
+
+.full-width { width: 100%; }
+
+.summary-card {
+  margin-top: 16px;
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1e293b;
+  }
+}
+
+.summary-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  align-items: flex-start;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+
+  .label {
+    display: block;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .value {
+    font-size: 0.9rem;
+    color: #1e293b;
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 900px) {
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+}

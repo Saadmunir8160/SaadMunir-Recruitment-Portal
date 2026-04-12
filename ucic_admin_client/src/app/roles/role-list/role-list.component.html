@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h4 class="card-title">Roles</h4>
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-primary" (click)="createNewRole()">
+                <iconify-icon icon="solar:add-circle-bold-duotone" class="me-1"></iconify-icon>
+                Create New Role
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <div class="search-box">
+                <input type="text" class="form-control" [(ngModel)]="searchTerm" (ngModelChange)="onSearch()" placeholder="Search roles...">
+                <iconify-icon icon="solar:magnifer-linear" class="search-icon"></iconify-icon>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-centered table-nowrap mb-0 align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Role Name</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="loading">
+                  <td colspan="2" class="text-center">Loading...</td>
+                </tr>
+                <tr *ngFor="let role of filteredRoles">
+                  <td>{{ role.roleName }}</td>
+                  <td class="text-end">
+                    <button class="btn btn-sm btn-primary me-1" (click)="editRole(role)">
+                      <iconify-icon icon="solar:pen-2-bold-duotone"></iconify-icon>
+                    </button>
+                    <button class="btn btn-sm btn-danger" (click)="deleteRole(role.id)">
+                      <iconify-icon icon="solar:trash-bin-minimalistic-bold-duotone"></iconify-icon>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="!loading && filteredRoles.length === 0">
+                  <td colspan="2" class="text-center">No roles found</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

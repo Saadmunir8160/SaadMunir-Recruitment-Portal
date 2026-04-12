@@ -1,0 +1,341 @@
+.dealer-layout {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar main";
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+  background: #f8f9fa;
+}
+
+// Header Styles
+.dealer-header {
+  grid-area: header;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 70px;
+  z-index: 1000;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .sidebar-toggle {
+      background: none;
+      border: none;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #6c757d;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #f8f9fa;
+        color: #495057;
+      }
+
+      .material-icons {
+        font-size: 24px;
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .logo {
+        height: 40px;
+        width: auto;
+      }
+
+      .brand-text {
+        font-size: 20px;
+        font-weight: 600;
+        color: #2c3e50;
+      }
+    }
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .cart-icon-container {
+      .cart-button {
+        position: relative;
+        background: none;
+        border: 1px solid #e9ecef;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: #495057;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+
+        &:hover {
+          background: #f8f9fa;
+          border-color: #007bff;
+          color: #007bff;
+        }
+
+        .material-icons {
+          font-size: 20px;
+        }
+
+        .cart-count {
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background: #dc3545;
+          color: white;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          font-size: 12px;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transform: scale(0.5);
+          transition: all 0.3s ease;
+
+          &.visible {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      }
+    }
+
+    .dealer-info {
+      text-align: right;
+
+      .company-name {
+        display: block;
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 14px;
+      }
+
+      .dealer-code {
+        display: block;
+        color: #6c757d;
+        font-size: 12px;
+      }
+    }
+
+    .user-menu-button {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid #e9ecef;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #495057;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #f8f9fa;
+        border-color: #dee2e6;
+      }
+
+      .material-icons {
+        font-size: 18px;
+      }
+
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// Sidebar Styles
+.dealer-sidebar {
+  grid-area: sidebar;
+  background: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+
+  &.collapsed {
+    width: 75px !important;
+
+    .nav-text {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .nav-item {
+      margin-bottom: 2px;
+    }
+
+    .nav-link {
+      padding: 8px 5px;
+      justify-content: flex-start;
+    }
+  }
+
+  .sidebar-nav {
+    padding: 20px 0;
+
+    .nav-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      .nav-item {
+        margin-bottom: 4px;
+
+        .nav-link {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 16px 20px;
+          color: #6c757d;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          cursor: pointer;
+
+          &:hover {
+            background: #f8f9fa;
+            color: #495057;
+
+            .material-icons {
+              color: #007bff;
+            }
+          }
+
+          &.active {
+            background: linear-gradient(90deg, #007bff 0%, rgba(0, 123, 255, 0.1) 100%);
+            color: #ffffff;
+            border-right: 3px solid #007bff;
+
+            .material-icons {
+              color: #ffffff;
+            }
+          }
+
+          .material-icons {
+            font-size: 20px;
+            flex-shrink: 0;
+            transition: color 0.3s ease;
+          }
+
+          .nav-text {
+            font-size: 14px;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+          }
+
+          .badge {
+            background: #dc3545;
+            color: white;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 11px;
+            font-weight: 600;
+            min-width: 18px;
+            text-align: center;
+            margin-left: auto;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Main Content Styles
+.dealer-main {
+  grid-area: main;
+  overflow: auto;
+  transition: all 0.3s ease;
+
+  .content-wrapper {
+    padding: 20px;
+    min-height: calc(100vh - 70px);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .dealer-layout {
+    grid-template-areas:
+      "header"
+      "main";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .dealer-sidebar {
+    position: fixed;
+    top: 70px;
+    left: -200px;
+    height: calc(100vh - 70px);
+    z-index: 999;
+    transition: left 0.3s ease;
+
+    &:not(.collapsed) {
+      left: 0;
+    }
+  }
+
+  .dealer-header {
+    .header-right {
+      .dealer-info {
+        display: none;
+      }
+    }
+
+    .brand {
+      .brand-text {
+        display: none;
+      }
+    }
+  }
+
+  .dealer-main {
+    grid-area: main;
+
+    .content-wrapper {
+      padding: 15px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .dealer-header {
+    padding: 0 15px;
+
+    .header-left {
+      gap: 10px;
+
+      .brand {
+        .logo {
+          height: 40px !important;
+          width: 120px !important;
+        }
+      }
+    }
+  }
+
+  .dealer-main .content-wrapper {
+    padding: 10px;
+  }
+}

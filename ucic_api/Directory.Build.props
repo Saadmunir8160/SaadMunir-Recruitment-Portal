@@ -1,0 +1,17 @@
+<Project>
+  <!-- 
+    Custom MSBuild file to exclude test projects from build
+    Save as: Directory.Build.props in root directory
+  -->
+  
+  <PropertyGroup>
+    <!-- Skip test projects during regular build -->
+    <SkipTestsOnBuild Condition="'$(SkipTestsOnBuild)' == ''">true</SkipTestsOnBuild>
+  </PropertyGroup>
+  
+  <!-- Conditional exclude for test projects -->
+  <PropertyGroup Condition="'$(SkipTestsOnBuild)' == 'true' AND $(MSBuildProjectName.Contains('Test'))">
+    <ExcludeFromBuild>true</ExcludeFromBuild>
+  </PropertyGroup>
+  
+</Project>

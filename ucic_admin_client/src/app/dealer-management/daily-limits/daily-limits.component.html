@@ -1,0 +1,275 @@
+<div class="daily-limits-container">
+  <!-- Notification Toast -->
+  <div class="notification-container" *ngIf="notification">
+    <div class="alert alert-dismissible fade show" [class.alert-success]="notification.type === 'success'"
+      [class.alert-danger]="notification.type === 'error'" [class.alert-info]="notification.type === 'info'">
+      {{ notification.message }}
+      <button type="button" class="btn-close" (click)="dismissNotification()"></button>
+    </div>
+  </div>
+
+  <!-- Header Section -->
+  <div class="daily-limits-header">
+    <!-- <div class="header-content">
+      <h2 class="section-title">
+        <i class="material-icons">settings</i>
+        Customer Daily Limits Management
+      </h2>
+      <p class="section-subtitle">Manage daily limits for customers (bags and tons)</p>
+    </div> -->
+    <div class="header-actions">
+      <button class="btn btn-primary" (click)="openCreateForm()">
+        <i class="material-icons">add</i> Add Daily Limit
+      </button>
+      <button class="btn btn-outline-secondary me-2" (click)="refreshData()" title="Refresh Data">
+        <i class="material-icons">refresh</i> Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Search</label>
+        <input type="text" class="form-control" placeholder="Search by dealer name..." [(ngModel)]="searchTerm"
+          (keyup.enter)="onSearch()">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Customer</label>
+        <select class="form-select" [(ngModel)]="selectedDealerId" (change)="onFilterChange()">
+          <option [ngValue]="null">All Customers</option>
+          <option [ngValue]="dealer.dealerId" *ngFor="let dealer of dealers">
+            {{dealer.dealerName || dealer.fullName || 'Customer ' + dealer.dealerId}}
+          </option>
+          <option [ngValue]="0">General Limits</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Limit Type</label>
+        <select class="form-select" [(ngModel)]="selectedLimitType" (change)="onFilterChange()">
+          <option value="">All Types</option>
+          <option *ngFor="let type of limitTypes" [value]="type.value">{{type.label}}</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Status</label>
+        <select class="form-select" [(ngModel)]="selectedStatus" (change)="onFilterChange()">
+          <option *ngFor="let status of statusOptions" [value]="status.value">{{status.label}}</option>
+        </select>
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <label class="form-label">&nbsp;</label>
+        <button class="btn btn-primary" (click)="onSearch()">
+          <i class="material-icons">filter_list</i>
+          Apply Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily Limits Table -->
+  <div class="table-section">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 border">
+            <thead class="table-header">
+              <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Limit Type</th>
+                <th>Limit Value</th>
+                <th>Effective Date</th>
+                <th>Status</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let limit of dailyLimits">
+                <td>{{limit.dailyLimitID}}</td>
+                <td>
+                  <div class="dealer-info">
+                    <strong>{{getDealerName(limit.dealerID, limit.dealerName)}}</strong>
+                  </div>
+                </td>
+                <td>
+                  <span class="badge" [ngClass]="{
+                'bg-primary': limit.limitType === 'DAILY_TONS_LIMIT',
+                'bg-success': limit.limitType === 'DAILY_BAGS_LIMIT'
+              }">
+                    {{getLimitTypeLabel(limit.limitType)}}
+                  </span>
+                </td>
+                <td>
+                  <span class="limit-value">{{formatLimitValue(limit.limitType, limit.limitValue)}}</span>
+                </td>
+                <td>{{limit.effectiveDate | date:'shortDate'}}</td>
+                <td>
+                  <span class="badge" [ngClass]="{
+                'bg-success': limit.isActive,
+                'bg-secondary': !limit.isActive
+              }">
+                    {{limit.isActive ? 'Active' : 'Inactive'}}
+                  </span>
+                </td>
+                <td>{{limit.createdDate | date:'shortDate'}}</td>
+                <td>
+                  <div class="action-buttons">
+                    <button class="btn btn-sm btn-outline-primary" (click)="openEditForm(limit)" [disabled]="loading"
+                      title="Edit">
+                      <i class="material-icons">edit</i>
+                    </button>
+                    <button class="btn btn-sm" [ngClass]="{
+                    'btn-outline-success': !limit.isActive,
+                    'btn-outline-warning': limit.isActive
+                  }" (click)="toggleActiveStatus(limit)" [disabled]="loading"
+                      [title]="limit.isActive ? 'Pause' : 'Activate'">
+                      <i class="material-icons">{{ limit.isActive ? 'pause' : 'play_arrow' }}</i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteDailyLimit(limit)" [disabled]="loading"
+                      title="Delete">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="dailyLimits.length === 0 && !loading">
+                <td colspan="8" class="text-center py-4">
+                  <div class="no-data">
+                    <i class="material-icons text-muted" style="font-size: 16px;">info</i>
+                    <p class="text-muted mb-0">
+                      <span *ngIf="allDailyLimits.length === 0">No daily limits found</span>
+                      <span *ngIf="allDailyLimits.length > 0 && dailyLimits.length === 0">
+                        No daily limits match the current filters
+                      </span>
+                    </p>
+                    <button class="btn btn-outline-primary btn-sm mt-2"
+                      *ngIf="allDailyLimits.length > 0 && dailyLimits.length === 0" (click)="clearFilters()">
+                      Clear Filters
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div *ngIf="loading" class="text-center py-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-section" *ngIf="totalPages > 1">
+          <nav aria-label="Daily limits pagination">
+            <ul class="pagination justify-content-center">
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <button class="page-link" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                  Previous
+                </button>
+              </li>
+              <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+                <button class="page-link" (click)="onPageChange(page)">{{page}}</button>
+              </li>
+              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <button class="page-link" (click)="onPageChange(currentPage + 1)"
+                  [disabled]="currentPage === totalPages">
+                  Next
+                </button>
+              </li>
+            </ul>
+          </nav>
+          <div class="pagination-info text-center text-muted">
+            Showing {{(currentPage - 1) * pageSize + 1}} to {{Math.min(currentPage * pageSize, totalItems)}} of
+            {{totalItems}} entries
+          </div>
+        </div>
+      </div>
+
+      <!-- Create/Edit Form Modal -->
+      <div class="modal fade show" [style.display]="(showCreateForm || showEditForm) ? 'block' : 'none'"
+        [class.show]="showCreateForm || showEditForm" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                {{showCreateForm ? 'Add New Daily Limit' : 'Edit Daily Limit'}}
+              </h5>
+              <button type="button" class="btn-close" (click)="closeForm()"></button>
+            </div>
+            <form [formGroup]="dailyLimitForm" (ngSubmit)="onSubmit()">
+              <div class="modal-body">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Customer</label>
+                    <select class="form-select" formControlName="dealerID">
+                      <option [ngValue]="null">General (All Customers)</option>
+                      <option [ngValue]="dealer.dealerId" *ngFor="let dealer of dealers">
+                        {{dealer.dealerName || dealer.fullName || 'Customer ' + dealer.dealerId}}
+                      </option>
+                    </select>
+                    <small class="form-text text-muted">
+                      Leave as "General" to create a default limit for all customers
+                    </small>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Limit Type *</label>
+                    <select class="form-select" formControlName="limitType"
+                      [class.is-invalid]="getValidationErrors('limitType').length > 0">
+                      <option value="">Select Limit Type</option>
+                      <option *ngFor="let type of limitTypes" [value]="type.value">{{type.label}}</option>
+                    </select>
+                    <div class="invalid-feedback" *ngFor="let error of getValidationErrors('limitType')">
+                      {{error}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Limit Value *</label>
+                    <input type="number" class="form-control" formControlName="limitValue"
+                      [class.is-invalid]="getValidationErrors('limitValue').length > 0" placeholder="Enter limit value"
+                      min="0" step="0.01">
+                    <div class="invalid-feedback" *ngFor="let error of getValidationErrors('limitValue')">
+                      {{error}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Effective Date *</label>
+                    <input type="date" class="form-control" formControlName="effectiveDate"
+                      [class.is-invalid]="getValidationErrors('effectiveDate').length > 0">
+                    <div class="invalid-feedback" *ngFor="let error of getValidationErrors('effectiveDate')">
+                      {{error}}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="alert alert-info mt-3">
+                  <i class="fa fa-info-circle"></i>
+                  <strong>Note:</strong>
+                  <ul class="mb-0 mt-2">
+                    <li>Daily Bags Limit: Maximum number of bags a customer can order per day</li>
+                    <li>Daily Tons Limit: Maximum weight in tons a customer can order per day</li>
+                    <li>General limits apply to all customers unless a specific customer limit is set</li>
+                    <li>Customer-specific limits override general limits</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeForm()">Cancel</button>
+                <button type="submit" class="btn btn-primary" [disabled]="dailyLimitForm.invalid || loading">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  {{showCreateForm ? 'Create Daily Limit' : 'Update Daily Limit'}}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Backdrop -->
+      <div class="modal-backdrop fade show" *ngIf="showCreateForm || showEditForm" (click)="closeForm()">
+      </div>
+    </div>

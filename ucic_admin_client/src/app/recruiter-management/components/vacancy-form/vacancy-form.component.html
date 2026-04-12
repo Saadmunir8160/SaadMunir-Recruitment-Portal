@@ -1,0 +1,255 @@
+@if (isLoading) {
+  <div class="loading-overlay">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+}
+
+@if (!isLoading) {
+  <div class="vacancy-form">
+    <div class="form-header">
+      <button mat-icon-button (click)="goBack()" matTooltip="Back">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>{{ isEdit ? 'Edit Vacancy' : 'Create New Vacancy' }}</h2>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <!-- Basic Info -->
+      <mat-card appearance="outlined" class="form-section">
+        <mat-card-header>
+          <mat-card-title>Basic Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-grid">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Job Title</mat-label>
+              <input matInput formControlName="jobTitle" placeholder="e.g. Senior Software Engineer">
+              @if (form.get('jobTitle')?.hasError('required')) {
+                <mat-error>Job title is required</mat-error>
+              }
+            </mat-form-field>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Department</mat-label>
+                <input matInput formControlName="departmentName">
+                @if (form.get('departmentName')?.hasError('required')) {
+                  <mat-error>Department is required</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Location</mat-label>
+                <input matInput formControlName="location">
+                @if (form.get('location')?.hasError('required')) {
+                  <mat-error>Location is required</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Job Grade</mat-label>
+                <input matInput formControlName="jobGrade">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Number of Positions</mat-label>
+                <input matInput type="number" formControlName="numberOfPositions" min="1">
+                @if (form.get('numberOfPositions')?.hasError('required')) {
+                  <mat-error>Required</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Work Type</mat-label>
+                <mat-select formControlName="workType">
+                  <mat-option [value]="0">Full-time</mat-option>
+                  <mat-option [value]="1">Part-time</mat-option>
+                  <mat-option [value]="2">Contract</mat-option>
+                  <mat-option [value]="3">Internship</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Work Location</mat-label>
+                <mat-select formControlName="workLocation">
+                  <mat-option [value]="0">On-site</mat-option>
+                  <mat-option [value]="1">Remote</mat-option>
+                  <mat-option [value]="2">Hybrid</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Closing Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="closingDate">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              @if (form.get('closingDate')?.hasError('required')) {
+                <mat-error>Closing date is required</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Job Description -->
+      <mat-card appearance="outlined" class="form-section">
+        <mat-card-header>
+          <mat-card-title>Job Description</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-grid">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Job Description</mat-label>
+              <textarea matInput formControlName="jobDescription" rows="5"></textarea>
+              @if (form.get('jobDescription')?.hasError('required')) {
+                <mat-error>Job description is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Qualifications</mat-label>
+              <textarea matInput formControlName="qualifications" rows="4"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Requirements</mat-label>
+              <textarea matInput formControlName="requirements" rows="4"></textarea>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Salary & Experience -->
+      <mat-card appearance="outlined" class="form-section">
+        <mat-card-header>
+          <mat-card-title>Salary & Experience</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-grid">
+            <div class="form-row three-col">
+              <mat-form-field appearance="outline">
+                <mat-label>Salary Min</mat-label>
+                <input matInput type="number" formControlName="salaryRangeMin">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Salary Max</mat-label>
+                <input matInput type="number" formControlName="salaryRangeMax">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Currency</mat-label>
+                <mat-select formControlName="currency">
+                  <mat-option value="SAR">SAR</mat-option>
+                  <mat-option value="USD">USD</mat-option>
+                  <mat-option value="EUR">EUR</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Experience Min (years)</mat-label>
+                <input matInput type="number" formControlName="requiredExperienceMin" min="0">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Experience Max (years)</mat-label>
+                <input matInput type="number" formControlName="requiredExperienceMax" min="0">
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Requirements -->
+      <mat-card appearance="outlined" class="form-section">
+        <mat-card-header>
+          <mat-card-title>Candidate Requirements</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-grid">
+            <div class="form-row three-col">
+              <mat-form-field appearance="outline">
+                <mat-label>Required Nationality</mat-label>
+                <input matInput formControlName="requiredNationality" placeholder="e.g. Saudi">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Required Specialization</mat-label>
+                <input matInput formControlName="requiredSpecialization">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Required Qualification</mat-label>
+                <input matInput formControlName="requiredQualification">
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- AI Match Weights -->
+      <mat-card appearance="outlined" class="form-section">
+        <mat-card-header>
+          <mat-card-title>AI Match Weights</mat-card-title>
+          <mat-card-subtitle>
+            Assign weights for AI matching criteria (total: {{ getTotalWeight() }}%)
+            @if (getTotalWeight() !== 100) {
+              <span class="weight-warning"> — should equal 100%</span>
+            }
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-grid">
+            <div class="form-row three-col">
+              <mat-form-field appearance="outline">
+                <mat-label>Specialization %</mat-label>
+                <input matInput type="number" formControlName="weightSpecialization" min="0" max="100">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Experience %</mat-label>
+                <input matInput type="number" formControlName="weightExperience" min="0" max="100">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Qualification %</mat-label>
+                <input matInput type="number" formControlName="weightQualification" min="0" max="100">
+              </mat-form-field>
+            </div>
+            <div class="form-row three-col">
+              <mat-form-field appearance="outline">
+                <mat-label>Nationality %</mat-label>
+                <input matInput type="number" formControlName="weightNationality" min="0" max="100">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Location %</mat-label>
+                <input matInput type="number" formControlName="weightLocation" min="0" max="100">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Certifications %</mat-label>
+                <input matInput type="number" formControlName="weightCertifications" min="0" max="100">
+              </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline" class="threshold-field">
+              <mat-label>Match Threshold %</mat-label>
+              <input matInput type="number" formControlName="matchThreshold" min="0" max="100">
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button mat-stroked-button type="button" (click)="goBack()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit"
+                [disabled]="form.invalid || isSaving">
+          @if (isSaving) {
+            <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+          }
+          {{ isEdit ? 'Update Vacancy' : 'Create Vacancy' }}
+        </button>
+      </div>
+    </form>
+  </div>
+}

@@ -1,0 +1,304 @@
+// Addresses List Component Styles - Match Order History Filter Style
+
+// Override entire container to match other pages
+.container-fluid {
+  background-color: #f8f9fa !important;
+  min-height: 100vh !important;
+  padding: 1.5rem !important;
+}
+
+// Filter Section - Match Order History Style
+.filter-section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  .filter-controls {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 20px;
+    align-items: center;
+    
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      
+      .search-icon {
+        position: absolute;
+        left: 12px;
+        color: #6c757d;
+        font-size: 20px;
+        z-index: 1;
+      }
+      
+      .search-input {
+        width: 100%;
+        padding: 12px 12px 12px 44px;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+        
+        &::placeholder {
+          color: #6c757d;
+        }
+      }
+    }
+    
+    .status-filter {
+      padding: 6px;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 14px;
+      background: white;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+      
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+      }
+    }
+    
+    .page-size-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      label {
+        font-size: 14px;
+        color: #6c757d;
+        margin: 0;
+        white-space: nowrap;
+      }
+      
+      .page-size-select {
+        padding: 12px;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 14px;
+        background: white;
+        cursor: pointer;
+        transition: border-color 0.3s ease;
+        width: 80px;
+        
+        &:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+      }
+    }
+  }
+}
+
+// Card styling
+.card {
+  background-color: white !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 12px !important;
+}
+
+// Card body styling
+.card-body {
+  padding: 24px !important;
+  background-color: white !important;
+}
+
+// Responsive design for filter controls
+@media (max-width: 768px) {
+  .filter-section {
+    .filter-controls {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    
+    .page-size-control {
+      justify-content: center;
+    }
+  }
+}
+
+// Keep existing table and pagination styles below this point
+// (They will continue to work with the new filter section above)
+
+// Table styling to match drivers page exactly
+.table-responsive {
+  background-color: white !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075) !important;
+  overflow: hidden !important;
+  border: 1px solid #dee2e6 !important;
+  
+  .table {
+    margin-bottom: 0 !important;
+    background-color: white !important;
+    
+    thead {
+      background-color: #f1f3f4 !important;
+      
+      th {
+        border-bottom: 1px solid #dee2e6 !important;
+        font-weight: 600 !important;
+        color: #495057 !important;
+        padding: 1rem 0.75rem !important;
+        font-size: 0.75rem !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        background-color: #f1f3f4 !important;
+      }
+    }
+    
+    tbody {
+      background-color: white !important;
+      
+      tr {
+        background-color: white !important;
+        
+        &:hover {
+          background-color: #f8f9fa !important;
+        }
+        
+        &:nth-child(even) {
+          background-color: white !important;
+          
+          &:hover {
+            background-color: #f8f9fa !important;
+          }
+        }
+      }
+      
+      td {
+        padding: 0.5rem 0.75rem !important;
+        vertical-align: middle !important;
+        border-bottom: 1px solid #dee2e6 !important;
+        font-size: 0.875rem !important;
+        background-color: inherit !important;
+        line-height: 1.2 !important;
+      }
+    }
+  }
+}
+
+// Badge styling to match drivers page
+.badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.375em 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 0.25rem;
+}
+
+// Action buttons styling to match drivers page exactly - transparent with colored borders and icons
+.btn-sm {
+  padding: 0.5rem !important;
+  font-size: 0.875rem !important;
+  border-radius: 0.25rem !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-right: 0.25rem !important;
+  
+  // Edit button - Blue border and icon
+  &.btn-primary {
+    background-color: transparent !important;
+    border: 1px solid #007bff !important;
+    color: #007bff !important;
+    
+    &:hover {
+      background-color: #007bff !important;
+      border-color: #007bff !important;
+      color: white !important;
+    }
+  }
+  
+  // Delete button - Red border and icon
+  &.btn-danger {
+    background-color: transparent !important;
+    border: 1px solid #dc3545 !important;
+    color: #dc3545 !important;
+    
+    &:hover {
+      background-color: #dc3545 !important;
+      border-color: #dc3545 !important;
+      color: white !important;
+    }
+  }
+  
+  iconify-icon {
+    font-size: 14px !important;
+  }
+}
+
+// Pagination styling to match drivers page
+.d-flex.justify-content-between.align-items-center.mt-3 {
+  background-color: white !important;
+  padding: 1rem 1.5rem !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075) !important;
+  margin-top: 1.5rem !important;
+  border: 1px solid #dee2e6 !important;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.875rem;
+  }
+  
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .card-header {
+    padding: 1rem !important;
+  }
+  
+  .card-body {
+    padding: 1rem !important;
+  }
+}
+
+// Add button styling
+.btn-success {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  border: none;
+  color: white;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  iconify-icon {
+    font-size: 1.25rem;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, #218838 0%, #1ba97e 100%);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}

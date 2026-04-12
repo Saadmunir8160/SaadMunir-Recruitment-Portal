@@ -1,0 +1,229 @@
+<div class="dealer-orders-container">
+  <!-- Header Section -->
+  <!-- <div class="dealer-orders-header">
+    <div class="header-content">
+      <h2 class="section-title">
+        <i class="material-icons">shopping_cart</i>
+        Customer Orders Management
+      </h2>
+      <p class="section-subtitle">View and manage all customer orders across the system</p>
+    </div>
+  </div> -->
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="row g-3">
+      <!-- Search -->
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Search</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="searchTerm"
+          placeholder="Order number, LN order, customer..."
+          (keyup.enter)="onSearch()"
+        />
+      </div>
+
+      <!-- Status Filter -->
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Status</label>
+        <select class="form-select" [(ngModel)]="selectedStatus" (change)="onSearch()">
+          <option *ngFor="let status of statusOptions" [value]="status.value">
+            {{ status.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Date Range -->
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">Start Date</label>
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="startDate"
+          (change)="onSearch()"
+        />
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">End Date</label>
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="endDate"
+          (change)="onSearch()"
+        />
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="col-md-2">
+        <label class="form-label">&nbsp;</label>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary flex-fill" (click)="onSearch()">
+            <i class="material-icons">filter_list</i>
+            Apply Filters
+          </button>
+          <button class="btn btn-outline-secondary flex-fill" (click)="onClearFilters()">
+            <i class="material-icons">clear</i>
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Summary -->
+  <div class="results-summary" *ngIf="!loading">
+    <span class="text-muted">
+      Showing {{ orders.length }} of {{ totalRecords }} orders
+    </span>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="text-center py-4" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-2 text-muted">Loading dealer orders...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-danger" *ngIf="error">
+    <i class="material-icons">error</i>
+    {{ error }}
+  </div>
+
+  <!-- Orders Table -->
+  <div class="orders-table" *ngIf="!loading && !error">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 border">
+            <thead class="table-header">
+              <tr>
+              <th>Customer Order</th>
+              <th>ERP Order</th>
+              <!-- <th>LN Order #</th> -->
+              <th>LN ID</th>
+              <th>Customer Name</th>
+              <th>Driver</th>
+              <th>Vehicle</th>
+              <th>Area</th>
+              <th>Order Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders" class="order-row">
+              <td>
+                <span>{{ order.customerOrderNumber || 'N/A' }}</span>
+              </td>
+              <td>
+                <span class="text-primary">{{ order.ln_OrderNumber || 'N/A' }}</span>
+              </td>
+              <td>
+                <span>{{ order.dealerLN_ID || 'N/A' }}</span>
+              </td>
+              <!-- <td>
+                <span class="text-info">{{ order.ln_OrderNumber || '' }}</span>
+              </td> -->
+              <td>
+                <!-- <div class="dealer-info"> -->
+                  <strong>{{ order.dealerName || 'Unknown Dealer' }}</strong>
+                <!-- </div> -->
+              </td>
+              <td>
+                  <strong>{{ order.driverName || 'Unknown Driver' }}</strong>
+              </td>
+              <td>
+                {{ order.vehicleName || 'Unknown Vehicle' }}
+              </td>
+              <td>
+                ({{ order.areaCode}}) {{ order.areaName || 'Unknown Area' }}
+              </td>
+              <td>
+                <span>{{ formatDate(order.orderDate) }}</span>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="getStatusClass(order.status)">
+                  {{ order.status }}
+                </span>
+              </td>
+              <td>
+                <div class="d-flex gap-2">
+                  <button
+                    class="btn btn-sm btn-outline-info"
+                    (click)="viewOrderDetails(order)"
+                    title="View Details"
+                  >
+                    <i class="material-icons">visibility</i>
+                  </button>
+                  <button
+                    *ngIf="order.status && order.status.toLowerCase() === 'delivered'"
+                    class="btn btn-sm btn-outline-success"
+                    title="View Delivery Notes"
+                    (click)="viewDeliveryNote(order)"
+                  >
+                    <i class="material-icons">description</i>
+                  </button>
+                  <button
+                    *ngIf="hasEmptyLnOrderNumber(order)"
+                    class="btn btn-sm btn-outline-primary"
+                    title="Resend"
+                    (click)="resendOrder(order)"
+                    [disabled]="resendingOrderId === order.dealerOrderID"
+                  >
+                    <span *ngIf="resendingOrderId !== order.dealerOrderID">
+                      <i class="material-icons">send</i>
+                    </span>
+                    <span *ngIf="resendingOrderId === order.dealerOrderID" class="spinner-border spinner-border-sm" role="status"></span>
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-warning"
+                    title="View Invoice"
+                  >
+                    <i class="material-icons">receipt</i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="orders.length === 0">
+              <td colspan="8" class="text-center py-4">
+                <div class="no-data">
+                  <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                  <p class="text-muted">No orders found matching your criteria.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="!loading && totalRecords > 0" class="pagination-container">
+    <div class="pagination-info">
+      Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ Math.min(currentPage * pageSize, totalRecords) }} of {{ totalRecords }} results
+    </div>
+    <div class="pagination-controls">
+      <button 
+        class="btn-page" 
+        [disabled]="currentPage === 1"
+        (click)="onPageChange(currentPage - 1)">
+        <i class="material-icons">chevron_left</i>
+      </button>
+      
+      <span class="page-info">{{ currentPage }} of {{ totalPages }}</span>
+      
+      <button 
+        class="btn-page" 
+        [disabled]="currentPage === totalPages"
+        (click)="onPageChange(currentPage + 1)">
+        <i class="material-icons">chevron_right</i>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+.interviews-list {
+  .list-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    h2 { margin: 0; font-weight: 500; }
+  }
+}
+
+.filter-card {
+  margin-bottom: 16px;
+  .search-field { width: 350px; }
+}
+
+.loading-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0;
+}
+
+.table-content { padding: 0 !important; }
+.full-width { width: 100%; }
+
+.type-chip {
+  background: #e8eaf6;
+  color: #3f51b5;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-chip {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  &.status-success { background: #c8e6c9; color: #2e7d32; }
+  &.status-warning { background: #fff9c4; color: #f57f17; }
+  &.status-danger { background: #ffcdd2; color: #c62828; }
+  &.status-info { background: #bbdefb; color: #1565c0; }
+  &.status-default { background: #e0e0e0; color: #616161; }
+}
+
+.confirmed { color: #2e7d32; }
+.not-confirmed { color: #bdbdbd; }
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px;
+  color: #bdbdbd;
+  mat-icon { font-size: 48px; width: 48px; height: 48px; margin-bottom: 8px; }
+  p { margin: 0; }
+}
+
+.empty-cell { text-align: center; }

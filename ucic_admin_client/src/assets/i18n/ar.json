@@ -1,0 +1,1066 @@
+{
+  "DEALER": {
+    "TITLE": "بوابة عملاء اسمنت المتحدة الصناعية",
+    "NAVIGATION": {
+      "DASHBOARD": "لوحة التحكم",
+      "PRODUCTS": "المنتجات",
+      "ORDERS": "الطلبات",
+      "MY_ORDERS": "طلباتي",
+      "DELIVERY_ADDRESSES": "عناوين التوصيل",
+      "DRIVERS": "السائقين",
+      "VEHICLES": "الشاحنات",
+      "PROFILE": "ملف العميل",
+      "SUPPORT": "الدعم الفني",
+      "LOGOUT": "تسجيل الخروج"
+    },
+    "DASHBOARD": {
+      "WELCOME_TITLE": "مرحباً بك في بوابة عملاء اسمنت المتحدة الصناعية",
+      "WELCOME_SUBTITLE": "إدارة طلبات الأسمنت وتتبع التوصيل",
+      "NEXT_DELIVERY": "التوصيل القادم",
+      "METRICS": {
+        "TOTAL_ORDERS": "إجمالي الطلبات",
+        "PENDING_ORDERS": "الطلبات المعلقة",
+        "LAST_ORDER_VALUE": "الرصيد الحالي",
+        "MONTHLY_SPENDING": "الإنفاق الشهري",
+        "REMAINING_TONS": "الأطنان المتبقية",
+        "REMAINING_BAGS": "الأكياس المتبقية",
+        "TOTAL_PRODUCTS_ORDERED": "إجمالي المنتجات المطلوبة",
+        "YEARLY_SPENDING": "الإنفاق السنوي",
+        "AVERAGE_ORDER_VALUE": "متوسط قيمة الطلب",
+        "AVERAGE_DELIVERY_TIME": "متوسط وقت التوصيل"
+      },
+      "TRENDS": {
+        "THIS_MONTH": "+2 هذا الشهر",
+        "IN_PROGRESS": "قيد التنفيذ",
+        "THIS_MONTH_LABEL": "هذا الشهر",
+        "USED": "مستخدم",
+        "DAYS": "أيام"
+      },
+      "SECTIONS": {
+        "FAVORITE_PRODUCTS": "منتجاتك المفضلة",
+        "RECENT_ORDERS": "الطلبات الحديثة",
+        "QUICK_ACTIONS": "التفاصيل السريعة"
+      },
+      "TABLE": {
+        "ORDER": "الطلب",
+        "CUSTOMER_ORDER": "رقم الفسح",
+        "ERP_ORDER": "طلب ERP",
+        "DATE": "التاريخ",
+        "STATUS": "الحالة",
+        "DELIVERY_AREA": "منطقة التوصيل",
+        "DRIVER": "السائق",
+        "VEHICLE": "الشاحنة",
+        "ITEMS": "العناصر",
+        "TOTAL": "المجموع",
+        "BAGS": "كيس",
+        "VIEW_ALL_ORDERS": "عرض جميع الطلبات",
+        "NO_RECENT_ORDERS": "لا توجد طلبات حديثة"
+      },
+      "QUICK_ACTIONS": {
+        "BROWSE_PRODUCTS": "تصفح المنتجات",
+        "BROWSE_PRODUCTS_DESC": "استكشف كتالوج الأسمنت الخاص بنا",
+        "VIEW_CART": "عرض السلة",
+        "VIEW_CART_DESC": "مراجعة العناصر في سلتك",
+        "ORDER_HISTORY": "تاريخ الطلبات",
+        "ORDER_HISTORY_DESC": "عرض الطلبات السابقة",
+        "CONTACT_SUPPORT": "اتصل بالدعم",
+        "CONTACT_SUPPORT_DESC": "احصل على المساعدة من فريقنا"
+      },
+      "CART_STATUS": {
+        "ITEMS_IN_CART": "لديك عناصر في سلتك",
+        "ITEMS_READY": "عنصر جاهز للدفع",
+        "VIEW_CART": "عرض السلة",
+        "CHECKOUT": "إنهاء الشراء"
+      },
+      "SUPPORT": {
+        "NEED_HELP": "تحتاج مساعدة؟",
+        "SUPPORT_MESSAGE": "فريق الدعم لدينا جاهز لمساعدتك.",
+        "CONTACT_SUPPORT": "اتصل بالدعم",
+        "BUSINESS_HOURS": "الإثنين - الجمعة: 8:00 صباحاً - 6:00 مساءً"
+      },
+      "STATUS": {
+        "PENDING": "تحت الاجراء",
+        "IN_PROCESS": "تم التسجيل",
+        "DELIVERED": "تم التحميل"
+      }
+    },
+    "PRODUCTS": {
+      "TITLE": "كتالوج المنتجات",
+      "SUBTITLE": "تصفح المنتجات المتاحة للتجار",
+      "SEARCH": {
+        "LABEL": "البحث في المنتجات",
+        "PLACEHOLDER": "البحث بالاسم أو الكود أو الوصف..."
+      },
+      "FILTERS": {
+        "CATEGORY": "الفئة",
+        "ALL_CATEGORIES": "جميع الفئات",
+        "SORT_BY": "ترتيب حسب",
+        "SORT_NAME": "الاسم",
+        "SORT_NEWEST": "الأحدث",
+        "SHOW": "عرض",
+        "CLEAR": "مسح"
+      },
+      "RESULTS": {
+        "SHOWING": "عرض",
+        "OF": "من",
+        "PRODUCTS": "منتج",
+        "PAGE": "صفحة"
+      },
+      "TABLE": {
+        "ID": "المعرف",
+        "PRODUCT_NAME": "اسم المنتج",
+        "PRODUCT_CODE": "كود المنتج",
+        "LN_CODE": "كود LN",
+        "DESCRIPTION": "الوصف",
+        "UNIT": "الوحدة",
+        "STATUS": "الحالة",
+        "CREATED_DATE": "تاريخ الإنشاء",
+        "ACTIONS": "التفاصيل",
+        "ACTIVE": "نشط",
+        "INACTIVE": "غير نشط",
+        "NO_DESCRIPTION": "لا يوجد وصف متاح",
+        "DETAILS": "التفاصيل",
+        "VIEW_DETAILS": "عرض التفاصيل"
+      },
+      "EMPTY_STATE": {
+        "TITLE": "لم يتم العثور على منتجات",
+        "MESSAGE": "جرب تعديل معايير البحث أو امسح الفلاتر لرؤية جميع المنتجات.",
+        "SHOW_ALL": "عرض جميع المنتجات"
+      },
+      "LOADING": {
+        "MESSAGE": "جار تحميل المنتجات...",
+        "LOADING": "جار التحميل..."
+      },
+      "MEASUREMENT": {
+        "TONS": "أطنان",
+        "BAGS": "أكياس",
+        "KG": "كجم"
+      }
+    },
+    "ORDER_HISTORY": {
+      "TITLE": "نظرة عامة على الطلبات",
+      "SUBTITLE": "عرض وتتبع طلباتك السابقة",
+      "NEW_ORDER": "طلب جديد",
+      "SEARCH": {
+        "PLACEHOLDER": "البحث رقم الفسح أو المنتجات..."
+      },
+      "FILTERS": {
+        "ALL_STATUS": "جميع الحالات",
+        "PENDING": "تحت الاجراء",
+        "IN_PROCESS": "تم التسجيل",
+        "MODIFIED": "تم التعديل",
+        "CANCELED": "ملغى",
+        "BLOCKED": "محظور",
+        "LOADING": "جارٍ التحميل",
+        "DELIVERED": "تم التحميل",
+        "INVOICED": "تم إصدار الفاتورة",
+        "CLOSED": "مغلق",
+        "PROCESSING": "قيد التنفيذ",
+        "SHIPPED": "تم الشحن",
+        "CANCELLED": "ملغي",
+        "ALL_TIME": "جميع الأوقات",
+        "LAST_7_DAYS": "آخر 7 أيام",
+        "LAST_30_DAYS": "آخر 30 يوماً",
+        "LAST_3_MONTHS": "آخر 3 شهور",
+        "LAST_YEAR": "العام الماضي"
+      },
+      "PAGINATION": {
+        "SHOW": "عرض",
+        "PER_PAGE": "لكل صفحة",
+        "SHOWING": "عرض",
+        "TO": "إلى",
+        "OF": "من",
+        "ORDERS": "طلبات"
+      },
+      "LOADING": {
+        "LOADING": "جار التحميل...",
+        "MESSAGE": "جار تحميل تاريخ طلباتك..."
+      },
+      "ERROR": {
+        "TITLE": "خطأ في تحميل الطلبات",
+        "RETRY": "إعادة المحاولة"
+      },
+      "TABLE": {
+        "CUSTOMER_ORDER": "رقم الفسح",
+        "LN_ORDER": "رقم طلب LN",
+        "DATE": "التاريخ",
+        "ITEMS": "العناصر",
+        "STATUS": "الحالة",
+        "ADDRESS": "منطقة التوصيل",
+        "DRIVER": "السائق",
+        "ACTIONS": "التفاصيل",
+        "VEHICLE": "الشاحنة"
+      },
+      "ORDER_PREFIX": "طلب رقم ",
+      "ITEMS_TEXT": "عناصر",
+      "STATUS": {
+        "PENDING": "قيد الانتظار",
+        "IN_PROCESS": "قيد المعالجة",
+        "MODIFIED": "تم التعديل",
+        "CANCELED": "ملغى",
+        "BLOCKED": "محظور",
+        "LOADING": "جارٍ التحميل",
+        "DELIVERED": "تم التسليم",
+        "INVOICED": "تم إصدار الفاتورة",
+        "CLOSED": "مغلق",
+        "PROCESSING": "قيد التنفيذ",
+        "SHIPPED": "تم الشحن",
+        "CANCELLED": "ملغي"
+      },
+      "ACTIONS": {
+        "VIEW_DETAILS": "عرض التفاصيل",
+        "DOWNLOAD_PDF": "جار تحميل التقرير",
+        "HIDE_ITEMS": "إخفاء العناصر",
+        "SHOW_ITEMS": "عرض العناصر",
+        "REORDER": "إعادة الطلب",
+        "DELIVERY_NOTE": "مذكرة التسليم"
+      },
+      "ITEM_DETAILS": {
+        "ORDER_ITEMS": "تفاصيل الطلب",
+        "QTY": "الكمية",
+        "SPECIAL_INSTRUCTIONS": "تعليمات خاصة",
+        "TRACKING": "التتبع"
+      },
+      "EMPTY_STATE": {
+        "TITLE": "لم يتم العثور على طلبات",
+        "FILTERED_MESSAGE": "جرب تعديل معايير البحث أو المرشحات.",
+        "NO_ORDERS_MESSAGE": "لم تقم بوضع أي طلبات بعد.",
+        "START_SHOPPING": "إنشاء طلب جديد"
+      },
+      "STATS": {
+        "TOTAL_ORDERS": "إجمالي الطلبات",
+        "DELIVERED": "تم التسليم"
+      }
+    },
+    "DRIVERS": {
+      "TITLE": "إدارة السائقين",
+      "SUBTITLE": "إدارة سائقي التوصيل الخاص بك",
+      "ADD_DRIVER": "إضافة سائق",
+      "SEARCH": {
+        "PLACEHOLDER": "البحث عن السائقين..."
+      },
+      "FILTERS": {
+        "ALL_STATUS": "جميع الحالات",
+        "ACTIVE": "نشط",
+        "INACTIVE": "غير نشط"
+      },
+      "PAGINATION": {
+        "SHOW": "عرض",
+        "ALL": "الكل"
+      },
+      "LOADING": {
+        "MESSAGE": "جار تحميل السائقين..."
+      },
+      "EMPTY_STATE": {
+        "NO_DRIVERS_TITLE": "لم يتم العثور على سائقين",
+        "NO_DRIVERS_MESSAGE": "ابدأ بإضافة سائقك الأول",
+        "ADD_FIRST_DRIVER": "إضافة السائق الأول",
+        "NO_MATCH_TITLE": "لا توجد سائقين مطابقين",
+        "NO_MATCH_MESSAGE": "جرب تعديل معايير البحث"
+      },
+      "TABLE": {
+        "NAME": "الاسم",
+        "USERNAME": "اسم المستخدم",
+        "PHONE": "الهاتف",
+        "EMAIL": "البريد الإلكتروني",
+        "LICENSE_ID": "رقم الرخصة",
+        "IQAMA_NUMBER": "رقم الإقامة",
+        "STATUS": "الحالة",
+        "ACTIONS": "التفاصيل"
+      },
+      "STATUS": {
+        "ACTIVE": "نشط",
+        "INACTIVE": "غير نشط"
+      },
+      "ACTIONS": {
+        "EDIT": "تعديل السائق",
+        "DEACTIVATE": "إلغاء تفعيل السائق",
+        "ACTIVATE": "تفعيل السائق",
+        "DELETE": "حذف السائق"
+      },
+      "DELETE_MODAL": {
+        "TITLE": "تأكيد الحذف",
+        "MESSAGE": "هل أنت متأكد من رغبتك في حذف السائق",
+        "WARNING": "لا يمكن التراجع عن هذا الإجراء.",
+        "CANCEL": "إلغاء",
+        "DELETE": "حذف"
+      },
+      "EDIT": {
+        "TITLE": "تعديل السائق",
+        "SUBTITLE": "تحديث معلومات السائق القابلة للتعديل (رقم الإقامة، رقم الرخصة، الحالة)",
+        "BACK_TO_DRIVERS": "العودة إلى السائقين",
+        "DRIVER_INFORMATION": "معلومات السائق",
+        "FORM": {
+          "FULL_NAME": "الاسم الكامل",
+          "EMAIL": "البريد الإلكتروني",
+          "PHONE_NUMBER": "رقم الهاتف",
+          "IQAMA_NUMBER": "رقم الإقامة",
+          "LICENSE_NUMBER": "رقم الرخصة",
+          "STATUS": "الحالة",
+          "PLACEHOLDERS": {
+            "FULL_NAME": "أدخل الاسم الكامل",
+            "EMAIL": "أدخل عنوان البريد الإلكتروني",
+            "PHONE_NUMBER": "أدخل رقم الهاتف",
+            "IQAMA_NUMBER": "أدخل رقم الإقامة",
+            "LICENSE_NUMBER": "أدخل رقم الرخصة"
+          },
+          "STATUS_OPTIONS": {
+            "ACTIVE": "نشط",
+            "INACTIVE": "غير نشط"
+          },
+          "ERRORS": {
+            "FULL_NAME_REQUIRED": "الاسم الكامل مطلوب",
+            "EMAIL_REQUIRED": "البريد الإلكتروني مطلوب",
+            "EMAIL_INVALID": "يرجى إدخال بريد إلكتروني صحيح",
+            "PHONE_REQUIRED": "رقم الهاتف مطلوب"
+          },
+          "CANCEL": "إلغاء",
+          "UPDATE_DRIVER": "تحديث السائق",
+          "UPDATING": "جار التحديث..."
+        },
+        "LOADING": {
+          "MESSAGE": "جار تحميل معلومات السائق..."
+        }
+      },
+      "CREATE": {
+        "TITLE": "إضافة سائق جديد",
+        "SUBTITLE": "إضافة سائق جديد إلى أسطولك",
+        "BACK_TO_DRIVERS": "العودة إلى السائقين",
+        "USER_INFORMATION": "معلومات المستخدم",
+        "DRIVER_INFORMATION": "معلومات السائق",
+        "FORM": {
+          "FULL_NAME": "الاسم الكامل",
+          "USERNAME": "اسم المستخدم",
+          "EMAIL": "البريد الإلكتروني",
+          "PHONE_NUMBER": "رقم الهاتف",
+          "PASSWORD": "كلمة المرور",
+          "CONFIRM_PASSWORD": "تأكيد كلمة المرور",
+          "IQAMA_NUMBER": "رقم الإقامة",
+          "LICENSE_NUMBER": "رقم الرخصة",
+          "PLACEHOLDERS": {
+            "FULL_NAME": "أدخل الاسم الكامل",
+            "USERNAME": "أدخل اسم المستخدم",
+            "EMAIL": "أدخل عنوان البريد الإلكتروني",
+            "PHONE_NUMBER": "أدخل رقم الهاتف",
+            "PASSWORD": "أدخل كلمة المرور",
+            "CONFIRM_PASSWORD": "أكد كلمة المرور",
+            "IQAMA_NUMBER": "أدخل رقم الإقامة",
+            "LICENSE_NUMBER": "أدخل رقم الرخصة"
+          },
+          "ERRORS": {
+            "FULL_NAME_REQUIRED": "الاسم الكامل مطلوب",
+            "USERNAME_REQUIRED": "اسم المستخدم مطلوب",
+            "EMAIL_REQUIRED": "البريد الإلكتروني مطلوب",
+            "EMAIL_INVALID": "يرجى إدخال بريد إلكتروني صحيح",
+            "PHONE_REQUIRED": "رقم الهاتف مطلوب",
+            "PASSWORD_REQUIRED": "كلمة المرور مطلوبة",
+            "PASSWORD_MIN_LENGTH": "يجب أن تحتوي كلمة المرور على الأقل 6 أحرف",
+            "CONFIRM_PASSWORD_REQUIRED": "تأكيد كلمة المرور مطلوب",
+            "PASSWORD_MISMATCH": "كلمات المرور غير متطابقة"
+          },
+          "CANCEL": "إلغاء",
+          "ADD_DRIVER": "إضافة سائق",
+          "ADDING": "جار الإضافة..."
+        },
+        "SUCCESS_MESSAGE": "تم إنشاء السائق بنجاح!",
+        "ERROR_MESSAGE": "فشل إنشاء السائق. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "VEHICLES": {
+      "TITLE": "إدارة الشاحنات",
+      "SUBTITLE": "إدارة شاحنات التوصيل الخاصة بك",
+      "ADD_VEHICLE": "إضافة شاحنة",
+      "SEARCH": {
+        "PLACEHOLDER": "البحث عن الشاحنات..."
+      },
+      "FILTERS": {
+        "ALL_STATUS": "جميع الحالات",
+        "ACTIVE": "نشط",
+        "INACTIVE": "غير نشط",
+        "ALL_TYPES": "جميع الأنواع",
+        "TRUCK": "شاحنة",
+        "VAN": "عربة نقل",
+        "PICKUP": "سيارة نقل صغيرة",
+        "TRAILER": "مقطورة"
+      },
+      "PAGINATION": {
+        "SHOW": "عرض",
+        "ALL": "الكل"
+      },
+      "LOADING": {
+        "MESSAGE": "تحميل الشاحنات..."
+      },
+      "EMPTY_STATE": {
+        "NO_VEHICLES_TITLE": "لم يتم العثور على شاحنات",
+        "NO_VEHICLES_MESSAGE": "ابدأ بإضافة شاحنتك الأولى",
+        "ADD_FIRST_VEHICLE": "إضافة الشاحنة الأولى",
+        "NO_MATCH_TITLE": "لا توجد شاحنات مطابقة",
+        "NO_MATCH_MESSAGE": "جرب تعديل معايير البحث"
+      },
+      "TABLE": {
+        "PLATE_NUMBER": "رقم اللوحة",
+        "TYPE": "النوع",
+        "CAPACITY": "الحمولة",
+        "REGISTRATION_DATE": "تاريخ التسجيل",
+        "REGISTRATION_EXPIRY": "انتهاء التسجيل",
+        "INSURANCE_EXPIRY": "انتهاء التأمين",
+        "STATUS": "الحالة",
+        "ACTIONS": "التفاصيل"
+      },
+      "STATUS": {
+        "ACTIVE": "نشط",
+        "INACTIVE": "غير نشط"
+      },
+      "TYPES": {
+        "TRUCK": "شاحنة",
+        "VAN": "عربة نقل",
+        "PICKUP": "سيارة نقل صغيرة",
+        "TRAILER": "مقطورة"
+      },
+      "ACTIONS": {
+        "VIEW": "عرض الشاحنة",
+        "EDIT": "تعديل الشاحنة",
+        "DEACTIVATE": "إلغاء تنشيط الشاحنة",
+        "ACTIVATE": "تنشيط الشاحنة",
+        "DELETE": "حذف الشاحنة"
+      },
+      "DELETE_MODAL": {
+        "TITLE": "تأكيد الحذف",
+        "MESSAGE": "هل أنت متأكد من أنك تريد حذف الشاحنة",
+        "WARNING": "لا يمكن التراجع عن هذا الإجراء.",
+        "CANCEL": "إلغاء",
+        "DELETE": "حذف"
+      },
+      "CREATE": {
+        "TITLE": "إضافة شاحنة جديدة",
+        "SUBTITLE": "إضافة شاحنة جديدة إلى أسطولك",
+        "BACK_TO_VEHICLES": "العودة إلى الشاحنات",
+        "BASIC_INFORMATION": "المعلومات الأساسية",
+        "IMPORTANT_DATES": "التواريخ المهمة",
+        "ADDITIONAL_INFORMATION": "معلومات إضافية",
+        "FORM": {
+          "PLATE_NUMBER": "رقم اللوحة",
+          "VEHICLE_TYPE": "نوع الشاحنة",
+          "CAPACITY": "الحمولة (طن)",
+          "REGISTRATION_DATE": "تاريخ التسجيل",
+          "REGISTRATION_EXPIRY_DATE": "تاريخ انتهاء التسجيل",
+          "INSURANCE_EXPIRY_DATE": "تاريخ انتهاء التأمين",
+          "LICENSE_ID": "رقم الرخصة",
+          "REGISTRATION_NUMBER": "رقم التسجيل",
+          "VEHICLE_IS_ACTIVE": "الشاحنة نشطة",
+          "SELECT_VEHICLE_TYPE": "اختر نوع الشاحنة",
+          "TYPES": {
+            "TRUCK": "شاحنة",
+            "VAN": "عربة نقل",
+            "PICKUP": "سيارة نقل صغيرة",
+            "TRAILER": "مقطورة"
+          },
+          "PLACEHOLDERS": {
+            "PLATE_NUMBER": "مثال: ABC-1234",
+            "CAPACITY": "مثال: 5.5",
+            "LICENSE_ID": "معرف رخصة اختياري",
+            "REGISTRATION_NUMBER": "رقم تسجيل اختياري"
+          },
+          "ERRORS": {
+            "PLATE_NUMBER_REQUIRED": "رقم اللوحة مطلوب",
+            "PLATE_NUMBER_MAX_LENGTH": "رقم اللوحة لا يمكن أن يتجاوز 20 حرفاً",
+            "VEHICLE_TYPE_REQUIRED": "نوع الشاحنة مطلوب",
+            "CAPACITY_REQUIRED": "الحمولة مطلوبة",
+            "CAPACITY_MIN": "الحمولة يجب أن تكون على الأقل 0.1 طن",
+            "CAPACITY_MAX": "الحمولة لا يمكن أن تتجاوز 100 طن",
+            "REGISTRATION_DATE_REQUIRED": "تاريخ التسجيل مطلوب",
+            "REGISTRATION_EXPIRY_DATE_REQUIRED": "تاريخ انتهاء التسجيل مطلوب",
+            "INSURANCE_EXPIRY_DATE_REQUIRED": "تاريخ انتهاء التأمين مطلوب",
+            "LICENSE_ID_MAX_LENGTH": "رقم الرخصة لا يمكن أن يتجاوز 50 حرفاً",
+            "REGISTRATION_NUMBER_MAX_LENGTH": "رقم التسجيل لا يمكن أن يتجاوز 50 حرفاً"
+          },
+          "CANCEL": "إلغاء",
+          "CREATE_VEHICLE": "إنشاء شاحنة",
+          "CREATING": "جار الإنشاء..."
+        }
+      },
+      "EDIT": {
+        "TITLE": "تعديل الشاحنة",
+        "SUBTITLE": "تحديث معلومات الشاحنة",
+        "BACK_TO_VEHICLES": "العودة إلى الشاحنات",
+        "LOADING": {
+          "MESSAGE": "تحميل معلومات الشاحنة..."
+        },
+        "FORM": {
+          "UPDATE_VEHICLE": "تحديث الشاحنة",
+          "UPDATING": "جار التحديث..."
+        }
+      }
+    },
+    "PROFILE": {
+      "TITLE": "ملف العميل",
+      "SUBTITLE": "عرض معلومات العميل وإدارة إعدادات الحساب",
+      "DEALER_INFORMATION": "معلومات العميل",
+      "CHANGE_PASSWORD": "تغيير كلمة المرور",
+      "BASIC_INFORMATION": "المعلومات الأساسية",
+      "FINANCIAL_INFORMATION": "المعلومات المالية",
+      "USER_ACCOUNT_DETAILS": "تفاصيل حساب المستخدم",
+      "ACCOUNT_INFORMATION": "معلومات الحساب",
+      "DEALER_NAME": "اسم العميل",
+      "DEALER_CODE": "كود العميل",
+      "LN_ID": "LN  كود",
+      "STATUS": "الحالة",
+      "VERIFIED": "مُتحقق",
+      "NOT_VERIFIED": "غير مُتحقق",
+      "CREDIT_LIMIT": "حد الائتمان",
+      "CURRENT_BALANCE": "الرصيد الحالي",
+      "AVAILABLE_CREDIT": "الرصيد الحالي",
+      "FULL_NAME": "الاسم الكامل",
+      "EMAIL": "البريد الإلكتروني",
+      "PHONE_NUMBER": "رقم الهاتف",
+      "USERNAME": "اسم المستخدم",
+      "ROLES": "الأدوار",
+      "CREATED_AT": "تاريخ الإنشاء",
+      "LAST_UPDATED": "آخر تحديث",
+      "NOT_AVAILABLE": "غير متوفر",
+      "LOADING": {
+        "MESSAGE": "تحميل ملف العميل الشخصي..."
+      },
+      "RETRY": "إعادة المحاولة",
+      "CHANGE_PASSWORD_DIALOG": {
+        "TITLE": "تغيير كلمة المرور",
+        "CURRENT_PASSWORD": "كلمة المرور الحالية",
+        "NEW_PASSWORD": "كلمة المرور الجديدة",
+        "CONFIRM_PASSWORD": "تأكيد كلمة المرور الجديدة",
+        "PLACEHOLDERS": {
+          "CURRENT_PASSWORD": "أدخل كلمة المرور الحالية",
+          "NEW_PASSWORD": "أدخل كلمة المرور الجديدة",
+          "CONFIRM_PASSWORD": "أكد كلمة المرور الجديدة"
+        },
+        "ERRORS": {
+          "CURRENT_PASSWORD_REQUIRED": "كلمة المرور الحالية مطلوبة",
+          "NEW_PASSWORD_MIN_LENGTH": "يجب أن تحتوي كلمة المرور على الأقل 8 أحرف",
+          "PASSWORDS_MISMATCH": "كلمات المرور غير متطابقة"
+        },
+        "CANCEL": "إلغاء",
+        "CHANGE_PASSWORD": "تغيير كلمة المرور",
+        "CHANGING": "جار التغيير..."
+      }
+    },
+    "SUPPORT": {
+      "TITLE": "مركز الدعم",
+      "SUBTITLE": "احصل على المساعدة في طلباتك ومنتجاتك وحسابك",
+      "TABS": {
+        "CONTACT_SUPPORT": "اتصل بالدعم",
+        "MY_TICKETS": "تذاكري",
+        "FAQ": "الأسئلة الشائعة"
+      },
+      "CONTACT": {
+        "CREATE_TICKET": "إنشاء تذكرة دعم",
+        "CONTACT_INFORMATION": "معلومات الاتصال",
+        "PHONE_SUPPORT": "الدعم الهاتفي",
+        "PHONE_HOURS": "الاثنين-الجمعة: 9:00 صباحاً - 6:00 مساءً",
+        "EMAIL_SUPPORT": "بريد خدمة العملاء",
+        "EMAIL_RESPONSE": "الرد خلال 24 ساعة",
+        "LIVE_CHAT": "المحادثة المباشرة",
+        "CHAT_DESCRIPTION": "تحدث مع فريق الدعم",
+        "START_CHAT": "بدء المحادثة",
+        "WHATSAPP": "واتساب",
+        "OPEN_WHATSAPP": "فتح واتساب",
+        "QUICK_LINKS": "روابط سريعة",
+        "QUICK_LINKS_ITEMS": {
+          "TRACK_ORDER": "تتبع الطلب",
+          "DOWNLOAD_INVOICE": "تحميل الفاتورة",
+          "RETURN_EXCHANGE": "الإرجاع/الاستبدال",
+          "UPDATE_PROFILE": "تحديث الملف الشخصي"
+        },
+        "FORM": {
+          "SUBJECT": "الموضوع",
+          "CATEGORY": "الفئة",
+          "SELECT_CATEGORY": "اختر الفئة",
+          "PRIORITY": "الأولوية",
+          "DESCRIPTION": "الوصف",
+          "ATTACHMENTS": "المرفقات",
+          "UPLOAD_FILES": "رفع الملفات (حد أقصى 5 ميجا لكل ملف)",
+          "SUBMIT_TICKET": "إرسال التذكرة",
+          "PLACEHOLDERS": {
+            "SUBJECT": "وصف موجز لمشكلتك",
+            "DESCRIPTION": "يرجى تقديم معلومات مفصلة حول مشكلتك..."
+          },
+          "CATEGORIES": {
+            "ORDER_ISSUES": "مشاكل الطلبات",
+            "PRODUCT_INQUIRY": "استفسار عن المنتج",
+            "PAYMENT": "الدفع",
+            "SHIPPING": "الشحن",
+            "ACCOUNT": " طلب كشف الكميات",
+            "STATEMENT": "طلب كشف الحسابات",
+            "TECHNICAL": "تقني",
+            "OTHER": "أخرى"
+          },
+          "PRIORITIES": {
+            "LOW": "منخفض",
+            "MEDIUM": "متوسط",
+            "HIGH": "عالي",
+            "URGENT": "عاجل"
+          }
+        }
+      },
+      "TICKETS": {
+        "TITLE": "تذاكر الدعم الخاصة بي",
+        "NEW_TICKET": "تذكرة جديدة",
+        "SEARCH_PLACEHOLDER": "البحث في التذاكر بالموضوع أو الوصف أو رقم التذكرة...",
+        "FILTERS": {
+          "STATUS": "الحالة",
+          "PRIORITY": "الأولوية",
+          "CATEGORY": "الفئة",
+          "ALL_STATUS": "جميع الحالات",
+          "ALL_PRIORITY": "جميع الأولويات",
+          "ALL_CATEGORIES": "جميع الفئات",
+          "CLEAR_FILTERS": "مسح المرشحات"
+        },
+        "TABLE": {
+          "TICKET_NUMBER": "تذكرة رقم",
+          "SUBJECT": "الموضوع",
+          "CATEGORY": "الفئة",
+          "PRIORITY": "الأولوية",
+          "STATUS": "الحالة",
+          "CREATED": "تاريخ الإنشاء",
+          "LAST_UPDATED": "آخر تحديث",
+          "ACTION": "الإجراء",
+          "VIEW_DETAILS": "عرض التفاصيل"
+        },
+        "STATUS": {
+          "OPEN": "مفتوح",
+          "IN_PROGRESS": "قيد التنفيذ",
+          "RESOLVED": "محلول",
+          "CLOSED": "مغلق"
+        },
+        "EMPTY_STATES": {
+          "NO_TICKETS_TITLE": "لا توجد تذاكر دعم",
+          "NO_TICKETS_MESSAGE": "لم تقم بإنشاء أي تذاكر دعم بعد.",
+          "CREATE_FIRST_TICKET": "إنشاء تذكرتك الأولى",
+          "NO_RESULTS_TITLE": "لا توجد تذاكر",
+          "NO_RESULTS_MESSAGE": "لا توجد تذاكر تطابق معايير البحث والمرشح الحالية."
+        },
+        "PAGINATION": {
+          "SHOW": "عرض",
+          "PER_PAGE": "في الصفحة",
+          "PREVIOUS": "السابق",
+          "NEXT": "التالي",
+          "SHOWING": "عرض",
+          "TO": "إلى",
+          "OF": "من",
+          "TICKETS": "تذاكر"
+        }
+      },
+      "TICKET_DETAILS": {
+        "CLOSE": "إغلاق نافذة التفاصيل",
+        "CATEGORY": "الفئة",
+        "CREATED": "تاريخ الإنشاء",
+        "LAST_UPDATED": "آخر تحديث",
+        "DESCRIPTION": "الوصف",
+        "CONVERSATION_HISTORY": "تاريخ المحادثة",
+        "YOU_DEALER": "أنت (العميل)",
+        "SUPPORT_TEAM": "فريق الدعم",
+        "ATTACHMENTS": "المرفقات",
+        "ADD_REPLY": "إضافة رد",
+        "REPLY_PLACEHOLDER": "اكتب ردك هنا...",
+        "CANCEL": "إلغاء",
+        "SEND_REPLY": "إرسال الرد",
+        "SENDING": "جار الإرسال...",
+        "TICKET_RESOLVED": "تم حل التذكرة",
+        "TICKET_CLOSED": "تم إغلاق التذكرة",
+        "RESOLVED_MESSAGE": "تم حل هذه التذكرة من قبل فريق الدعم. لا يمكن إضافة المزيد من الردود.",
+        "CLOSED_MESSAGE": "تم إغلاق هذه التذكرة. لا يمكن إضافة المزيد من الردود."
+      },
+      "FAQ": {
+        "TITLE": "الأسئلة الشائعة",
+        "SEARCH_PLACEHOLDER": "البحث في الأسئلة الشائعة...",
+        "ALL_CATEGORIES": "الكل",
+        "QUESTIONS": {
+          "HOW_TO_TRACK_ORDER": "كيف يمكنني تتبع طلبي؟",
+          "RETURN_POLICY": "ما هي سياسة الإرجاع الخاصة بكم؟",
+          "PART_COMPATIBILITY": "كيف أعرف إذا كان الجزء متوافق مع مركبتي؟",
+          "SHIPPING_CHARGES": "ما هي رسوم الشحن؟",
+          "PAYMENT_METHODS": "ما هي طرق الدفع التي تقبلونها؟",
+          "ORDER_CANCELLATION": "هل يمكنني إلغاء طلبي؟"
+        },
+        "ANSWERS": {
+          "HOW_TO_TRACK_ORDER": "يمكنك تتبع طلبك عن طريق تسجيل الدخول إلى حسابك وزيارة قسم تاريخ الطلبات. انقر على زر \"تتبع\" بجوار طلبك لرؤية التحديثات في الوقت الفعلي.",
+          "RETURN_POLICY": "نقبل الإرجاع خلال 30 يوماً من التسليم للمواد غير المستخدمة في عبوتها الأصلية. يرجى الاتصال بفريق الدعم لبدء عملية الإرجاع.",
+          "PART_COMPATIBILITY": "تتضمن كل صفحة منتج أداة فحص التوافق. أدخل تفاصيل شاحنتك (الماركة، الطراز، السنة) للتحقق من التوافق. يمكنك أيضاً الاتصال بفريقنا الفني للحصول على المساعدة.",
+          "SHIPPING_CHARGES": "تختلف رسوم الشحن حسب قيمة الطلب والموقع. الطلبات فوق 5000 ريال تستحق الشحن المجاني. يمكنك رؤية الرسوم الدقيقة أثناء الدفع.",
+          "PAYMENT_METHODS": "نقبل بطاقات الائتمان والخصم والخدمات المصرفية عبر الإنترنت و UPI والمحافظ الرقمية. الدفع عند الاستلام متاح للمواقع المختارة.",
+          "ORDER_CANCELLATION": "يمكنك إلغاء طلبك خلال 24 ساعة من وضعه إذا لم يتم شحنه بعد. اذهب إلى تاريخ الطلبات وانقر على 'إلغاء الطلب'."
+        }
+      }
+    },
+    "ADDRESSES": {
+      "TITLE": "إدارة عناوين التوصيل",
+      "SUBTITLE": "إدارة عناوين التوصيل الخاصة بك للطلبات",
+      "ADD_NEW": "إضافة عنوان جديد",
+      "DELETE": "حذف العنوان",
+      "SET_DEFAULT": "تعيين كافتراضي",
+      "SEARCH_PLACEHOLDER": "البحث عن العناوين...",
+      "SHOW": "عرض",
+      "LOADING": {
+        "MESSAGE": "تحميل العناوين..."
+      },
+      "EMPTY_STATE": {
+        "TITLE": "لم يتم العثور على عناوين",
+        "MESSAGE": "أضف عنوانك الأول للبدء في الطلبات",
+        "ADD_FIRST": "إضافة العنوان الأول"
+      },
+      "NO_MATCH": {
+        "TITLE": "لا توجد عناوين مطابقة",
+        "MESSAGE": "جرب تعديل معايير البحث"
+      },
+      "FILTERS": {
+        "ALL_STATUS": "جميع الحالات",
+        "ACTIVE": "نشط",
+        "INACTIVE": "غير نشط"
+      },
+      "TABLE": {
+        "ADDRESS_LINE_1": "السطر الأول للعنوان",
+        "ADDRESS_LINE_2": "السطر الثاني للعنوان",
+        "CITY": "المدينة",
+        "STATE": "الولاية",
+        "POSTAL_CODE": "الرمز البريدي",
+        "COUNTRY": "البلد",
+        "STATUS": "الحالة",
+        "ACTIONS": "التفاصيل"
+      },
+      "STATUS": {
+        "ACTIVE": "نشط",
+        "INACTIVE": "غير نشط"
+      },
+      "ACTIONS": {
+        "EDIT": "تعديل العنوان",
+        "DELETE": "حذف العنوان"
+      },
+      "PAGINATION": {
+        "SHOWING": "عرض",
+        "TO": "إلى",
+        "OF": "من",
+        "RESULTS": "النتائج"
+      },
+      "FORM": {
+        "ADDRESS_NAME": "اسم العنوان",
+        "ADDRESS_LINE_1": "السطر الأول للعنوان",
+        "ADDRESS_LINE_2": "السطر الثاني للعنوان",
+        "CITY": "المدينة",
+        "STATE_PROVINCE": "الولاية/المقاطعة",
+        "POSTAL_CODE": "الرمز البريدي",
+        "COUNTRY": "البلد",
+        "PHONE": "رقم الهاتف",
+        "ACTIVE_ADDRESS": "عنوان نشط",
+        "SAVE": "حفظ العنوان",
+        "CANCEL": "إلغاء",
+        "CREATE_ADDRESS": "إنشاء عنوان",
+        "CREATING": "جار الإنشاء...",
+        "UPDATE_ADDRESS": "تحديث العنوان",
+        "UPDATING": "جار التحديث...",
+        "PLACEHOLDERS": {
+          "STREET_ADDRESS": "أدخل عنوان الشارع",
+          "APARTMENT_SUITE": "شقة، جناح، إلخ. (اختياري)",
+          "CITY": "أدخل المدينة",
+          "STATE_PROVINCE": "أدخل الولاية أو المقاطعة",
+          "POSTAL_CODE": "أدخل الرمز البريدي",
+          "COUNTRY": "أدخل البلد"
+        },
+        "ERRORS": {
+          "ADDRESS_LINE_1_REQUIRED": "السطر الأول للعنوان مطلوب",
+          "CITY_REQUIRED": "المدينة مطلوبة",
+          "COUNTRY_REQUIRED": "البلد مطلوب"
+        }
+      },
+      "CREATE": {
+        "TITLE": "إضافة عنوان جديد",
+        "SUBTITLE": "إنشاء عنوان توصيل جديد"
+      },
+      "EDIT": {
+        "TITLE": "تعديل العنوان",
+        "SUBTITLE": "تحديث تفاصيل عنوان التوصيل",
+        "LOADING": "تحميل العنوان..."
+      }
+    },
+    "SHOP": {
+      "LOADING": {
+        "LOADING": "جار التحميل..."
+      },
+      "PRODUCT_DETAILS": {
+        "LOADING": {
+          "MESSAGE": "تحميل تفاصيل المنتج..."
+        },
+        "ERROR": {
+          "TITLE": "المنتج غير موجود"
+        },
+        "PRODUCTS": "المنتجات",
+        "BACK_TO_PRODUCTS": "العودة إلى المنتجات",
+        "PRODUCT_IMAGE": "صورة المنتج",
+        "IMAGE_AVAILABLE_SOON": "ستتوفر الصورة قريباً",
+        "CODE": "الكود",
+        "LN": "رقم التصنيف",
+        "ACTIVE": "نشط",
+        "INACTIVE": "غير نشط",
+        "UNIT": "الوحدة",
+        "CREATED": "تاريخ الإنشاء",
+        "MODIFIED": "تاريخ التعديل",
+        "NO_DESCRIPTION": "لا يوجد وصف متاح لهذا المنتج.",
+        "TABS": {
+          "DESCRIPTION": "الوصف",
+          "SPECIFICATIONS": "المواصفات",
+          "PRODUCT_DESCRIPTION": "وصف المنتج",
+          "PRODUCT_SPECIFICATIONS": "مواصفات المنتج"
+        },
+        "SPECS": {
+          "UNIT_OF_MEASUREMENT": "وحدة القياس",
+          "PRODUCT_CODE": "كود المنتج",
+          "LN_CODE": "رمز التصنيف",
+          "STATUS": "الحالة",
+          "CREATED_DATE": "تاريخ الإنشاء",
+          "CREATED_BY": "أنشئ بواسطة",
+          "LAST_MODIFIED": "آخر تعديل",
+          "MODIFIED_BY": "عُدل بواسطة"
+        }
+      },
+      "CART": {
+        "TITLE": "عربة التسوق",
+        "SUBTITLE": "راجع العناصر المحددة",
+        "ORDER_LINES": "خطوط الطلب",
+        "ADD_PRODUCTS": "إضافة منتجات",
+        "CLEAR_CART": "مسح",
+        "ADD_ITEMS": "إضافة عناصر",
+        "CLEAR_CONFIRMATION": {
+          "TITLE": "مسح العربة؟",
+          "MESSAGE": "هل أنت متأكد من أنك تريد إزالة جميع العناصر من عربة التسوق؟ لا يمكن التراجع عن هذا الإجراء.",
+          "CANCEL": "إلغاء",
+          "CONFIRM": "مسح العربة"
+        },
+        "EMPTY": {
+          "TITLE": "عربة التسوق فارغة",
+          "MESSAGE": "أضف بعض المنتجات للبدء!",
+          "BROWSE_PRODUCTS": "تصفح المنتجات"
+        },
+        "EMPTY_CART": {
+          "TITLE": "عربة التسوق فارغة",
+          "MESSAGE": "لم تقم بإضافة أي منتجات إلى عربة التسوق حتى الآن.",
+          "HINT": "قم بزيارة شاشة الطلب لإضافة المنتجات."
+        },
+        "TABLE": {
+          "PRODUCT": "المنتج",
+          "UNIT_PRICE": "سعر الوحدة",
+          "QUANTITY": "الكمية",
+          "TOTAL": "الإجمالي",
+          "ACTIONS": "التفاصيل",
+          "BAGS_PER_TRUCK": "أكياس لكل شاحنة",
+          "TRUCKS": "شاحنات",
+          "TONS": "أطنان",
+          "REMOVE": "إزالة"
+        },
+        "MOBILE": {
+          "NUMBER_OF_TRUCKS": "عدد الشاحنات",
+          "QUANTITY": "الكمية"
+        },
+        "SUMMARY": {
+          "TOTAL_ITEMS": "إجمالي العناصر",
+          "TOTAL_BAGS": "إجمالي الأكياس",
+          "TOTAL_TONS": "إجمالي الأطنان",
+          "TRUCKS_NEEDED": "الشاحنات المطلوبة (للأكياس)",
+          "PRODUCTS": "منتجات",
+          "BAGS": "أكياس",
+          "TONS": "أطنان",
+          "TRUCKS": "شاحنات",
+          "SUBTOTAL": "المجموع الفرعي",
+          "TAX": "الضريبة",
+          "TOTAL": "الإجمالي",
+          "CONTINUE_SHOPPING": "متابعة التسوق",
+          "PROCEED_CHECKOUT": "متابعة الى الطلب"
+        }
+      },
+      "CHECKOUT": {
+        "ADD_NEW": "إضافة جديد",
+        "TITLE": "تفاصيل الطلب",
+        "SUBTITLE": "راجع طلبك وأكمل الدفع",
+        "PAYMENT_INFO": "معلومات الدفع",
+        "PLACE_ORDER": "تقديم الطلب",
+        "CONFIRM_ORDER": "تأكيد الطلب",
+        "LOADING": {
+          "TITLE": "تحميل بيانات الدفع",
+          "MESSAGE": "يرجى الانتظار بينما نقوم بتحميل معلومات طلبك والحدود اليومية والخيارات المتاحة...",
+          "DAILY_LIMITS": "الحدود اليومية",
+          "DELIVERY_ADDRESSES": "عناوين التسليم",
+          "DRIVERS": "السائقون",
+          "VEHICLES": "الشاحنات"
+        },
+        "DAILY_LIMIT": {
+          "TITLE": "الحد الأقصى للطلب اليومي",
+          "TONS_TITLE": "الحدود اليومية (أطنان)",
+          "BAGS_TITLE": "الحدود اليومية (أكياس)",
+          "TOTAL_LIMIT": "الحد الإجمالي",
+          "USED_TODAY": "المستخدم اليوم",
+          "REMAINING": "المتبقي",
+          "CURRENT_ORDER": "الطلب الحالي",
+          "TONS": "أطنان",
+          "BAGS": "أكياس",
+          "PRICING_NOTE": "لم يتم تنفيذ تسعير المنتج بعد - ستتم معالجة الطلبات بتسعير غير محدد"
+        },
+        "ORDER_ITEMS": {
+          "TITLE": "عناصر الطلب",
+          "QTY": "الكمية",
+          "UNIT": "الوحدة",
+          "AMOUNT": "المبلغ"
+        },
+        "ORDER_INFO": {
+          "TITLE": "معلومات الطلب",
+          "CUSTOMER_ORDER_NUMBER": "رقم الفسح",
+          "OPTIONAL": "اختياري",
+          "PLACEHOLDER": "أدخل رقم الطلب المخصص الخاص بك",
+          "AUTO_GENERATE_NOTE": "إذا تركت فارغاً، سيتم إنشاء رقم طلب فريد تلقائياً."
+        },
+        "DELIVERY_ADDRESS": {
+          "TITLE": "منطقة التوصيل"
+        },
+        "DELIVERY_AREA": {
+          "SELECT_AREA": "اختر المنطقة",
+          "SELECT_PLACEHOLDER": "اختر منطقة التوصيل..."
+        },
+        "DELIVERY_ASSIGNMENT": {
+          "TITLE": "تعيين التوصيل",
+          "ASSIGN_DRIVER": "تعيين سائق",
+          "NO_SPECIFIC_DRIVER": "لا يوجد سائق محدد",
+          "ASSIGN_VEHICLE": "تعيين شاحنة",
+          "NO_SPECIFIC_VEHICLE": "لا توجد شاحنة محددة",
+          "INFO_MESSAGE": "تعيين التوصيل: يجب عليك إما اختيار سائق وشاحنة من القوائم المنسدلة أعلاه، أو إدخال اسم شركة النقل أدناه. إذا اخترت سائق/شاحنة، يصبح اسم شركة النقل اختيارياً.",
+          "TRANSPORTER_NAME": "اسم شركة النقل",
+          "TRANSPORTER_PLACEHOLDER": "أدخل اسم شركة النقل إذا لم تستخدم سائق/شاحنة",
+          "TRANSPORTER_REQUIRED": "اسم شركة النقل مطلوب عندما لا يتم اختيار السائق والشاحنة.",
+          "TRANSPORTER_NOTE": "استخدم هذا الحقل إذا كنت تريد تحديد شركة نقل خارجية بدلاً من تعيين سائق وشاحنة محددين."
+        },
+        "ORDER_SUMMARY": {
+          "TITLE": "ملخص الطلب",
+          "TOTAL_ITEMS": "إجمالي العناصر",
+          "TOTAL_BAGS": "إجمالي الأكياس",
+          "TOTAL_TONS": "إجمالي الأطنان",
+          "ESTIMATED_TRUCKS": "الشاحنات المقدرة",
+          "BACK_TO_CART": "العودة",
+          "PLACE_ORDER": "تقديم الطلب",
+          "PLACING_ORDER": "جار تقديم الطلب..."
+        },
+        "VALIDATION": {
+          "CART_EMPTY": "السلة فارغة",
+          "SELECT_ADDRESS": "يرجى اختيار عنوان التوصيل",
+          "SELECT_AREA": "يرجى اختيار منطقة التوصيل",
+          "SELECT_DELIVERY_METHOD": "يرجى اختيار سائق وشاحنة، أو إدخال اسم شركة النقل",
+          "FILL_REQUIRED_FIELDS": "يرجى ملء جميع الحقول المطلوبة",
+          "EXCEEDS_LIMITS": "الطلب يتجاوز الحدود اليومية",
+          "CHECK_ALL_FIELDS": "يرجى التحقق من جميع الحقول المطلوبة والحدود اليومية للطلب",
+          "CUSTOMER_ORDER_REQUIRED": "رقم الفسح مطلوب"
+        },
+        "SUCCESS": {
+          "ORDER_PLACED": "تم تقديم الطلب بنجاح!"
+        },
+        "ERROR": {
+          "FAILED_TO_PLACE": "فشل تقديم الطلب"
+        },
+        "UNKNOWN_DRIVER": "سائق غير معروف"
+      },
+      "ADDRESS_SELECTOR": {
+        "LABEL": "اختر المنطقة",
+        "PLACEHOLDER": "اختر المنطقة...",
+        "LOADING": "تحميل العناوين...",
+        "NO_MATCH": "لم يتم العثور على عناوين مطابقة لـ",
+        "NO_ADDRESSES": "لا توجد عناوين متاحة",
+        "DEFAULT": "افتراضي",
+        "ADD_NEW": "إضافة عنوان جديد",
+        "CLEAR_SELECTION": "مسح التحديد",
+        "DEFAULT_ADDRESS": "العنوان الافتراضي",
+        "ADD_NEW_TITLE": "إضافة عنوان جديد",
+        "SELECTED_ADDRESS": "عنوان التوصيل المحدد",
+        "CREATING": "جار الإنشاء...",
+        "CREATE_ADDRESS": "إنشاء عنوان",
+        "FORM": {
+          "ADDRESS_LINE_1_PLACEHOLDER": "مثال: 123 شارع الرئيسي",
+          "ADDRESS_LINE_2_PLACEHOLDER": "شقة، جناح، وحدة، مبنى، طابق، إلخ.",
+          "SAUDI_ARABIA": "المملكة العربية السعودية"
+        }
+      },
+      "PROGRESS": {
+        "TITLE": "تفاصيل الطلب",
+        "SUBTITLE": "راجع وأدر عناصر عربتك",
+        "STEPS": {
+          "ADD_ITEMS": "إضافة العناصر",
+          "CHECKOUT": "الدفع"
+        }
+      },
+      "PRODUCT_SEARCH_POPUP": {
+        "TITLE": "يرجى اختيار كود الصنف",
+        "SEARCH_PLACEHOLDER": "البحث باسم المنتج أو الكود أو كود LN...",
+        "LOADING": "تحميل المنتجات...",
+        "NO_RESULTS": "لم يتم العثور على منتجات",
+        "NO_RESULTS_SUBTITLE": "حاول تعديل كلمات البحث أو مرشح الفئة",
+        "TABLE": {
+          "PRODUCT_NAME": "اسم المنتج",
+          "PRODUCT_CODE": "كود المنتج",
+          "LN_CODE": "كود LN",
+          "DESCRIPTION": "الوصف"
+        },
+        "CLICK_TO_ADD": "انقر لإضافة",
+        "TO_CART": "إلى العربة",
+        "LOAD_MORE": "تحميل المزيد من المنتجات",
+        "CANCEL": "إلغاء",
+        "DONE": "تم"
+      },
+      "NAVIGATION": {
+        "PREVIOUS": "السابق",
+        "NEXT": "التالي",
+        "ITEMS_IN_CART": "عناصر في العربة"
+      },
+      "NOTIFICATIONS": {
+        "PRODUCT_ADDED": "تمت إضافة {{productName}} إلى العربة بنجاح!",
+        "ADD_FAILED": "فشل في إضافة المنتج إلى العربة. يرجى المحاولة مرة أخرى."
+      }
+    }
+  },
+  "ADMIN": {
+    "DEALER_ORDERS": {
+      "DETAILS": {
+        "TITLE": "تفاصيل طلب العميل",
+        "LOADING": "جاري التحميل...",
+        "LOADING_MESSAGE": "جاري تحميل تفاصيل الطلب...",
+        "ORDER_INFO": "معلومات الطلب",
+        "PORTAL_ORDER_NUMBER": "رقم طلب البوابة",
+        "LN_ORDER_NUMBER": "رقم طلب LN",
+        "CUSTOMER_ORDER_NUMBER": "رقم الفسح",
+        "DEALER": "العميل",
+        "TRANSPORTER": "الناقل",
+        "ORDER_DATE": "تاريخ الطلب",
+        "CREATED_DATE": "تاريخ الإنشاء",
+        "STATUS": "الحالة",
+        "NA": "غير متوفر",
+        "UNKNOWN": "غير معروف",
+        "ORDER_ITEMS": "عناصر الطلب",
+        "ITEM_ID": "رقم العنصر",
+        "PRODUCT": "المنتج",
+        "QUANTITY": "الكمية",
+        "UNIT_PRICE": "سعر الوحدة",
+        "TOTAL_PRICE": "السعر الإجمالي",
+        "NOTES": "ملاحظات",
+        "UNKNOWN_PRODUCT": "منتج غير معروف",
+        "NO_ITEMS": "لا توجد عناصر في هذا الطلب",
+        "TOTAL": "الإجمالي",
+        "ADDITIONAL_DETAILS": "تفاصيل إضافية",
+        "DRIVER": "السائق",
+        "VEHICLE": "الشاحنة",
+        "AREA": "المنطقة",
+        "MODIFIED_DATE": "تاريخ التعديل",
+        "ACTIVE_STATUS": "حالة النشاط",
+        "ACTIVE": "نشط",
+        "INACTIVE": "غير نشط",
+        "CLOSE": "إغلاق",
+        "DOWNLOAD_PDF": "تحميل PDF",
+        "FIELD": "الحقل",
+        "VALUE": "القيمة",
+        "GENERATED_ON": "تم الإنشاء في",
+        "AT": "في",
+        "PAGE": "صفحة",
+        "OF": "من"
+      }
+    }
+  }
+}

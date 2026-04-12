@@ -1,0 +1,63 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h4 class="card-title">Email Notification Recipients</h4>
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary" (click)="create()">
+                  <i class="bi bi-plus-circle me-2"></i> Create New Recipient
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+            </div>
+            <div class="table-responsive">
+              <table class="table table-centered table-nowrap mb-0 align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Email Address</th>
+                    <th>Phone</th>
+                    <th>Department</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of emailList">
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.emailAddress }}</td>
+                    <td> {{ item.phone || '' }} </td>
+                    <td>{{ item.departmentName }}</td>
+                    <td class="text-end">
+                      <button class="btn btn-sm btn-danger" (click)="deleteItem(item.id)">
+                        <iconify-icon icon="solar:trash-bin-minimalistic-bold-duotone"></iconify-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+  .search-box {
+    position: relative;
+  }
+  .search-box .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none;
+  }
+  </style> 

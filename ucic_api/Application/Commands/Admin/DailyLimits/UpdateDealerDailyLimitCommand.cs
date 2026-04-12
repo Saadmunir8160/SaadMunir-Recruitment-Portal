@@ -1,0 +1,24 @@
+using MediatR;
+using Application.DTOs;
+using System.ComponentModel.DataAnnotations;
+
+namespace Application.Commands.Admin.DailyLimits
+{
+    public class UpdateDealerDailyLimitCommand : IRequest<Response<object>>
+    {
+        public int DailyLimitID { get; set; }
+        public int? DealerID { get; set; }
+        
+        [Required]
+        [MaxLength(50)]
+        public string? LimitType { get; set; }
+        
+        [Required]
+        public decimal? LimitValue { get; set; }
+        
+        [Required]
+        public DateTime? EffectiveDate { get; set; }
+        
+        public bool? IsActive { get; set; }
+    }
+}

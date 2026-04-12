@@ -1,0 +1,104 @@
+<div class="dealer-layout">
+  <!-- Top Header -->
+  <header class="dealer-header">
+    <div class="header-left">
+      <button class="sidebar-toggle" (click)="toggleSidebar()">
+        <i class="material-icons">{{ isSidebarCollapsed ? 'menu' : 'menu_open' }}</i>
+      </button>
+      <div class="brand">
+        <img src="assets/images/logo-blue.jpg" style="height: 65px;width: 180px;" alt="UCIC Logo" class="logo">
+        <!-- <span class="brand-text">{{ 'DEALER.TITLE' | translate }}</span> -->
+      </div>
+    </div>
+    
+    <div class="header-right">
+      <!-- Cart Icon with Count Badge -->
+      <!-- <div class="cart-icon-container">
+        <button class="cart-button" (click)="navigateTo('shop/cart')">
+          <i class="material-icons">shopping_cart</i>
+          <span class="cart-count" [class.visible]="cartItemCount > 0">{{ cartItemCount }}</span>
+        </button>
+      </div> -->
+      
+      <div class="dealer-info">
+        <span class="company-name">{{ dealerInfo?.companyName }}</span>
+        <span class="dealer-code">{{ dealerInfo?.dealerCode }}</span>
+      </div>
+      
+      <!-- Language Switch -->
+      <app-language-switch></app-language-switch>
+      
+      <div class="user-menu">
+        <button class="user-menu-button" (click)="logout()">
+          <i class="material-icons">logout</i>
+          <span class="d-md-block d-none">{{ 'DEALER.NAVIGATION.LOGOUT' | translate }}</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="dealer-sidebar" [class.collapsed]="isSidebarCollapsed">
+    <nav class="sidebar-nav">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="isActiveRoute('dashboard')" (click)="navigateTo('dashboard')">
+            <i class="material-icons">dashboard</i>
+            <span class="nav-text">{{ 'DEALER.NAVIGATION.DASHBOARD' | translate }}</span>
+          </a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" [class.active]="isActiveRoute('products')" (click)="navigateTo('products')">
+            <i class="material-icons">inventory</i>
+            <span class="nav-text">{{ 'DEALER.NAVIGATION.PRODUCTS' | translate }}</span>
+          </a>
+        </li> -->
+        <!-- <li class="nav-item">
+          <a class="nav-link" [class.active]="currentRoute === 'shop' && router.url.includes('cart')" (click)="navigateTo('shop/cart')">
+            <i class="material-icons">shopping_cart</i>
+            <span class="nav-text">{{ 'DEALER.NAVIGATION.ORDERS' | translate }}</span>
+            <span class="badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+          </a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="isActiveRoute('orders')" (click)="navigateTo('orders')">
+            <i class="material-icons">receipt_long</i>
+            <span class="nav-text">{{ 'DEALER.NAVIGATION.ORDERS' | translate }}</span>
+          </a>
+        </li>
+        <!-- Delivery Addresses menu item hidden - areas are now managed in checkout -->
+        <!-- <li class="nav-item">
+          <a class="nav-link" [class.active]="isActiveRoute('drivers')" (click)="navigateTo('drivers')">
+            <i class="material-icons">person</i>
+            <span class="nav-text">{{ 'DEALER.NAVIGATION.DRIVERS' | translate }}</span>
+          </a>
+        </li> -->
+        <!-- <li class="nav-item">
+          <a class="nav-link" [class.active]="isActiveRoute('vehicles')" (click)="navigateTo('vehicles')">
+            <i class="material-icons">local_shipping</i>
+            <span class="nav-text">{{ 'DEALER.NAVIGATION.VEHICLES' | translate }}</span>
+          </a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="isActiveRoute('profile')" (click)="navigateTo('profile')">
+            <i class="material-icons">account_circle</i>
+            <span class="nav-text">{{ 'DEALER.NAVIGATION.PROFILE' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="isActiveRoute('support')" (click)="navigateTo('support')">
+            <i class="material-icons">support_agent</i>
+            <span class="nav-text">{{ 'DEALER.NAVIGATION.SUPPORT' | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="dealer-main" [class.sidebar-collapsed]="isSidebarCollapsed">
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

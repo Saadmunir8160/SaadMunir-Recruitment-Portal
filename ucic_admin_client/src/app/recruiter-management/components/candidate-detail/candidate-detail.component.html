@@ -1,0 +1,383 @@
+<!-- Loading -->
+<div *ngIf="loading" class="loading-overlay">
+  <mat-spinner diameter="48"></mat-spinner>
+</div>
+
+<div class="candidate-detail" *ngIf="!loading && candidate">
+  <!-- Header -->
+  <div class="detail-header">
+    <button mat-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon> Back to Candidates
+    </button>
+    <div class="header-info">
+      <h2>{{ candidate.fullName }}</h2>
+      <span class="status-chip" [ngClass]="getStatusClass(candidate.profileStatus)">
+        {{ getStatusLabel(candidate.profileStatus) }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Action Bar -->
+  <mat-card appearance="outlined" class="action-bar"
+    *ngIf="candidate.profileStatus === 1 || candidate.profileStatus === 2">
+    <mat-card-content>
+      <span class="action-label">Review Actions:</span>
+      <button mat-flat-button color="primary" (click)="updateStatus(3)">
+        <mat-icon>check_circle</mat-icon> Approve
+      </button>
+      <button mat-stroked-button color="warn" (click)="showModal = 'correction'">
+        <mat-icon>edit_note</mat-icon> Request Correction
+      </button>
+      <button mat-flat-button color="warn" (click)="showModal = 'rejection'">
+        <mat-icon>cancel</mat-icon> Reject
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Tabs -->
+  <mat-tab-group animationDuration="200ms">
+    <!-- Personal Info -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="tab-label-icon">person</mat-icon> Personal Info
+      </ng-template>
+      <mat-card appearance="outlined" class="tab-card">
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Full Name</label>
+              <p>{{ candidate.fullName }}</p>
+            </div>
+            <div class="info-item">
+              <label>National ID</label>
+              <p>{{ candidate.nationalId }}</p>
+            </div>
+            <div class="info-item">
+              <label>Email</label>
+              <p>{{ candidate.email }}</p>
+            </div>
+            <div class="info-item">
+              <label>Mobile</label>
+              <p>{{ candidate.mobileNumber }}</p>
+            </div>
+            <div class="info-item">
+              <label>Nationality</label>
+              <p>{{ candidate.nationality || '-' }}</p>
+            </div>
+            <div class="info-item">
+              <label>Date of Birth</label>
+              <p>{{ candidate.dateOfBirth | date:'mediumDate' }}</p>
+            </div>
+            <div class="info-item">
+              <label>Gender</label>
+              <p>{{ candidate.gender === 1 ? 'Male' : candidate.gender === 2 ? 'Female' : '-' }}</p>
+            </div>
+            <div class="info-item">
+              <label>Residence City</label>
+              <p>{{ candidate.residenceCity || '-' }}</p>
+            </div>
+            <div class="info-item full-width">
+              <label>National Address</label>
+              <p>{{ candidate.nationalAddress || '-' }}</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- CV Summary -->
+      <mat-card appearance="outlined" class="tab-card" *ngIf="candidate.cvSummary">
+        <mat-card-header>
+          <mat-card-title>AI-Generated CV Summary</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="cv-summary">{{ candidate.cvSummary }}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+
+    <!-- Education -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="tab-label-icon">school</mat-icon> Education
+      </ng-template>
+      <mat-card appearance="outlined" class="tab-card" *ngIf="candidate.educations && candidate.educations.length > 0; else noEducation">
+        <mat-card-content class="table-content">
+          <table mat-table [dataSource]="candidate.educations" class="full-width">
+            <ng-container matColumnDef="qualification">
+              <th mat-header-cell *matHeaderCellDef>Qualification</th>
+              <td mat-cell *matCellDef="let row">{{ row.qualification }}</td>
+            </ng-container>
+            <ng-container matColumnDef="major">
+              <th mat-header-cell *matHeaderCellDef>Major</th>
+              <td mat-cell *matCellDef="let row">{{ row.major }}</td>
+            </ng-container>
+            <ng-container matColumnDef="institution">
+              <th mat-header-cell *matHeaderCellDef>Institution</th>
+              <td mat-cell *matCellDef="let row">{{ row.institution }}</td>
+            </ng-container>
+            <ng-container matColumnDef="graduationYear">
+              <th mat-header-cell *matHeaderCellDef>Year</th>
+              <td mat-cell *matCellDef="let row">{{ row.graduationYear }}</td>
+            </ng-container>
+            <ng-container matColumnDef="gradeOrGPA">
+              <th mat-header-cell *matHeaderCellDef>GPA</th>
+              <td mat-cell *matCellDef="let row">{{ row.gradeOrGPA || '-' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="country">
+              <th mat-header-cell *matHeaderCellDef>Country</th>
+              <td mat-cell *matCellDef="let row">{{ row.country || '-' }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="eduColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: eduColumns;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+      <ng-template #noEducation>
+        <div class="empty-state"><mat-icon>school</mat-icon><p>No education records</p></div>
+      </ng-template>
+    </mat-tab>
+
+    <!-- Experience -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="tab-label-icon">work_history</mat-icon> Experience
+      </ng-template>
+      <mat-card appearance="outlined" class="tab-card" *ngIf="candidate.experiences && candidate.experiences.length > 0; else noExperience">
+        <mat-card-content class="table-content">
+          <table mat-table [dataSource]="candidate.experiences" class="full-width">
+            <ng-container matColumnDef="employer">
+              <th mat-header-cell *matHeaderCellDef>Employer</th>
+              <td mat-cell *matCellDef="let row">{{ row.employer }}</td>
+            </ng-container>
+            <ng-container matColumnDef="jobTitle">
+              <th mat-header-cell *matHeaderCellDef>Job Title</th>
+              <td mat-cell *matCellDef="let row">{{ row.jobTitle }}</td>
+            </ng-container>
+            <ng-container matColumnDef="period">
+              <th mat-header-cell *matHeaderCellDef>Period</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.startDate | date:'MMM yyyy' }} -
+                {{ row.isCurrent ? 'Present' : (row.endDate | date:'MMM yyyy') }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="salary">
+              <th mat-header-cell *matHeaderCellDef>Salary</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.salary ? (row.salary | number) + ' ' + (row.currency || 'SAR') : '-' }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="country">
+              <th mat-header-cell *matHeaderCellDef>Country</th>
+              <td mat-cell *matCellDef="let row">{{ row.country || '-' }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="expColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: expColumns;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+      <ng-template #noExperience>
+        <div class="empty-state"><mat-icon>work</mat-icon><p>No experience records</p></div>
+      </ng-template>
+    </mat-tab>
+
+    <!-- Documents -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="tab-label-icon">description</mat-icon> Documents
+      </ng-template>
+      <mat-card appearance="outlined" class="tab-card" *ngIf="candidate.documents && candidate.documents.length > 0; else noDocuments">
+        <mat-card-content class="table-content">
+          <table mat-table [dataSource]="candidate.documents" class="full-width">
+            <ng-container matColumnDef="documentType">
+              <th mat-header-cell *matHeaderCellDef>Type</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="doc-type-chip">{{ getDocTypeLabel(row.documentType) }}</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="fileName">
+              <th mat-header-cell *matHeaderCellDef>File Name</th>
+              <td mat-cell *matCellDef="let row">{{ row.fileName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="fileSize">
+              <th mat-header-cell *matHeaderCellDef>Size</th>
+              <td mat-cell *matCellDef="let row">{{ (row.fileSize / 1024) | number:'1.0-0' }} KB</td>
+            </ng-container>
+            <ng-container matColumnDef="aiStatus">
+              <th mat-header-cell *matHeaderCellDef>AI Status</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="status-chip" [ngClass]="row.aiProcessingStatus === 2 ? 'status-success' : 'status-warning'">
+                  {{ row.aiProcessingStatus === 2 ? 'Processed' : 'Pending' }}
+                </span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="confidence">
+              <th mat-header-cell *matHeaderCellDef>Confidence</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.aiConfidenceScore > 0 ? ((row.aiConfidenceScore * 100) | number:'1.0-0') + '%' : '-' }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="uploadedDate">
+              <th mat-header-cell *matHeaderCellDef>Uploaded</th>
+              <td mat-cell *matCellDef="let row">{{ row.uploadedDate | date:'short' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button color="primary" (click)="downloadDocument(row.candidateDocumentId)"
+                  matTooltip="Download">
+                  <mat-icon>download</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="docColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: docColumns;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+      <ng-template #noDocuments>
+        <div class="empty-state"><mat-icon>description</mat-icon><p>No documents uploaded</p></div>
+      </ng-template>
+    </mat-tab>
+
+    <!-- ID Verification (OCR) -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="tab-label-icon">verified_user</mat-icon> ID Verification
+      </ng-template>
+
+      <!-- OCR Status Summary -->
+      <mat-card appearance="outlined" class="tab-card ocr-status-card">
+        <mat-card-content>
+          <div class="ocr-status-row">
+            <span class="ocr-status-label">OCR Verification Status:</span>
+            <span class="status-chip"
+              [ngClass]="candidate.ocrVerificationStatus === 1 ? 'status-success' :
+                         candidate.ocrVerificationStatus === 2 ? 'status-danger' : 'status-warning'">
+              {{ candidate.ocrVerificationStatus === 1 ? 'Verified' :
+                 candidate.ocrVerificationStatus === 2 ? 'Mismatch Detected' : 'Pending' }}
+            </span>
+          </div>
+          <p class="ocr-hint" *ngIf="candidate.ocrVerificationStatus === 0">
+            OCR verification runs automatically when a National ID or Passport is uploaded.
+            You can also trigger it manually from the Documents tab.
+          </p>
+          <div class="ocr-override-row" *ngIf="candidate.ocrVerificationStatus === 2">
+            <p class="ocr-hint">A mismatch was detected. Review the field comparison below, then override if the document is acceptable.</p>
+            <button mat-flat-button color="primary" [disabled]="isMarkingVerified" (click)="markAsVerified()">
+              <mat-icon>verified_user</mat-icon> Mark as Verified
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Trigger buttons for identity documents -->
+      <mat-card appearance="outlined" class="tab-card" *ngIf="candidate.documents && candidate.documents.length > 0">
+        <mat-card-header>
+          <mat-card-title>Manually Re-trigger Verification</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="ocr-trigger-row">
+          <ng-container *ngFor="let doc of candidate.documents">
+            <button mat-stroked-button color="primary"
+              *ngIf="doc.documentType === 1 || doc.documentType === 2"
+              (click)="triggerVerification(doc.candidateDocumentId)"
+              matTooltip="Re-run OCR on this document">
+              <mat-icon>refresh</mat-icon>
+              {{ getDocTypeLabel(doc.documentType) }} — {{ doc.fileName }}
+            </button>
+          </ng-container>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- OCR Results Table -->
+      <div *ngIf="isOcrLoading" class="ocr-loading">
+        <mat-spinner diameter="32"></mat-spinner>
+        <span>Loading verification results...</span>
+      </div>
+
+      <mat-card appearance="outlined" class="tab-card"
+        *ngIf="!isOcrLoading && ocrResults.length > 0; else noOcrResults">
+        <mat-card-header>
+          <mat-card-title>Field-by-Field Comparison</mat-card-title>
+          <mat-card-subtitle>Extracted from document vs. entered by candidate</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="table-content">
+          <table mat-table [dataSource]="ocrResults" class="full-width ocr-table">
+            <ng-container matColumnDef="fieldName">
+              <th mat-header-cell *matHeaderCellDef>Field</th>
+              <td mat-cell *matCellDef="let row">{{ row.fieldName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="extractedValue">
+              <th mat-header-cell *matHeaderCellDef>Extracted from Document</th>
+              <td mat-cell *matCellDef="let row">{{ row.extractedValue || '-' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="enteredValue">
+              <th mat-header-cell *matHeaderCellDef>Entered by Candidate</th>
+              <td mat-cell *matCellDef="let row">{{ row.enteredValue || '-' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="isMatch">
+              <th mat-header-cell *matHeaderCellDef>Match</th>
+              <td mat-cell *matCellDef="let row">
+                <ng-container *ngIf="row.isMatch === null">
+                  <span class="ocr-match-na">N/A</span>
+                </ng-container>
+                <ng-container *ngIf="row.isMatch === true">
+                  <mat-icon class="ocr-match-yes">check_circle</mat-icon>
+                </ng-container>
+                <ng-container *ngIf="row.isMatch === false">
+                  <mat-icon class="ocr-match-no">cancel</mat-icon>
+                </ng-container>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="severity">
+              <th mat-header-cell *matHeaderCellDef>Severity</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="severity-chip" [ngClass]="getSeverityClass(row.mismatchSeverity)"
+                  *ngIf="row.mismatchSeverity > 0">
+                  {{ getSeverityLabel(row.mismatchSeverity) }}
+                </span>
+                <span *ngIf="row.mismatchSeverity === 0">—</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="processedDate">
+              <th mat-header-cell *matHeaderCellDef>Processed</th>
+              <td mat-cell *matCellDef="let row">{{ row.processedDate | date:'short' }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="ocrColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: ocrColumns;"
+              [ngClass]="{ 'ocr-mismatch-row': row.isMatch === false }"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+
+      <ng-template #noOcrResults>
+        <div class="empty-state" *ngIf="!isOcrLoading">
+          <mat-icon>verified_user</mat-icon>
+          <p>No OCR verification results yet. Upload a National ID or Passport to trigger verification.</p>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>
+
+<!-- Rejection / Correction Modal Overlay -->
+<div class="modal-overlay" *ngIf="showModal" (click)="showModal = null">
+  <mat-card class="modal-card" (click)="$event.stopPropagation()">
+    <mat-card-header>
+      <mat-card-title>{{ showModal === 'rejection' ? 'Reject Candidate' : 'Request Correction' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ showModal === 'rejection' ? 'Reason for rejection' : 'What needs correction' }}</mat-label>
+        <textarea matInput [(ngModel)]="modalReason" rows="4"></textarea>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button (click)="showModal = null">Cancel</button>
+      <button mat-flat-button [color]="showModal === 'rejection' ? 'warn' : 'accent'"
+        (click)="updateStatus(showModal === 'rejection' ? 5 : 4, modalReason)">
+        {{ showModal === 'rejection' ? 'Confirm Rejection' : 'Send Correction Request' }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

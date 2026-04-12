@@ -1,0 +1,147 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Create Product</h4>
+        </div>
+        <div class="card-body">
+         <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Product Name *</label>
+                  <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter product name" [ngClass]="{'is-invalid': productForm.get('name')?.invalid && productForm.get('name')?.touched}">
+                  <div class="invalid-feedback" *ngIf="productForm.get('name')?.errors?.['required']">Product name is required</div>
+                </div>
+              </div>
+           
+              <!-- Coverage area Dropdown -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="coverageAreaId" class="form-label">Coverage Area *</label>
+                  <select id="coverageAreaId" formControlName="coverageAreaId" class="form-control rounded-pill">
+                    <option [ngValue]="null" disabled selected>
+                      Select Coverage Area
+                    </option>
+                    <option *ngFor="let category of coverageAreasList" [value]="category.coverageAreaId">
+                      {{ category.name }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="productForm.get('coverageAreaId')?.errors?.['required']">Coverage Area is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="price" class="form-label">Price *</label>
+                  <input type="number" step="any" class="form-control" id="price" formControlName="price" placeholder="Enter product price" [ngClass]="{'is-invalid': productForm.get('price')?.invalid && productForm.get('price')?.touched}">
+                  <div class="invalid-feedback" *ngIf="productForm.get('price')?.errors?.['required']">Price is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="vatPercentage" class="form-label">Vat Percentage *</label>
+                  <input type="number" step="any" class="form-control" id="vatPercentage" formControlName="vatPercentage" placeholder="Enter product vat percentage" [ngClass]="{'is-invalid': productForm.get('vatPercentage')?.invalid && productForm.get('vatPercentage')?.touched}">
+                  <div class="invalid-feedback" *ngIf="productForm.get('vatPercentage')?.errors?.['required']">Vat Percentage is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="discountPercentage" class="form-label">Discount Percentage *</label>
+                  <input type="number" step="any" class="form-control" id="discountPercentage" formControlName="discountPercentage" placeholder="Enter product discount percentage" [ngClass]="{'is-invalid': productForm.get('discountPercentage')?.invalid && productForm.get('discountPercentage')?.touched}">
+                  <div class="invalid-feedback" *ngIf="productForm.get('discountPercentage')?.errors?.['required']">Discount Percentage is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="shipingCostPercentage" class="form-label">Shipping Cost Per Bag *</label>
+                  <input type="number" step="any" class="form-control" id="shipingCostPercentage" formControlName="shipingCostPercentage" placeholder="Enter shipping cost" [ngClass]="{'is-invalid': productForm.get('shipingCostPercentage')?.invalid && productForm.get('shipingCostPercentage')?.touched}">
+                  <div class="invalid-feedback" *ngIf="productForm.get('shipingCostPercentage')?.errors?.['required']">Shipping cost is required</div>
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="productCode" class="form-label">Product Code *</label>
+                  <input type="text" class="form-control" id="productCode" formControlName="productCode" placeholder="Enter product code" [ngClass]="{'is-invalid': productForm.get('productCode')?.invalid && productForm.get('productCode')?.touched}">
+                  <div class="invalid-feedback" *ngIf="productForm.get('productCode')?.errors?.['required']">Product code is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="sku" class="form-label">Product Sku *</label>
+                  <input type="text" class="form-control" id="sku" formControlName="sku" placeholder="Enter product sku" [ngClass]="{'is-invalid': productForm.get('sku')?.invalid && productForm.get('sku')?.touched}">
+                  <div class="invalid-feedback" *ngIf="productForm.get('sku')?.errors?.['required']">Product sku is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="type" class="form-label">Product Type *</label>
+                  <input type="text" class="form-control" id="type" formControlName="type" placeholder="Enter product type" [ngClass]="{'is-invalid': productForm.get('type')?.invalid && productForm.get('type')?.touched}">
+                  <div class="invalid-feedback" *ngIf="productForm.get('type')?.errors?.['required']">Product type is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="description" class="form-label">Description *</label>
+                  <textarea type="text" class="form-control" id="name" formControlName="description" placeholder="Enter product description" [ngClass]="{'is-invalid': productForm.get('description')?.invalid && productForm.get('description')?.touched}"></textarea>
+                  <div class="invalid-feedback" *ngIf="productForm.get('description')?.errors?.['required']">Description is required</div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="arabicName" class="form-label">Product Arabic Name</label>
+                  <input type="text" class="form-control" id="arabicName" formControlName="arabicName" placeholder="Enter product arabic name">    
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="arabicDescription" class="form-label">Arabic Description </label>
+                  <textarea type="text" class="form-control" id="arabicDescription" formControlName="arabicDescription" placeholder="Enter product arabic description" ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="productFilePath" class="form-label">
+                    Product Image<span class="text-danger">*</span>
+                  </label>
+                  <input type="file" id="productFilePath" formControlName="productFilePath"
+                    class="form-control rounded-pill" (change)="onProductFileSelected($event)" required />
+                    <div class="invalid-feedback" *ngIf="productForm.get('productFilePath')?.errors?.['required']">Product image is required</div>
+                  </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary"  [disabled]="productForm.invalid" >
+                  <iconify-icon icon="solar:check-circle-bold-duotone" class="me-1"></iconify-icon>
+                  {{'Create Product'}}
+                </button>
+                <button type="button" class="btn btn-light ms-2" (click)="onCancel()" [disabled]="loading">
+                  <iconify-icon icon="solar:arrow-left-bold-duotone" class="me-1"></iconify-icon>
+                  Back
+                </button>
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

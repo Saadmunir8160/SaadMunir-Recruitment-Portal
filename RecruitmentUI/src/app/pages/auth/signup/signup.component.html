@@ -1,0 +1,90 @@
+﻿<div class="auth-container">
+  <mat-card class="auth-card">
+    <div class="auth-header">
+      <mat-icon class="auth-icon">person_add</mat-icon>
+      <h2>Create Account</h2>
+      <p>Join UCIC Recruitment Portal as a candidate</p>
+    </div>
+
+    <mat-card-content>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="fullName" placeholder="Enter your full name">
+          <mat-icon matPrefix>person</mat-icon>
+          @if (signupForm.get('fullName')?.hasError('required') && signupForm.get('fullName')?.touched) {
+            <mat-error>Full name is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="your.email@example.com">
+          <mat-icon matPrefix>email</mat-icon>
+          @if (signupForm.get('email')?.hasError('required') && signupForm.get('email')?.touched) {
+            <mat-error>Email is required</mat-error>
+          }
+          @if (signupForm.get('email')?.hasError('email') && signupForm.get('email')?.touched) {
+            <mat-error>Enter a valid email</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Phone Number</mat-label>
+          <input matInput formControlName="phoneNumber" placeholder="+966 5x xxx xxxx">
+          <mat-icon matPrefix>phone</mat-icon>
+          @if (signupForm.get('phoneNumber')?.hasError('required') && signupForm.get('phoneNumber')?.touched) {
+            <mat-error>Phone number is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (signupForm.get('password')?.hasError('required') && signupForm.get('password')?.touched) {
+            <mat-error>Password is required</mat-error>
+          }
+          @if (signupForm.get('password')?.hasError('minlength') && signupForm.get('password')?.touched) {
+            <mat-error>Minimum 6 characters</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput formControlName="confirmPassword" [type]="hideConfirm ? 'password' : 'text'">
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <button mat-icon-button matSuffix type="button" (click)="hideConfirm = !hideConfirm">
+            <mat-icon>{{ hideConfirm ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (signupForm.get('confirmPassword')?.hasError('required') && signupForm.get('confirmPassword')?.touched) {
+            <mat-error>Please confirm your password</mat-error>
+          }
+        </mat-form-field>
+
+        @if (signupForm.errors?.['passwordMismatch'] && signupForm.get('confirmPassword')?.touched) {
+          <p class="password-mismatch">Passwords do not match</p>
+        }
+
+        <button mat-raised-button color="primary" type="submit" class="full-width submit-btn"
+                [disabled]="signupForm.invalid || loading">
+          @if (loading) {
+            <mat-spinner diameter="20" class="btn-spinner"></mat-spinner>
+          } @else {
+            Create Account
+          }
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <p class="login-link">
+        Already have an account?
+        <a routerLink="/login">Sign in</a>
+      </p>
+    </mat-card-actions>
+  </mat-card>
+</div>

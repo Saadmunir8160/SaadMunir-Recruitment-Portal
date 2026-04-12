@@ -1,0 +1,73 @@
+﻿<div class="page-container">
+  <div class="page-header">
+    <h1>My Applications</h1>
+    <a mat-raised-button color="primary" routerLink="/jobs">
+      <mat-icon>search</mat-icon>
+      Browse Jobs
+    </a>
+  </div>
+
+  @if (loading) {
+    <div class="spinner-overlay">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  }
+
+  @if (!loading && applications.length === 0) {
+    <div class="empty-state">
+      <mat-icon>inbox</mat-icon>
+      <h3>No applications yet</h3>
+      <p>You haven't applied to any jobs yet. Start exploring available positions!</p>
+      <a mat-raised-button color="primary" routerLink="/jobs">Browse Jobs</a>
+    </div>
+  }
+
+  @if (!loading && applications.length > 0) {
+    <div class="applications-list">
+      @for (app of applications; track app.applicationId) {
+        <mat-card class="application-card" [routerLink]="['/my-applications', app.applicationId]">
+          <mat-card-content>
+            <div class="app-row">
+              <div class="app-info">
+                <h3>{{ app.vacancyTitle }}</h3>
+                <div class="app-meta">
+                  <span class="meta-item">
+                    <mat-icon>calendar_today</mat-icon>
+                    Applied {{ app.applicationDate | date:'mediumDate' }}
+                  </span>
+                  @if (app.matchScore !== null) {
+                    <span class="meta-item match-score">
+                      <mat-icon>analytics</mat-icon>
+                      Match: {{ app.matchScore }}%
+                    </span>
+                  }
+                  @if (app.assignedRecruiterName) {
+                    <span class="meta-item">
+                      <mat-icon>person</mat-icon>
+                      {{ app.assignedRecruiterName }}
+                    </span>
+                  }
+                </div>
+              </div>
+              <div class="app-status-col">
+                <span class="app-status" [ngClass]="getStatusClass(app.status)">
+                  {{ getStatusLabel(app.status) }}
+                </span>
+                <mat-icon class="arrow-icon">chevron_right</mat-icon>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+
+    <mat-paginator
+      [length]="totalCount"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="[5, 10, 20]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  }
+</div>

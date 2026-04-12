@@ -1,0 +1,115 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Edit News</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="newsForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label for="title" class="form-label">Title</label>
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="title" 
+                    formControlName="title"
+                    placeholder="Enter news title"
+                    [class.is-invalid]="isFieldInvalid('title')"
+                  >
+                  <div class="invalid-feedback" *ngIf="newsForm.get('title')?.errors?.['required'] && newsForm.get('title')?.touched">
+                    Title is required
+                  </div>
+                  <div class="invalid-feedback" *ngIf="newsForm.get('title')?.errors?.['minlength'] && newsForm.get('title')?.touched">
+                    Title must be at least 5 characters long
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label for="content" class="form-label">Content</label>
+                  <textarea 
+                    class="form-control" 
+                    id="content" 
+                    formControlName="content"
+                    rows="5"
+                    placeholder="Enter news content"
+                    [class.is-invalid]="isFieldInvalid('content')"
+                  ></textarea>
+                  <div class="invalid-feedback" *ngIf="newsForm.get('content')?.errors?.['required'] && newsForm.get('content')?.touched">
+                    Content is required
+                  </div>
+                  <div class="invalid-feedback" *ngIf="newsForm.get('content')?.errors?.['minlength'] && newsForm.get('content')?.touched">
+                    Content must be at least 20 characters long
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label for="createdAt" class="form-label">Created Date</label>
+                  <input 
+                    type="datetime-local" 
+                    class="form-control" 
+                    id="createdAt" 
+                    formControlName="createdAt"
+                    [class.is-invalid]="isFieldInvalid('createdAt')"
+                  >
+                  <div class="invalid-feedback" *ngIf="newsForm.get('createdAt')?.errors?.['required'] && newsForm.get('createdAt')?.touched">
+                    Created date is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label for="image" class="form-label">Image</label>
+                  <input 
+                    type="file" 
+                    class="form-control" 
+                    id="image" 
+                    (change)="onFileChange($event)"
+                    accept="image/*"
+                  >
+                  <div class="mt-2" *ngIf="currentImageUrl">
+                    <img [src]="getImageUrl(currentImageUrl)" class="img-thumbnail" style="max-height: 200px;" alt="Current image">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch mb-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="isArabic"
+                formControlName="isArabic"
+                [checked]="true"
+              >
+              <label class="form-check-label" for="isArabic">
+                Arabic News
+              </label>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary" [disabled]="!newsForm.valid || loading">
+                  <iconify-icon icon="solar:check-circle-bold-duotone" class="me-1"></iconify-icon>
+                  {{ loading ? 'Updating...' : 'Update' }}
+                </button>
+                <button type="button" class="btn btn-light ms-2" (click)="onBack()">
+                  <iconify-icon icon="solar:arrow-left-bold-duotone" class="me-1"></iconify-icon>
+                  Back
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,121 @@
+﻿.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: #1e293b;
+  }
+}
+
+.applications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.application-card {
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+  }
+}
+
+.app-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.app-info {
+  flex: 1;
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: #1e293b;
+  }
+}
+
+.app-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #64748b;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: #94a3b8;
+  }
+}
+
+.match-score {
+  font-weight: 500;
+  color: #1976d2;
+  mat-icon { color: #1976d2; }
+}
+
+.app-status-col {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-status {
+  padding: 4px 14px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-applied { background: #dbeafe; color: #1e40af; }
+.status-matched { background: #dcfce7; color: #166534; }
+.status-not-matched { background: #fecaca; color: #991b1b; }
+.status-screening { background: #fef3c7; color: #92400e; }
+.status-interview { background: #ede9fe; color: #6d28d9; }
+.status-offer { background: #d1fae5; color: #065f46; }
+.status-hired { background: #dcfce7; color: #166534; }
+.status-rejected { background: #fecaca; color: #991b1b; }
+.status-withdrawn { background: #f1f5f9; color: #64748b; }
+.status-default { background: #f1f5f9; color: #475569; }
+
+.arrow-icon {
+  color: #cbd5e1;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 64px 24px;
+
+  mat-icon {
+    font-size: 56px;
+    width: 56px;
+    height: 56px;
+    color: #cbd5e1;
+  }
+
+  h3 { color: #64748b; font-size: 1.15rem; }
+  p { color: #94a3b8; margin-bottom: 20px; }
+}

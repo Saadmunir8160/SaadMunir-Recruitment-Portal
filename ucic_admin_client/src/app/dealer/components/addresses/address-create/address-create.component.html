@@ -1,0 +1,115 @@
+<div class="address-create-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <i class="material-icons">add_location</i>
+        {{ 'DEALER.ADDRESSES.CREATE.TITLE' | translate }}
+      </h1>
+      <p class="page-subtitle">{{ 'DEALER.ADDRESSES.CREATE.SUBTITLE' | translate }}</p>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="form-container">
+      <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="addressLine1">{{ 'DEALER.ADDRESSES.FORM.ADDRESS_LINE_1' | translate }} *</label>
+            <input 
+              type="text" 
+              id="addressLine1"
+              formControlName="addressLine1" 
+              class="form-control"
+              [placeholder]="'DEALER.ADDRESSES.FORM.PLACEHOLDERS.STREET_ADDRESS' | translate">
+            <div class="error-message" *ngIf="addressForm.get('addressLine1')?.touched && addressForm.get('addressLine1')?.errors?.['required']">
+              {{ 'DEALER.ADDRESSES.FORM.ERRORS.ADDRESS_LINE_1_REQUIRED' | translate }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="addressLine2">{{ 'DEALER.ADDRESSES.FORM.ADDRESS_LINE_2' | translate }}</label>
+            <input 
+              type="text" 
+              id="addressLine2"
+              formControlName="addressLine2" 
+              class="form-control"
+              [placeholder]="'DEALER.ADDRESSES.FORM.PLACEHOLDERS.APARTMENT_SUITE' | translate">
+          </div>
+
+          <div class="form-group">
+            <label for="city">{{ 'DEALER.ADDRESSES.FORM.CITY' | translate }} *</label>
+            <input 
+              type="text" 
+              id="city"
+              formControlName="city" 
+              class="form-control"
+              [placeholder]="'DEALER.ADDRESSES.FORM.PLACEHOLDERS.CITY' | translate">
+            <div class="error-message" *ngIf="addressForm.get('city')?.touched && addressForm.get('city')?.errors?.['required']">
+              {{ 'DEALER.ADDRESSES.FORM.ERRORS.CITY_REQUIRED' | translate }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="state">{{ 'DEALER.ADDRESSES.FORM.STATE_PROVINCE' | translate }}</label>
+            <input 
+              type="text" 
+              id="state"
+              formControlName="state" 
+              class="form-control"
+              [placeholder]="'DEALER.ADDRESSES.FORM.PLACEHOLDERS.STATE_PROVINCE' | translate">
+          </div>
+
+          <div class="form-group">
+            <label for="postalCode">{{ 'DEALER.ADDRESSES.FORM.POSTAL_CODE' | translate }}</label>
+            <input 
+              type="text" 
+              id="postalCode"
+              formControlName="postalCode" 
+              class="form-control"
+              [placeholder]="'DEALER.ADDRESSES.FORM.PLACEHOLDERS.POSTAL_CODE' | translate">
+          </div>
+
+          <div class="form-group">
+            <label for="country">{{ 'DEALER.ADDRESSES.FORM.COUNTRY' | translate }} *</label>
+            <input 
+              type="text" 
+              id="country"
+              formControlName="country" 
+              class="form-control"
+              [placeholder]="'DEALER.ADDRESSES.FORM.PLACEHOLDERS.COUNTRY' | translate">
+            <div class="error-message" *ngIf="addressForm.get('country')?.touched && addressForm.get('country')?.errors?.['required']">
+              {{ 'DEALER.ADDRESSES.FORM.ERRORS.COUNTRY_REQUIRED' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" formControlName="isActive">
+              <span class="checkmark"></span>
+              {{ 'DEALER.ADDRESSES.FORM.ACTIVE_ADDRESS' | translate }}
+            </label>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="alert alert-danger" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline-secondary" (click)="onCancel()" [disabled]="loading">
+            {{ 'DEALER.ADDRESSES.FORM.CANCEL' | translate }}
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="!addressForm.valid || loading">
+            <span *ngIf="loading" class="spinner-small"></span>
+            <i class="material-icons" *ngIf="!loading">save</i>
+            {{ loading ? ('DEALER.ADDRESSES.FORM.CREATING' | translate) : ('DEALER.ADDRESSES.FORM.CREATE_ADDRESS' | translate) }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

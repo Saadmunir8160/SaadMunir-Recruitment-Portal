@@ -1,0 +1,699 @@
+<div>
+  <!-- Shopping Progress -->
+  <!-- <app-shop-progress [currentStep]="2"></app-shop-progress> -->
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" *ngIf="isLoadingData">
+    <div class="loading-content">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">{{ 'DEALER.SHOP.LOADING.LOADING' | translate }}</span>
+      </div>
+      <h4>{{ 'DEALER.SHOP.CHECKOUT.LOADING.TITLE' | translate }}</h4>
+      <p>{{ 'DEALER.SHOP.CHECKOUT.LOADING.MESSAGE' | translate }}</p>
+      <div class="loading-progress">
+        <div class="progress-item" [class.completed]="!isLoadingLimits">
+          <i class="material-icons">{{ !isLoadingLimits ? 'check_circle' : 'hourglass_empty' }}</i>
+          {{ 'DEALER.SHOP.CHECKOUT.LOADING.DAILY_LIMITS' | translate }}
+        </div>
+        <div class="progress-item" [class.completed]="!isLoadingAreas">
+          <i class="material-icons">{{ !isLoadingAreas ? 'check_circle' : 'hourglass_empty' }}</i>
+          {{ 'DEALER.SHOP.CHECKOUT.LOADING.DELIVERY_AREAS' | translate }}
+        </div>
+        <div class="progress-item" [class.completed]="!isLoadingDrivers">
+          <i class="material-icons">{{ !isLoadingDrivers ? 'check_circle' : 'hourglass_empty' }}</i>
+          {{ 'DEALER.SHOP.CHECKOUT.LOADING.DRIVERS' | translate }}
+        </div>
+        <div class="progress-item" [class.completed]="!isLoadingVehicles">
+          <i class="material-icons">{{ !isLoadingVehicles ? 'check_circle' : 'hourglass_empty' }}</i>
+          {{ 'DEALER.SHOP.CHECKOUT.LOADING.VEHICLES' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <!-- <i class="material-icons">shopping_cart_checkout</i> -->
+        {{ 'DEALER.SHOP.CHECKOUT.TITLE' | translate }}
+      </h1>
+      <!-- <p class="page-subtitle">{{ 'DEALER.SHOP.CHECKOUT.SUBTITLE' | translate }}</p> -->
+    </div>
+  </div>
+
+  <div class="checkout-content" [style.opacity]="isLoadingData ? '0.3' : '1'" [style.pointer-events]="isLoadingData ? 'none' : 'auto'">
+    <div class="row">
+      <!-- Left Column: Order Details -->
+      <div class="col-md-8">
+
+        <!-- Daily Order Limit Card -->
+        <!-- <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="material-icons">assessment</i>
+              {{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.TITLE' | translate }}
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <h6 class="text-muted mb-3">{{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.TONS_TITLE' | translate }}</h6>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="limit-item">
+                      <span class="limit-label">{{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.TOTAL_LIMIT' | translate }}</span>
+                      <span class="limit-value">{{ dailyOrderLimit.totalLimitTons | number:'1.0-0' }} {{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.TONS' | translate }}</span>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="limit-item">
+                      <span class="limit-label">{{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.USED_TODAY' | translate }}</span>
+                      <span class="limit-value text-warning">{{ dailyOrderLimit.usedTodayTons | number:'1.0-0' }} {{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.TONS' | translate }}</span>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="limit-item">
+                      <span class="limit-label">{{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.REMAINING' | translate }}</span>
+                      <span class="limit-value text-success">{{ dailyOrderLimit.remainingTodayTons | number:'1.0-0' }} {{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.TONS' | translate }}</span>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="limit-item">
+                      <span class="limit-label">{{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.CURRENT_ORDER' | translate }}</span>
+                      <span class="limit-value text-primary">{{ dailyOrderLimit.currentOrderTons | number:'1.2-2' }} {{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.TONS' | translate }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <h6 class="text-muted mb-3">{{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.BAGS_TITLE' | translate }}</h6>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="limit-item">
+                      <span class="limit-label">{{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.TOTAL_LIMIT' | translate }}</span>
+                      <span class="limit-value">{{ dailyOrderLimit.totalLimitBags | number:'1.0-0' }} {{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.BAGS' | translate }}</span>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="limit-item">
+                      <span class="limit-label">{{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.USED_TODAY' | translate }}</span>
+                      <span class="limit-value text-warning">{{ dailyOrderLimit.usedTodayBags | number:'1.0-0' }} {{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.BAGS' | translate }}</span>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="limit-item">
+                      <span class="limit-label">{{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.REMAINING' | translate }}</span>
+                      <span class="limit-value text-success">{{ dailyOrderLimit.remainingTodayBags | number:'1.0-0' }} {{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.BAGS' | translate }}</span>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="limit-item">
+                      <span class="limit-label">{{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.CURRENT_ORDER' | translate }}</span>
+                      <span class="limit-value text-primary">{{ dailyOrderLimit.currentOrderBags | number:'1.0-0' }} {{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.BAGS' | translate }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-2 small">
+              <span class="text-info">
+                ℹ {{ 'DEALER.SHOP.CHECKOUT.DAILY_LIMIT.PRICING_NOTE' | translate }}
+              </span>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Order Items -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="material-icons">list_alt</i>
+              {{ 'DEALER.SHOP.CHECKOUT.ORDER_ITEMS.TITLE' | translate }} ({{ cartSummary.itemCount }})
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="order-items">
+              <div class="order-item" *ngFor="let item of cartSummary.items">
+                <!-- <div class="item-icon">
+                  <i class="material-icons">inventory_2</i>
+                </div> -->
+                <div class="item-details">
+                  <h6 class="item-name">{{ item.name }}</h6>
+                  <div class="item-specs">
+                    <span class="spec">{{ 'DEALER.SHOP.CHECKOUT.ORDER_ITEMS.QTY' | translate }}: {{ item.quantity }}</span>
+                    <span class="spec">{{ 'DEALER.SHOP.CHECKOUT.ORDER_ITEMS.UNIT' | translate }}: {{ item.unit }}</span>
+                    <span class="spec">{{ 'DEALER.SHOP.CHECKOUT.ORDER_ITEMS.AMOUNT' | translate }}: {{ item.quantity }} {{ item.unit }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <form [formGroup]="checkoutForm">
+          <!-- Customer Order Number -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <h5 class="card-title mb-0">
+                <i class="material-icons">receipt</i>
+                {{ 'DEALER.SHOP.CHECKOUT.ORDER_INFO.TITLE' | translate }}
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="customerOrderNumber" class="form-label">
+                      {{ 'DEALER.SHOP.CHECKOUT.ORDER_INFO.CUSTOMER_ORDER_NUMBER' | translate }}
+                      <span class="text-danger">*</span>
+                    </label>
+                    <div class="input-group">
+                      <!-- <span class="input-group-text">CUST-</span> -->
+                       <input id="customerOrderNumber"
+                         formControlName="customerOrderNumber"
+                         type="text"
+                         class="form-control"
+                         [class.is-invalid]="checkoutForm.get('customerOrderNumber')?.invalid && checkoutForm.get('customerOrderNumber')?.touched"
+                         [placeholder]="'DEALER.SHOP.CHECKOUT.ORDER_INFO.PLACEHOLDER' | translate"
+                         maxlength="50">
+                       <div *ngIf="checkoutForm.get('customerOrderNumber')?.invalid && checkoutForm.get('customerOrderNumber')?.touched" class="invalid-feedback">
+                         {{ 'DEALER.SHOP.CHECKOUT.VALIDATION.CUSTOMER_ORDER_REQUIRED' | translate }}
+                       </div>
+                    </div>
+                    <!-- <small class="form-text text-muted">
+                      {{ 'DEALER.SHOP.CHECKOUT.ORDER_INFO.AUTO_GENERATE_NOTE' | translate }}
+                    </small> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Area Selection -->
+          <div style="display: none;" class="card mb-4">
+            <div class="card-header">
+              <h5 class="card-title mb-0">
+                <i class="material-icons">location_on</i>
+                {{ 'DEALER.SHOP.CHECKOUT.DELIVERY_ADDRESS.TITLE' | translate }}
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="selectedArea" class="form-label">
+                  {{ 'DEALER.SHOP.CHECKOUT.DELIVERY_AREA.SELECT_AREA' | translate }}
+                  <span class="text-danger">*</span>
+                </label>
+                
+                <!-- Searchable Area Dropdown -->
+                <div class="searchable-dropdown area-dropdown" [class.open]="isAreaDropdownOpen">
+                  <div class="search-input-wrapper">
+                    <input
+                      #areaSearchInput
+                      type="text"
+                      class="form-control search-input"
+                      [class.is-invalid]="checkoutForm.get('selectedArea')?.invalid && checkoutForm.get('selectedArea')?.touched"
+                      [placeholder]="isLoadingAreas ? ('DEALER.SHOP.CHECKOUT.LOADING.DELIVERY_AREAS' | translate) : ('DEALER.SHOP.CHECKOUT.DELIVERY_AREA.SELECT_PLACEHOLDER' | translate)"
+                      [value]="selectedArea ? getAreaDisplayValue() : areaSearchTerm"
+                      (input)="areaSearchTerm = $any($event.target).value; filterAreas()"
+                      (focus)="onAreaFocus()"
+                      (click)="$event.stopPropagation(); openAreaDropdown()"
+                      [class.has-selection]="selectedArea"
+                      autocomplete="off"
+                      role="combobox"
+                      [attr.aria-expanded]="isAreaDropdownOpen"
+                      aria-haspopup="listbox">
+                    <i class="material-icons dropdown-arrow" 
+                       [class.rotated]="isAreaDropdownOpen"
+                       (click)="$event.stopPropagation(); toggleAreaDropdown()">keyboard_arrow_down</i>
+                    <i *ngIf="selectedArea && !isAreaDropdownOpen" 
+                       class="material-icons clear-icon" 
+                       (click)="clearAreaSelection(); $event.stopPropagation()">clear</i>
+                  </div>
+                  
+                  <!-- Area Dropdown menu -->
+                  <div class="dropdown-menu" *ngIf="isAreaDropdownOpen" role="listbox">
+                    <!-- Loading state -->
+                    <div *ngIf="isLoadingAreas" class="dropdown-item loading-item">
+                      <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="visually-hidden">{{ 'DEALER.SHOP.LOADING.LOADING' | translate }}</span>
+                      </div>
+                      {{ 'DEALER.SHOP.CHECKOUT.LOADING.DELIVERY_AREAS' | translate }}
+                    </div>
+                    
+                    <!-- No results -->
+                    <div *ngIf="!isLoadingAreas && filteredAreas.length === 0 && areaSearchTerm.trim()" class="dropdown-item no-results">
+                      {{ 'DEALER.SHOP.ADDRESS_SELECTOR.NO_MATCH' | translate }} "{{ areaSearchTerm }}"
+                    </div>
+                    <div *ngIf="!isLoadingAreas && filteredAreas.length === 0 && !areaSearchTerm.trim() && areas.length === 0" class="dropdown-item no-results">
+                      {{ 'DEALER.SHOP.CHECKOUT.NO_AREAS' | translate }}
+                    </div>
+                    
+                    <!-- Area items -->
+                    <div *ngFor="let area of filteredAreas" 
+                         class="dropdown-item area-item"
+                         [class.selected]="selectedArea?.areaID === area.areaID"
+                         (mousedown)="selectArea(area); $event.preventDefault()"
+                         role="option"
+                         [attr.aria-selected]="selectedArea?.areaID === area.areaID">
+                      <span class="item-name">{{ area.areaName }}</span>
+                      <span class="item-code">({{ area.areaCode }})</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div *ngIf="checkoutForm.get('selectedArea')?.invalid && checkoutForm.get('selectedArea')?.touched" class="invalid-feedback d-block">
+                  {{ 'DEALER.SHOP.CHECKOUT.VALIDATION.SELECT_AREA' | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Driver & Vehicle Selection -->
+          <div style="display: none;" class="card mb-4">
+            <div class="card-header">
+              <h5 class="card-title mb-0">
+                <i class="material-icons">local_shipping</i>
+                {{ 'DEALER.SHOP.CHECKOUT.DELIVERY_ASSIGNMENT.TITLE' | translate }}
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="label-with-action">
+                      <label for="driverID" class="form-label">{{ 'DEALER.SHOP.CHECKOUT.DELIVERY_ASSIGNMENT.ASSIGN_DRIVER' | translate }}</label>
+                      <button type="button" class="btn btn-sm btn-outline-primary add-btn" (click)="openAddDriverModal()">
+                        <i class="material-icons">add</i>
+                        {{ 'DEALER.SHOP.CHECKOUT.ADD_NEW' | translate }}
+                      </button>
+                    </div>
+                    
+                    <!-- Searchable Driver Dropdown -->
+                    <div class="searchable-dropdown driver-dropdown" [class.open]="isDriverDropdownOpen">
+                      <div class="search-input-wrapper">
+                        <input
+                          #driverSearchInput
+                          type="text"
+                          class="form-control search-input"
+                          [placeholder]="isLoadingDrivers ? ('DEALER.SHOP.CHECKOUT.LOADING.DRIVERS' | translate) : ('DEALER.SHOP.CHECKOUT.DELIVERY_ASSIGNMENT.NO_SPECIFIC_DRIVER' | translate)"
+                          [value]="selectedDriver ? getDriverDisplayValue() : driverSearchTerm"
+                          (input)="driverSearchTerm = $any($event.target).value; filterDrivers()"
+                          (focus)="onDriverFocus()"
+                          (click)="$event.stopPropagation(); openDriverDropdown()"
+                          [class.has-selection]="selectedDriver"
+                          autocomplete="off"
+                          role="combobox"
+                          [attr.aria-expanded]="isDriverDropdownOpen"
+                          aria-haspopup="listbox">
+                        <i class="material-icons dropdown-arrow" 
+                           [class.rotated]="isDriverDropdownOpen"
+                           (click)="$event.stopPropagation(); toggleDriverDropdown()">keyboard_arrow_down</i>
+                        <i *ngIf="selectedDriver && !isDriverDropdownOpen" 
+                           class="material-icons clear-icon" 
+                           (click)="clearDriverSelection(); $event.stopPropagation()">clear</i>
+                      </div>
+                      
+                      <!-- Driver Dropdown menu -->
+                      <div class="dropdown-menu" *ngIf="isDriverDropdownOpen" role="listbox">
+                        <!-- Loading state -->
+                        <div *ngIf="isLoadingDrivers" class="dropdown-item loading-item">
+                          <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="visually-hidden">{{ 'DEALER.SHOP.LOADING.LOADING' | translate }}</span>
+                          </div>
+                          {{ 'DEALER.SHOP.CHECKOUT.LOADING.DRIVERS' | translate }}
+                        </div>
+                        
+                        <!-- No specific driver option -->
+                        <div *ngIf="!isLoadingDrivers" 
+                             class="dropdown-item"
+                             [class.selected]="!selectedDriver"
+                             (mousedown)="clearDriverSelection(); $event.preventDefault()"
+                             role="option">
+                          <span class="item-name text-muted">{{ 'DEALER.SHOP.CHECKOUT.DELIVERY_ASSIGNMENT.NO_SPECIFIC_DRIVER' | translate }}</span>
+                        </div>
+                        
+                        <!-- No results -->
+                        <div *ngIf="!isLoadingDrivers && filteredDrivers.length === 0 && driverSearchTerm.trim()" class="dropdown-item no-results">
+                          {{ 'DEALER.SHOP.ADDRESS_SELECTOR.NO_MATCH' | translate }} "{{ driverSearchTerm }}"
+                        </div>
+                        
+                        <!-- Driver items -->
+                        <div *ngFor="let driver of filteredDrivers" 
+                             class="dropdown-item driver-item"
+                             [class.selected]="selectedDriver?.driverID === driver.driverID"
+                             (mousedown)="selectDriver(driver); $event.preventDefault()"
+                             role="option"
+                             [attr.aria-selected]="selectedDriver?.driverID === driver.driverID">
+                          <span class="item-name">{{ getDriverDisplay(driver) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="label-with-action">
+                      <label for="vehicleID" class="form-label">{{ 'DEALER.SHOP.CHECKOUT.DELIVERY_ASSIGNMENT.ASSIGN_VEHICLE' | translate }}</label>
+                      <button type="button" class="btn btn-sm btn-outline-primary add-btn" (click)="openAddVehicleModal()">
+                        <i class="material-icons">add</i>
+                        {{ 'DEALER.SHOP.CHECKOUT.ADD_NEW' | translate }}
+                      </button>
+                    </div>
+                    
+                    <!-- Searchable Vehicle Dropdown -->
+                    <div class="searchable-dropdown vehicle-dropdown" [class.open]="isVehicleDropdownOpen">
+                      <div class="search-input-wrapper">
+                        <input
+                          #vehicleSearchInput
+                          type="text"
+                          class="form-control search-input"
+                          [placeholder]="isLoadingVehicles ? ('DEALER.SHOP.CHECKOUT.LOADING.VEHICLES' | translate) : ('DEALER.SHOP.CHECKOUT.DELIVERY_ASSIGNMENT.NO_SPECIFIC_VEHICLE' | translate)"
+                          [value]="selectedVehicle ? getVehicleDisplayValue() : vehicleSearchTerm"
+                          (input)="vehicleSearchTerm = $any($event.target).value; filterVehicles()"
+                          (focus)="onVehicleFocus()"
+                          (click)="$event.stopPropagation(); openVehicleDropdown()"
+                          [class.has-selection]="selectedVehicle"
+                          autocomplete="off"
+                          role="combobox"
+                          [attr.aria-expanded]="isVehicleDropdownOpen"
+                          aria-haspopup="listbox">
+                        <i class="material-icons dropdown-arrow" 
+                           [class.rotated]="isVehicleDropdownOpen"
+                           (click)="$event.stopPropagation(); toggleVehicleDropdown()">keyboard_arrow_down</i>
+                        <i *ngIf="selectedVehicle && !isVehicleDropdownOpen" 
+                           class="material-icons clear-icon" 
+                           (click)="clearVehicleSelection(); $event.stopPropagation()">clear</i>
+                      </div>
+                      
+                      <!-- Vehicle Dropdown menu -->
+                      <div class="dropdown-menu" *ngIf="isVehicleDropdownOpen" role="listbox">
+                        <!-- Loading state -->
+                        <div *ngIf="isLoadingVehicles" class="dropdown-item loading-item">
+                          <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="visually-hidden">{{ 'DEALER.SHOP.LOADING.LOADING' | translate }}</span>
+                          </div>
+                          {{ 'DEALER.SHOP.CHECKOUT.LOADING.VEHICLES' | translate }}
+                        </div>
+                        
+                        <!-- No specific vehicle option -->
+                        <div *ngIf="!isLoadingVehicles" 
+                             class="dropdown-item"
+                             [class.selected]="!selectedVehicle"
+                             (mousedown)="clearVehicleSelection(); $event.preventDefault()"
+                             role="option">
+                          <span class="item-name text-muted">{{ 'DEALER.SHOP.CHECKOUT.DELIVERY_ASSIGNMENT.NO_SPECIFIC_VEHICLE' | translate }}</span>
+                        </div>
+                        
+                        <!-- No results -->
+                        <div *ngIf="!isLoadingVehicles && filteredVehicles.length === 0 && vehicleSearchTerm.trim()" class="dropdown-item no-results">
+                          {{ 'DEALER.SHOP.ADDRESS_SELECTOR.NO_MATCH' | translate }} "{{ vehicleSearchTerm }}"
+                        </div>
+                        
+                        <!-- Vehicle items -->
+                        <div *ngFor="let vehicle of filteredVehicles" 
+                             class="dropdown-item vehicle-item"
+                             [class.selected]="selectedVehicle?.vehicleID === vehicle.vehicleID"
+                             (mousedown)="selectVehicle(vehicle); $event.preventDefault()"
+                             role="option"
+                             [attr.aria-selected]="selectedVehicle?.vehicleID === vehicle.vehicleID">
+                          <span class="item-name">{{ getVehicleDisplay(vehicle) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Alternative: Transporter Name -->
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="transporterName" class="form-label">
+                      {{ 'DEALER.SHOP.CHECKOUT.DELIVERY_ASSIGNMENT.TRANSPORTER_NAME' | translate }}
+                      <span class="text-danger">*</span>
+                    </label>
+                    <input id="transporterName"
+                           formControlName="transporterName"
+                           type="text"
+                           class="form-control"
+                           [class.is-invalid]="checkoutForm.get('transporterName')?.invalid && checkoutForm.get('transporterName')?.touched"
+                           [placeholder]="'DEALER.SHOP.CHECKOUT.DELIVERY_ASSIGNMENT.TRANSPORTER_PLACEHOLDER' | translate">
+                    <div *ngIf="checkoutForm.get('transporterName')?.invalid && checkoutForm.get('transporterName')?.touched" class="invalid-feedback">
+                      {{ 'DEALER.SHOP.CHECKOUT.DELIVERY_ASSIGNMENT.TRANSPORTER_REQUIRED' | translate }}
+                    </div>
+                    <!-- <small class="form-text text-muted">
+                      {{ 'DEALER.SHOP.CHECKOUT.DELIVERY_ASSIGNMENT.TRANSPORTER_NOTE' | translate }}
+                    </small> -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </form>
+
+      </div>
+
+      <!-- Right Column: Order Summary -->
+      <div class="col-md-4">
+        <div class="card order-summary-card sticky-top">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="material-icons">receipt</i>
+              {{ 'DEALER.SHOP.CHECKOUT.ORDER_SUMMARY.TITLE' | translate }}
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="summary-row">
+              <span>{{ 'DEALER.SHOP.CHECKOUT.ORDER_SUMMARY.TOTAL_ITEMS' | translate }}:</span>
+              <span>{{ cartSummary.itemCount }}</span>
+            </div>
+            <div class="summary-row">
+              <span>{{ 'DEALER.SHOP.CHECKOUT.ORDER_SUMMARY.TOTAL_BAGS' | translate }}:</span>
+              <span>{{ cartSummary.totalBags }}</span>
+            </div>
+            <div class="summary-row">
+              <span>{{ 'DEALER.SHOP.CHECKOUT.ORDER_SUMMARY.TOTAL_TONS' | translate }}:</span>
+              <span>{{ cartSummary.totalTons | number:'1.2-2' }}</span>
+            </div>
+            <!-- <div class="summary-row">
+              <span>{{ 'DEALER.SHOP.CHECKOUT.ORDER_SUMMARY.ESTIMATED_TRUCKS' | translate }}:</span>
+              <span>{{ cartSummary.totalTrucks | number:'1.0-0' }}</span>
+            </div> -->
+
+            <!-- Error Message -->
+            <div *ngIf="getValidationErrors()" class="alert alert-danger mt-3">
+              {{ getValidationErrors() }}
+            </div>
+            <div *ngIf="errorMessage && !getValidationErrors()" class="alert alert-danger mt-3">
+              {{ errorMessage }}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-4">
+              <button type="button"
+                      class="btn btn-outline-secondary w-100 mb-2"
+                      (click)="goBack()">
+                <i class="material-icons">{{ backArrowIcon }}</i>
+                {{ 'DEALER.SHOP.CHECKOUT.ORDER_SUMMARY.BACK_TO_CART' | translate }}
+              </button>
+
+              <button type="button"
+                      class="btn btn-primary w-100"
+                      [disabled]="!canPlaceOrder() || isSubmitting"
+                      (click)="placeOrder()">
+                <i class="material-icons" *ngIf="!isSubmitting">check_circle</i>
+                <i class="fa fa-spinner fa-spin" *ngIf="isSubmitting"></i>
+                {{ isSubmitting ? ('DEALER.SHOP.CHECKOUT.ORDER_SUMMARY.PLACING_ORDER' | translate) : ('DEALER.SHOP.CHECKOUT.ORDER_SUMMARY.PLACE_ORDER' | translate) }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Driver Modal -->
+<div class="modal-overlay" *ngIf="showAddDriverModal" (click)="closeAddDriverModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>
+        <i class="material-icons">person_add</i>
+        {{ 'DEALER.DRIVERS.CREATE.TITLE' | translate }}
+      </h3>
+      <button type="button" class="close-btn" (click)="closeAddDriverModal()">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+      <form [formGroup]="addDriverForm">
+        <!-- User Information Section -->
+        <div class="form-section">
+          <h4>{{ 'DEALER.DRIVERS.CREATE.USER_INFORMATION' | translate }}</h4>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>{{ 'DEALER.DRIVERS.CREATE.FORM.FULL_NAME' | translate }} *</label>
+              <input type="text" class="form-control" formControlName="fullName"
+                     [placeholder]="'DEALER.DRIVERS.CREATE.FORM.PLACEHOLDERS.FULL_NAME' | translate">
+              <div class="error-message" *ngIf="addDriverForm.get('fullName')?.invalid && addDriverForm.get('fullName')?.touched">
+                {{ 'DEALER.DRIVERS.CREATE.FORM.ERRORS.FULL_NAME_REQUIRED' | translate }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{{ 'DEALER.DRIVERS.CREATE.FORM.USERNAME' | translate }} *</label>
+              <input type="text" class="form-control" formControlName="userName"
+                     [placeholder]="'DEALER.DRIVERS.CREATE.FORM.PLACEHOLDERS.USERNAME' | translate">
+              <div class="error-message" *ngIf="addDriverForm.get('userName')?.invalid && addDriverForm.get('userName')?.touched">
+                {{ 'DEALER.DRIVERS.CREATE.FORM.ERRORS.USERNAME_REQUIRED' | translate }}
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>{{ 'DEALER.DRIVERS.CREATE.FORM.EMAIL' | translate }} *</label>
+              <input type="email" class="form-control" formControlName="email"
+                     [placeholder]="'DEALER.DRIVERS.CREATE.FORM.PLACEHOLDERS.EMAIL' | translate">
+              <div class="error-message" *ngIf="addDriverForm.get('email')?.invalid && addDriverForm.get('email')?.touched">
+                <span *ngIf="addDriverForm.get('email')?.errors?.['required']">{{ 'DEALER.DRIVERS.CREATE.FORM.ERRORS.EMAIL_REQUIRED' | translate }}</span>
+                <span *ngIf="addDriverForm.get('email')?.errors?.['email']">{{ 'DEALER.DRIVERS.CREATE.FORM.ERRORS.EMAIL_INVALID' | translate }}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{{ 'DEALER.DRIVERS.CREATE.FORM.PHONE_NUMBER' | translate }} *</label>
+              <input type="tel" class="form-control" formControlName="phone"
+                     [placeholder]="'DEALER.DRIVERS.CREATE.FORM.PLACEHOLDERS.PHONE_NUMBER' | translate">
+              <div class="error-message" *ngIf="addDriverForm.get('phone')?.invalid && addDriverForm.get('phone')?.touched">
+                {{ 'DEALER.DRIVERS.CREATE.FORM.ERRORS.PHONE_REQUIRED' | translate }}
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>{{ 'DEALER.DRIVERS.CREATE.FORM.PASSWORD' | translate }} *</label>
+              <input type="password" class="form-control" formControlName="password"
+                     [placeholder]="'DEALER.DRIVERS.CREATE.FORM.PLACEHOLDERS.PASSWORD' | translate">
+              <div class="error-message" *ngIf="addDriverForm.get('password')?.invalid && addDriverForm.get('password')?.touched">
+                <span *ngIf="addDriverForm.get('password')?.errors?.['required']">{{ 'DEALER.DRIVERS.CREATE.FORM.ERRORS.PASSWORD_REQUIRED' | translate }}</span>
+                <span *ngIf="addDriverForm.get('password')?.errors?.['minlength']">{{ 'DEALER.DRIVERS.CREATE.FORM.ERRORS.PASSWORD_MIN_LENGTH' | translate }}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{{ 'DEALER.DRIVERS.CREATE.FORM.CONFIRM_PASSWORD' | translate }} *</label>
+              <input type="password" class="form-control" formControlName="confirmationPassword"
+                     [placeholder]="'DEALER.DRIVERS.CREATE.FORM.PLACEHOLDERS.CONFIRM_PASSWORD' | translate">
+              <div class="error-message" *ngIf="addDriverForm.get('confirmationPassword')?.invalid && addDriverForm.get('confirmationPassword')?.touched">
+                <span *ngIf="addDriverForm.get('confirmationPassword')?.errors?.['required']">{{ 'DEALER.DRIVERS.CREATE.FORM.ERRORS.CONFIRM_PASSWORD_REQUIRED' | translate }}</span>
+                <span *ngIf="addDriverForm.get('confirmationPassword')?.errors?.['mismatch']">{{ 'DEALER.DRIVERS.CREATE.FORM.ERRORS.PASSWORD_MISMATCH' | translate }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Driver Information Section -->
+        <div class="form-section">
+          <h4>{{ 'DEALER.DRIVERS.CREATE.DRIVER_INFORMATION' | translate }}</h4>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>{{ 'DEALER.DRIVERS.CREATE.FORM.IQAMA_NUMBER' | translate }}</label>
+              <input type="text" class="form-control" formControlName="iqamaNumber"
+                     [placeholder]="'DEALER.DRIVERS.CREATE.FORM.PLACEHOLDERS.IQAMA_NUMBER' | translate">
+            </div>
+            <div class="form-group">
+              <label>{{ 'DEALER.DRIVERS.CREATE.FORM.LICENSE_NUMBER' | translate }}</label>
+              <input type="text" class="form-control" formControlName="ln_ID"
+                     [placeholder]="'DEALER.DRIVERS.CREATE.FORM.PLACEHOLDERS.LICENSE_NUMBER' | translate">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Error Message -->
+        <div class="alert alert-danger" *ngIf="driverModalError">
+          {{ driverModalError }}
+        </div>
+      </form>
+    </div>
+    
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeAddDriverModal()">
+        {{ 'DEALER.DRIVERS.CREATE.FORM.CANCEL' | translate }}
+      </button>
+      <button type="button" class="btn btn-primary" (click)="submitAddDriver()" [disabled]="isAddingDriver">
+        <span *ngIf="isAddingDriver" class="spinner-border spinner-border-sm me-1"></span>
+        <i class="material-icons" *ngIf="!isAddingDriver">save</i>
+        {{ isAddingDriver ? ('DEALER.DRIVERS.CREATE.FORM.ADDING' | translate) : ('DEALER.DRIVERS.CREATE.FORM.ADD_DRIVER' | translate) }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Vehicle Modal -->
+<div class="modal-overlay" *ngIf="showAddVehicleModal" (click)="closeAddVehicleModal()">
+  <div class="modal-container modal-sm" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>
+        <i class="material-icons">add</i>
+        {{ 'DEALER.VEHICLES.CREATE.TITLE' | translate }}
+      </h3>
+      <button type="button" class="close-btn" (click)="closeAddVehicleModal()">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+      <form [formGroup]="addVehicleForm">
+        <div class="form-group">
+          <label>{{ 'DEALER.VEHICLES.CREATE.FORM.PLATE_NUMBER' | translate }} *</label>
+          <input type="text" class="form-control" formControlName="plateNumber"
+                 [placeholder]="'DEALER.VEHICLES.CREATE.FORM.PLACEHOLDERS.PLATE_NUMBER' | translate">
+          <div class="error-message" *ngIf="addVehicleForm.get('plateNumber')?.invalid && addVehicleForm.get('plateNumber')?.touched">
+            {{ 'DEALER.VEHICLES.CREATE.FORM.ERRORS.PLATE_NUMBER_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>{{ 'DEALER.VEHICLES.CREATE.FORM.VEHICLE_TYPE' | translate }} *</label>
+          <select class="form-control" formControlName="type">
+            <option value="">{{ 'DEALER.VEHICLES.CREATE.FORM.SELECT_VEHICLE_TYPE' | translate }}</option>
+            <option value="truck">{{ 'DEALER.VEHICLES.CREATE.FORM.TYPES.TRUCK' | translate }}</option>
+            <option value="van">{{ 'DEALER.VEHICLES.CREATE.FORM.TYPES.VAN' | translate }}</option>
+            <option value="pickup">{{ 'DEALER.VEHICLES.CREATE.FORM.TYPES.PICKUP' | translate }}</option>
+            <option value="trailer">{{ 'DEALER.VEHICLES.CREATE.FORM.TYPES.TRAILER' | translate }}</option>
+          </select>
+          <div class="error-message" *ngIf="addVehicleForm.get('type')?.invalid && addVehicleForm.get('type')?.touched">
+            {{ 'DEALER.VEHICLES.CREATE.FORM.ERRORS.VEHICLE_TYPE_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>{{ 'DEALER.VEHICLES.CREATE.FORM.LN_ID' | translate }}</label>
+          <input type="text" class="form-control" formControlName="ln_ID"
+                 [placeholder]="'DEALER.VEHICLES.CREATE.FORM.PLACEHOLDERS.LN_ID' | translate">
+        </div>
+        
+        <!-- Error Message -->
+        <div class="alert alert-danger" *ngIf="vehicleModalError">
+          {{ vehicleModalError }}
+        </div>
+      </form>
+    </div>
+    
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeAddVehicleModal()">
+        {{ 'DEALER.VEHICLES.CREATE.FORM.CANCEL' | translate }}
+      </button>
+      <button type="button" class="btn btn-primary" (click)="submitAddVehicle()" [disabled]="isAddingVehicle">
+        <span *ngIf="isAddingVehicle" class="spinner-border spinner-border-sm me-1"></span>
+        <i class="material-icons" *ngIf="!isAddingVehicle">save</i>
+        {{ isAddingVehicle ? ('DEALER.VEHICLES.CREATE.FORM.CREATING' | translate) : ('DEALER.VEHICLES.CREATE.FORM.CREATE_VEHICLE' | translate) }}
+      </button>
+    </div>
+  </div>
+</div>

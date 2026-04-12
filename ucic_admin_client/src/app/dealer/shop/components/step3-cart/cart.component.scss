@@ -1,0 +1,698 @@
+.cart-container {
+  padding: 0;
+}
+
+.cart-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+  color: #6c757d;
+  font-size: 16px;
+  margin: 0;
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+  color: #6c757d;
+  background: #fff;
+  border-radius: 12px;
+  margin: 24px 0;
+  min-height: 400px;
+}
+
+.empty-cart-icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  
+  i {
+    font-size: 60px;
+    color: #adb5bd;
+  }
+}
+
+.empty-cart h3 {
+  margin: 0 0 12px 0;
+  color: #495057;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.empty-cart p {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.empty-cart-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #e7f3ff;
+  border-radius: 8px;
+  color: #0066cc;
+  font-size: 14px;
+  margin-top: 16px;
+  
+  i {
+    font-size: 20px;
+  }
+}
+
+.empty-cart-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  
+  @media (max-width: 576px) {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+.cart-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+.cart-items-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #e9ecef;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.section-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    
+    i {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .header-actions {
+    flex-direction: column;
+    gap: 8px;
+    
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+}
+
+.cart-table-container {
+  overflow-x: auto;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cart-table th {
+  background: #f8f9fa;
+  padding: 12px;
+  // text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.cart-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #e9ecef;
+  vertical-align: middle;
+}
+
+.cart-item-row:hover {
+  background: #f8f9fa;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.product-thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.product-icon-container {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.product-icon {
+  font-size: 32px;
+  color: #6c757d;
+}
+
+.product-details h5 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.price, .subtotal {
+  font-weight: 600;
+  color: #28a745;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quantity-input {
+  width: 60px;
+  text-align: center;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  padding: 4px;
+}
+
+.trucks-count {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.cart-items-mobile {
+  display: none;
+}
+
+.cart-item-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #e9ecef;
+}
+
+.item-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-info h5 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.item-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quantity-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantity-section label {
+  font-size: 14px;
+  color: #495057;
+  font-weight: 500;
+}
+
+.item-summary {
+  text-align: right;
+}
+
+.item-summary .trucks {
+  font-size: 12px;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.item-summary .subtotal {
+  font-weight: 600;
+  color: #28a745;
+  font-size: 16px;
+}
+
+.order-summary-section {
+  position: sticky;
+  top: 24px;
+  align-self: flex-start;
+}
+
+.summary-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.summary-card h3 {
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #495057;
+}
+
+.summary-row:last-of-type {
+  margin-bottom: 0;
+}
+
+.amount {
+  font-weight: 500;
+}
+
+.total-row {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.total-amount {
+  color: #28a745;
+  font-size: 20px;
+}
+
+.summary-actions {
+  margin-top: 24px;
+
+  small.text-muted {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #6c757d;
+    font-size: 0.875rem;
+    text-align: center;
+
+    i.material-icons {
+      font-size: 16px;
+    }
+  }
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #007bff;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.btn-outline-primary {
+  background: transparent;
+  border: 1px solid #007bff !important;
+  color: #007bff;
+}
+
+.btn-outline-primary:hover {
+  background: #007bff;
+  color: white;
+}
+
+.btn-outline-secondary {
+  background: transparent;
+  border: 1px solid #6c757d !important;
+  color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-outline-danger {
+  background: transparent;
+  border: 1px solid #dc3545 !important;
+  color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+// Quantity and Unit Display
+.quantity-unit-display {
+  display: flex;
+  // flex-direction: column;
+  gap: 8px;
+  // min-width: 180px;  
+  align-items: center;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  .quantity-input {
+    width: 80px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+  
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.unit-display {
+  .unit-label {
+    font-size: 13px;
+    color: #495057;
+    font-weight: 500;
+    background: #f8f9fa;
+    padding: 4px 12px;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+  }
+}
+
+.equivalent-display {
+  font-size: 13px;
+  color: #6c757d;
+  font-style: italic;
+}
+
+// Mobile quantity control
+.quantity-control-mobile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  
+  .quantity-input {
+    width: 80px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.item-summary {
+  .equivalent {
+    font-size: 12px;
+    color: #6c757d;
+    margin-bottom: 4px;
+  }
+  
+  .trucks {
+    font-size: 13px;
+    color: #495057;
+    font-weight: 500;
+  }
+}
+
+// Truck-based controls styling
+.bags-per-truck-selection {
+  text-align: center;
+  margin-bottom: 8px;
+  
+  .btn-group {
+    .btn {
+      font-size: 12px;
+      padding: 4px 8px;
+      min-width: 45px;
+    }
+  }
+}
+
+.trucks-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  .input-group,
+  .input-group-sm {
+    max-width: 120px;
+    min-width: 120px;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    
+    > * {
+      flex-shrink: 0 !important;
+    }
+    
+    .btn {
+      border: 1px solid #ced4da;
+      padding: 6px 10px;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      flex-shrink: 0 !important;
+      
+      .material-icons {
+        font-size: 16px;
+        line-height: 1;
+        
+        &.small {
+          font-size: 16px;
+        }
+      }
+    }
+    
+    .form-control {
+      font-size: 14px;
+      padding: 6px 8px;
+      min-width: 50px;
+      text-align: center;
+      border-left: 0 !important;
+      border-right: 0 !important;
+      flex-shrink: 0 !important;
+    }
+  }
+}
+
+// Mobile truck controls
+.bags-control-section {
+  margin-bottom: 16px;
+  
+  .bags-per-truck-mobile {
+    margin-bottom: 12px;
+    
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #495057;
+    }
+    
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      
+      .btn {
+        font-size: 12px;
+        padding: 6px 12px;
+        min-width: 60px;
+      }
+    }
+  }
+  
+  .trucks-control-mobile {
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #495057;
+    }
+    
+    .input-group {
+      max-width: 150px;
+      margin: 0 auto;
+      
+      .btn {
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        
+        .material-icons {
+          font-size: 16px;
+        }
+      }
+      
+      .form-control {
+        text-align: center;
+        font-size: 14px;
+        min-width: 60px;
+      }
+    }
+  }
+}
+
+.tons-control-section {
+  .quantity-section {
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #495057;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-content {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .cart-items-mobile {
+    display: block !important;
+  }
+
+  .order-summary-section {
+    position: relative;
+    top: auto;
+  }
+
+  .summary-actions .btn {
+    padding: 12px 16px;
+  }
+  
+  .trucks-cell .input-group,
+  .trucks-cell .input-group-sm {
+    max-width: 100px;
+    min-width: 100px;
+    
+    .btn {
+      padding: 4px 8px;
+      min-width: 28px;
+    }
+    
+    .form-control {
+      font-size: 12px;
+      padding: 4px 6px;
+      min-width: 40px;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<div class="recruiter-management-container">
+  <!-- Hero header (blue banner) -->
+  <header class="rm-hero">
+    <div class="rm-hero-inner">
+      <div class="header-left">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a routerLink="/admin/dashboard">Dashboard</a>
+          <mat-icon class="breadcrumb-sep" aria-hidden="true">chevron_right</mat-icon>
+          <span class="breadcrumb-current">Recruitment Management</span>
+        </nav>
+        <h1 class="page-title">
+          <mat-icon class="title-icon" aria-hidden="true">business_center</mat-icon>
+          Recruitment Management Portal
+        </h1>
+      </div>
+      <button
+        mat-icon-button
+        type="button"
+        class="refresh-btn"
+        (click)="refreshData()"
+        matTooltip="Refresh data"
+        aria-label="Refresh data">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+  </header>
+
+  <!-- Tab bar -->
+  <div class="rm-tabs-wrap">
+    <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="rm-tabs" animationDuration="200ms">
+      <a
+        mat-tab-link
+        *ngFor="let tab of tabs"
+        [active]="activeTab === tab.key"
+        (click)="navigateToTab(tab.key)">
+        <mat-icon class="tab-icon" aria-hidden="true">{{ tab.icon }}</mat-icon>
+        {{ tab.label }}
+        <span class="tab-count" *ngIf="tab.count > 0">&nbsp;({{ tab.count }})</span>
+      </a>
+    </nav>
+  </div>
+
+  <mat-tab-nav-panel #tabPanel class="rm-content">
+    <router-outlet></router-outlet>
+  </mat-tab-nav-panel>
+</div>

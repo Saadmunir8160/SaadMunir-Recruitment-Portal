@@ -1,0 +1,124 @@
+<div class="delivery-note-container">
+  <button class="close-btn no-print" (click)="closeDialog()">
+    <i class="material-icons">close</i>
+  </button>
+  <div class="page">
+    <div class="header">
+      <div class="title">
+        مذكرة تسليم<br>
+        <small>Delivery Note</small>
+      </div>
+      <div class="logo">
+        <img src="assets/images/logo-light.png" alt="UNITED CEMENT INDUSTRIAL COMPANY" />
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <div class="label">رقم طلب العميل / Customer Order</div>
+        <div class="value">{{ getCustomerOrder() }}</div>
+      </div>
+      <div class="box">
+        <div class="label">رقم الشاحنة / Vehicle No.</div>
+        <div class="value">{{ getVehicleNo() }}</div>
+      </div>
+      <div class="box">
+        <div class="label">رقم الشحنة / Shipment No.</div>
+        <div class="value">{{ getShipmentNo() }}</div>
+      </div>
+      <div class="box">
+        <div class="label">التاريخ / Date</div>
+        <div class="value">{{ getDate() }}</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box full rtl">
+        <div class="label">العميل / Customer</div>
+        <div class="value">{{ getCustomerName() }}</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <div class="label">رقم أمر التحميل / Loading Order No.</div>
+        <div class="value">{{ getLoadingOrderNo() }}</div>
+      </div>
+      <div class="box">
+        <div class="label">الناقل / Transporter</div>
+        <div class="value">{{ getTransporterName() }}</div>
+      </div>
+      <div class="box">
+        <div class="label">رقم الإقامة / Iqama No.</div>
+        <div class="value">{{ getIqamaNo() }}</div>
+      </div>
+      <div class="box rtl">
+        <div class="label">اسم السائق / Driver Name</div>
+        <div class="value">{{ getDriverName() }}</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <div class="label">الوزن الصافي (طن) / Net Weight (Ton)</div>
+        <div class="value">{{ getNetWeight() }}</div>
+      </div>
+      <div class="box">
+        <div class="label">الوزن الإجمالي (طن) / Gross Weight (Ton)</div>
+        <div class="value">{{ getGrossWeight() }}</div>
+      </div>
+      <div class="box">
+        <div class="label">الوزن الفارغ (طن) / Empty Weight (Ton)</div>
+        <div class="value">{{ getEmptyWeight() }}</div>
+      </div>
+      <div class="box">
+        <div class="label">منطقة التسليم / Delivery Area</div>
+        <div class="value">{{ getDeliveryArea() }}</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box half rtl">
+        <div class="label">نوع الاسمنت / Type of Cement</div>
+        <div class="value">{{ getCementType() }}</div>
+      </div>
+      <div class="box half">
+        <div class="label">المستودع / Warehouse</div>
+        <div class="value">{{ getWarehouse() }}</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box half">
+        <div class="label">وقت الدخول / Entrance Time</div>
+        <div class="value">{{ getEntranceTime() }}</div>
+      </div>
+      <div class="box half">
+        <div class="label">وقت الخروج / Exit Time</div>
+        <div class="value">{{ getExitTime() }}</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box half">
+        <div class="label">كاتب التسليمات / Dispatch Clerk</div>
+        <div class="value">{{ getDispatchClerk() }}</div>
+      </div>
+      <div class="box half">
+        <div class="label">الختم / Stamp</div>
+        <div class="value">_________________</div>
+      </div>
+      <div class="box full text-center">
+        P.O.Box 1020, Jeddah 21431 Unified No. 920026267 www.unitedcement.com.sa<br>
+        Kingdom of Saudi Arabia Fax: +966126702444 Email: info&#64;unitedcement.com.sa
+      </div>
+    </div>
+
+
+  </div>
+
+  <button class="download-btn no-print" (click)="printDeliveryNote()">
+    <i class="material-icons">print</i>
+    Print
+  </button>
+</div>

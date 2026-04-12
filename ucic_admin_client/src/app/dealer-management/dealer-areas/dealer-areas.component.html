@@ -1,0 +1,123 @@
+<div class="dealer-areas-container">
+  <div class="header-section">
+    <!-- <div class="title-section">
+      <h2>
+        <i class="fas fa-map-marked-alt"></i>
+        Delivery Areas Management
+      </h2>
+      <p class="subtitle">View and manage all delivery areas</p>
+    </div> -->
+    <button class="btn btn-primary" (click)="createArea()">
+      <i class="fas fa-plus"></i>
+      Add New Area
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-section">
+    <div class="filter-group">
+      <label>Search</label>
+      <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Area name, code..."
+        (keyup.enter)="onSearch()" />
+    </div>
+
+    <div class="filter-group">
+      <label>Status</label>
+      <select class="form-control" [(ngModel)]="selectedStatus">
+        <option *ngFor="let opt of statusOptions" [ngValue]="opt.value">{{ opt.label }}</option>
+      </select>
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn btn-primary" (click)="onSearch()">
+        <i class="fas fa-filter"></i>
+        Apply Filters
+      </button>
+      <button class="btn btn-secondary" (click)="onClearFilters()">
+        <i class="fas fa-times"></i>
+        Clear
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading dealer areas...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <i class="fas fa-exclamation-circle"></i>
+    <p>{{ error }}</p>
+    <button class="btn btn-primary" (click)="loadAreas()">Retry</button>
+  </div>
+
+  <!-- Areas Table -->
+  <div *ngIf="!loading && !error" class="table-container">
+    <div class="results-info">
+      <span>Showing {{ areas.length }} of {{ totalRecords }} areas</span>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Area Code (LN ID)</th>
+          <th>Area Name</th>
+          <th>Status</th>
+          <th>Created Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let area of areas">
+          <td>
+            <span class="code-badge">{{ area.areaCode }}</span>
+          </td>
+          <td>
+            <div class="area-name">
+              <i class="fas fa-map-marker-alt"></i>
+              {{ area.areaName }}
+            </div>
+          </td>
+          <td>
+            <span class="badge" [ngClass]="getStatusClass(area.isActive)">
+              {{ getStatusText(area.isActive) }}
+            </span>
+          </td>
+          <td>{{ formatDate(area.createdDate) }}</td>
+          <td>
+            <div class="action-buttons">
+              <button class="btn btn-sm btn-outline-info" (click)="viewAreaDetails(area)" title="View Details">
+                <i class="material-icons">visibility</i>
+              </button>
+              <button class="btn btn-sm btn-outline-primary" (click)="editArea(area)" title="Edit Area">
+                <i class="material-icons">edit</i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteArea(area)" title="Delete Area">
+                <i class="material-icons">delete</i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="areas.length === 0">
+          <td colspan="6" class="no-data">
+            <i class="fas fa-inbox"></i>
+            <p>No areas found</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div *ngIf="totalPages > 1" class="pagination">
+      <button class="btn btn-secondary" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">
+        Previous
+      </button>
+      <span class="page-info">Page {{ currentPage }} of {{ totalPages }}</span>
+      <button class="btn btn-secondary" [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">
+        Next
+      </button>
+    </div>
+  </div>
+</div>

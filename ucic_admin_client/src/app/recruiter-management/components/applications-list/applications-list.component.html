@@ -1,0 +1,131 @@
+<div class="applications-list">
+
+  <!-- Header -->
+  <div class="list-toolbar">
+    <h2>Applications</h2>
+  </div>
+
+  <!-- Vacancy Selector -->
+  <mat-card appearance="outlined" class="filter-card">
+    <mat-card-content>
+      <div class="filter-row">
+        <mat-form-field appearance="outline" class="vacancy-select">
+          <mat-label>Select Vacancy</mat-label>
+          <mat-select [(value)]="selectedVacancyId" (selectionChange)="onVacancyChange()">
+            @for (v of vacancies; track v.vacancyId) {
+              <mat-option [value]="v.vacancyId">{{ v.jobTitle }} ({{ v.requisitionNumber || '#' + v.vacancyId }})</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search</mat-label>
+          <input matInput placeholder="Candidate name..." (input)="applyFilter($event)">
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  @if (!selectedVacancyId) {
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <div class="empty-state">
+          <mat-icon>ballot</mat-icon>
+          <p>Select a vacancy to view applications</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  }
+
+  @if (!isLoading && selectedVacancyId) {
+    <mat-card appearance="outlined">
+      <mat-card-content class="table-content">
+        <table mat-table [dataSource]="dataSource" matSort class="full-width">
+
+          <ng-container matColumnDef="index">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let row; let i = index">{{ (currentPage * pageSize) + i + 1 }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="candidateName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Candidate</th>
+            <td mat-cell *matCellDef="let row">
+              <span class="name-link" (click)="viewApplication(row.applicationId)">{{ row.candidateName }}</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="matchScore">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Match Score</th>
+            <td mat-cell *matCellDef="let row">
+              <div class="score-cell">
+                <mat-progress-bar
+                  mode="determinate"
+                  [value]="row.matchScore"
+                  [color]="getScoreColor(row.matchScore)">
+                </mat-progress-bar>
+                <span class="score-text" [class.high-score]="row.matchScore >= 70"
+                      [class.low-score]="row.matchScore < 40">
+                  {{ row.matchScore }}%
+                </span>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let row">
+              <span class="status-chip" [ngClass]="getStatusClass(row.status)">
+                {{ getStatusLabel(row.status) }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="applicationDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Applied</th>
+            <td mat-cell *matCellDef="let row">{{ row.applicationDate | date:'mediumDate' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="assignedRecruiterName">
+            <th mat-header-cell *matHeaderCellDef>Recruiter</th>
+            <td mat-cell *matCellDef="let row">{{ row.assignedRecruiterName || '—' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button matTooltip="View Details" (click)="viewApplication(row.applicationId)">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="clickable-row"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell empty-cell" [attr.colspan]="displayedColumns.length">
+              <div class="empty-state">
+                <mat-icon>person_off</mat-icon>
+                <p>No applications found for this vacancy</p>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <mat-paginator
+          [length]="totalCount"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[10, 25, 50]"
+          (page)="onPageChange($event)"
+          showFirstLastButtons>
+        </mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

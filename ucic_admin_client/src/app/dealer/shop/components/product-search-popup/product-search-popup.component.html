@@ -1,0 +1,82 @@
+<div class="product-search-overlay" (click)="closePopup()" [class.show]="isVisible">
+  <div class="product-search-popup" (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <div class="popup-header">
+      <h3>
+        <!-- <i class="material-icons">add_shopping_cart</i> -->
+        {{ 'DEALER.SHOP.PRODUCT_SEARCH_POPUP.TITLE' | translate }}
+      </h3>
+      <button class="btn-close" (click)="closePopup()">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-input-group">
+        <i class="material-icons search-icon">search</i>
+        <input type="text" class="search-input"
+          [placeholder]="'DEALER.SHOP.PRODUCT_SEARCH_POPUP.SEARCH_PLACEHOLDER' | translate" [(ngModel)]="searchTerm"
+          (input)="onSearchChange()" #searchInput>
+      </div>
+    </div>
+
+    <!-- Products List -->
+    <div class="products-section">
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="loading-state">
+        <div class="spinner"></div>
+        <p>{{ 'DEALER.SHOP.PRODUCT_SEARCH_POPUP.LOADING' | translate }}</p>
+      </div>
+
+      <!-- No Results -->
+      <div *ngIf="!isLoading && availableProducts.length === 0" class="no-results">
+        <i class="material-icons">search_off</i>
+        <p>{{ 'DEALER.SHOP.PRODUCT_SEARCH_POPUP.NO_RESULTS' | translate }}</p>
+        <small>{{ 'DEALER.SHOP.PRODUCT_SEARCH_POPUP.NO_RESULTS_SUBTITLE' | translate }}</small>
+      </div>
+
+      <!-- Products Table -->
+      <div *ngIf="!isLoading && availableProducts.length > 0" class="products-table-container">
+        <table class="products-table">
+          <thead>
+            <tr>
+              <th>{{ 'DEALER.SHOP.PRODUCT_SEARCH_POPUP.TABLE.PRODUCT_NAME' | translate }}</th>
+              <!-- <th>{{ 'DEALER.SHOP.PRODUCT_SEARCH_POPUP.TABLE.PRODUCT_CODE' | translate }}</th> -->
+              <th>{{ 'DEALER.SHOP.PRODUCT_SEARCH_POPUP.TABLE.LN_CODE' | translate }}</th>
+              <!-- <th>{{ 'DEALER.SHOP.PRODUCT_SEARCH_POPUP.TABLE.DESCRIPTION' | translate }}</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of availableProducts" class="product-row" (click)="addProductToCart(product)"
+              [attr.title]="('DEALER.SHOP.PRODUCT_SEARCH_POPUP.CLICK_TO_ADD' | translate) + ' ' + product.productName + ' ' + ('DEALER.SHOP.PRODUCT_SEARCH_POPUP.TO_CART' | translate)">
+
+              <td class="product-name">{{ product.productName }}</td>
+              <!-- <td class="product-code">{{ product.erpItemCode || product.productCode || 'N/A' }}</td> -->
+              <td class="ln-code">{{ product.itemDescription || product.product_LnCode || 'N/A' }}</td>
+              <!-- <td class="description">{{ getShortDescription(product) }}</td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more-section" *ngIf="!isLoading && hasMoreProducts">
+      <button class="btn-load-more" (click)="loadMoreProducts()">
+        {{ 'DEALER.SHOP.PRODUCT_SEARCH_POPUP.LOAD_MORE' | translate }}
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="popup-footer">
+      <button class="btn btn-outline-secondary" (click)="closePopup()">
+        {{ 'DEALER.SHOP.PRODUCT_SEARCH_POPUP.CANCEL' | translate }}
+      </button>
+      <button class="btn btn-primary" (click)="closePopup()">
+        <i class="material-icons">done</i>
+        {{ 'DEALER.SHOP.PRODUCT_SEARCH_POPUP.DONE' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h4 class="card-title">Edit Job</h4>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-secondary" (click)="back()">
+                                <iconify-icon icon="solar:arrow-left-bold-duotone" class="me-1"></iconify-icon>
+                                Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="JobsForm" (ngSubmit)="submitJobs()">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control" formControlName="title" [ngClass]="{ 'is-invalid': submitted && f['title'].errors }">
+                                <div *ngIf="submitted && f['title'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['title'].errors['required']">Title is required</div>
+                                    <div *ngIf="f['title'].errors['minlength']">Title must be at least 5 characters</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Department</label>
+                                <select class="form-select" formControlName="department" [ngClass]="{ 'is-invalid': submitted && f['department'].errors }">
+                                    <option value="">Select Department</option>
+                                    <option *ngFor="let dept of departments" [value]="dept.departmentId">{{dept.name}}</option>
+                                </select>
+                                <div *ngIf="submitted && f['department'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['department'].errors['required']">Department is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" formControlName="location" [ngClass]="{ 'is-invalid': submitted && f['location'].errors }">
+                                <div *ngIf="submitted && f['location'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['location'].errors['required']">Location is required</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Location Type</label>
+                                <select class="form-select" formControlName="locationType" [ngClass]="{ 'is-invalid': submitted && f['locationType'].errors }">
+                                    <option value="">Select Location Type</option>
+                                    <option *ngFor="let type of locationTypes" [value]="type">{{type}}</option>
+                                </select>
+                                <div *ngIf="submitted && f['locationType'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['locationType'].errors['required']">Location Type is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Salary</label>
+                                <input type="number" class="form-control" formControlName="salary" [ngClass]="{ 'is-invalid': submitted && f['salary'].errors }">
+                                <div *ngIf="submitted && f['salary'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['salary'].errors['required']">Salary is required</div>
+                                    <div *ngIf="f['salary'].errors['pattern']">Salary must be a number</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Job Type</label>
+                                <select class="form-select" formControlName="jobType" [ngClass]="{ 'is-invalid': submitted && f['jobType'].errors }">
+                                    <option value="">Select Job Type</option>
+                                    <option *ngFor="let type of jobTypes" [value]="type">{{type}}</option>
+                                </select>
+                                <div *ngIf="submitted && f['jobType'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['jobType'].errors['required']">Job Type is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" rows="4" formControlName="description" [ngClass]="{ 'is-invalid': submitted && f['description'].errors }"></textarea>
+                                <div *ngIf="submitted && f['description'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['description'].errors['required']">Description is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-check form-switch mb-3">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="isArabic"
+                                formControlName="isArabic"
+                            >
+                            <label class="form-check-label" for="isArabic">
+                                Arabic Job
+                            </label>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <iconify-icon icon="solar:save-bold-duotone" class="me-1"></iconify-icon>
+                                    Update Job
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,16 @@
+<div class="p-3">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h5 class="mb-0">Cancel Order</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+  </div>
+
+  <p>Please select a reason for canceling the order:</p>
+  <select class="form-select mb-3" [(ngModel)]="reason">
+    <option *ngFor="let opt of options" [value]="opt">{{ opt }}</option>
+  </select>
+
+  <div class="d-flex justify-content-end gap-2">
+    <button class="btn btn-secondary" (click)="cancel()">Close</button>
+    <button class="btn btn-danger" (click)="confirm()">Confirm Cancel</button>
+  </div>
+</div>

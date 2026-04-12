@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Create Product</h4>
+        </div>
+        <div class="card-body">
+         <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name *</label>
+                  <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter product name" [ngClass]="{'is-invalid': productForm.get('name')?.invalid && productForm.get('name')?.touched}">
+                  <div class="invalid-feedback" *ngIf="productForm.get('name')?.errors?.['required']">Name is required</div>
+                </div>
+              </div>
+           
+              <!-- Departments Dropdown -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="departmentId" class="form-label">Department *</label>
+                  <select id="departmentId" formControlName="departmentId" class="form-control rounded-pill">
+                    <option [ngValue]="null" disabled selected>
+                      Select Department
+                    </option>
+                    <option *ngFor="let dept of departmentList" [value]="dept.departmentId">
+                      {{ dept.name }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="productForm.get('departmentId')?.errors?.['required']">Department is required</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="emailAddress" class="form-label">Email *</label>
+                  <input type="text" class="form-control" id="emailAddress" formControlName="emailAddress" placeholder="Enter Email Address" [ngClass]="{'is-invalid': productForm.get('emailAddress')?.invalid && productForm.get('emailAddress')?.touched}">
+                  <div class="invalid-feedback" *ngIf="productForm.get('emailAddress')?.errors?.['required']">Email Address is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="phoneNo" class="form-label">Phone No</label>
+                  <input type="text" class="form-control" id="phoneNo" formControlName="phoneNo" placeholder="Enter Phone no">    
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row mt-3">
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary"  [disabled]="productForm.invalid" >
+                  <iconify-icon icon="solar:check-circle-bold-duotone" class="me-1"></iconify-icon>
+                  {{'Create Recipient'}}
+                </button>
+                <button type="button" class="btn btn-light ms-2" (click)="onCancel()" [disabled]="loading">
+                  <iconify-icon icon="solar:arrow-left-bold-duotone" class="me-1"></iconify-icon>
+                  Back
+                </button>
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,212 @@
+﻿<div class="page-container">
+  @if (loading) {
+    <div class="spinner-overlay">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  }
+
+  @if (!loading && vacancy) {
+    <button mat-button (click)="goBack()" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+      Back to Jobs
+    </button>
+
+    <div class="detail-layout">
+      <!-- Main Content -->
+      <div class="detail-main">
+        <mat-card>
+          <mat-card-content>
+            <div class="job-header">
+              <h1>{{ vacancy.jobTitle }}</h1>
+              <div class="chips-row">
+                <mat-chip-set>
+                  <mat-chip>{{ getWorkType(vacancy.workType) }}</mat-chip>
+                  <mat-chip>{{ getWorkLocation(vacancy.workLocation) }}</mat-chip>
+                  @if (vacancy.jobGrade) {
+                    <mat-chip>Grade: {{ vacancy.jobGrade }}</mat-chip>
+                  }
+                </mat-chip-set>
+              </div>
+            </div>
+
+            <div class="meta-row">
+              @if (vacancy.departmentName) {
+                <span class="meta-item"><mat-icon>business</mat-icon> {{ vacancy.departmentName }}</span>
+              }
+              @if (vacancy.location) {
+                <span class="meta-item"><mat-icon>location_on</mat-icon> {{ vacancy.location }}</span>
+              }
+              <span class="meta-item"><mat-icon>group</mat-icon> {{ vacancy.numberOfPositions }} Position(s)</span>
+              @if (vacancy.closingDate) {
+                <span class="meta-item" [class.closing-soon]="isClosingSoon(vacancy.closingDate)">
+                  <mat-icon>event</mat-icon> Closes {{ vacancy.closingDate | date:'mediumDate' }}
+                </span>
+              }
+            </div>
+
+            @if (vacancy.salaryRangeMin || vacancy.salaryRangeMax) {
+              <div class="salary-block">
+                <mat-icon>payments</mat-icon>
+                <div>
+                  <span class="salary-label">Salary Range</span>
+                  <span class="salary-value">
+                    @if (vacancy.salaryRangeMin && vacancy.salaryRangeMax) {
+                      {{ vacancy.salaryRangeMin | number }} - {{ vacancy.salaryRangeMax | number }} {{ vacancy.currency }}
+                    } @else if (vacancy.salaryRangeMin) {
+                      From {{ vacancy.salaryRangeMin | number }} {{ vacancy.currency }}
+                    } @else {
+                      Up to {{ vacancy.salaryRangeMax | number }} {{ vacancy.currency }}
+                    }
+                  </span>
+                </div>
+              </div>
+            }
+
+            <mat-divider></mat-divider>
+
+            @if (vacancy.jobDescription) {
+              <section class="detail-section">
+                <h3><mat-icon>description</mat-icon> Job Description</h3>
+                <div class="rich-text" [innerHTML]="vacancy.jobDescription"></div>
+              </section>
+            }
+
+            @if (vacancy.qualifications) {
+              <section class="detail-section">
+                <h3><mat-icon>school</mat-icon> Qualifications</h3>
+                <div class="rich-text" [innerHTML]="vacancy.qualifications"></div>
+              </section>
+            }
+
+            @if (vacancy.requirements) {
+              <section class="detail-section">
+                <h3><mat-icon>checklist</mat-icon> Requirements</h3>
+                <div class="rich-text" [innerHTML]="vacancy.requirements"></div>
+              </section>
+            }
+
+            @if (vacancy.requiredSkills) {
+              <section class="detail-section">
+                <h3><mat-icon>code</mat-icon> Required Skills</h3>
+                <mat-chip-set>
+                  @for (skill of parseJsonArray(vacancy.requiredSkills); track skill) {
+                    <mat-chip>{{ skill }}</mat-chip>
+                  }
+                </mat-chip-set>
+              </section>
+            }
+
+            @if (vacancy.requiredCertifications) {
+              <section class="detail-section">
+                <h3><mat-icon>verified</mat-icon> Required Certifications</h3>
+                <mat-chip-set>
+                  @for (cert of parseJsonArray(vacancy.requiredCertifications); track cert) {
+                    <mat-chip>{{ cert }}</mat-chip>
+                  }
+                </mat-chip-set>
+              </section>
+            }
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="detail-sidebar">
+        <mat-card class="apply-card">
+          <mat-card-content>
+            <h3>Interested in this role?</h3>
+            <p>Apply now and take the next step in your career.</p>
+
+            @if (authService.isLoggedIn()) {
+              <button mat-raised-button color="primary" class="full-width apply-btn"
+                      (click)="applyToJob()" [disabled]="applying">
+                @if (applying) {
+                  <mat-spinner diameter="20"></mat-spinner>
+                } @else {
+                  <mat-icon>send</mat-icon>
+                  Apply Now
+                }
+              </button>
+            } @else {
+              <p class="login-prompt">Please sign in to apply for this position.</p>
+              <a mat-raised-button color="primary" routerLink="/login" class="full-width">
+                <mat-icon>login</mat-icon>
+                Sign In to Apply
+              </a>
+              <a mat-stroked-button routerLink="/signup" class="full-width" style="margin-top: 8px">
+                Create Account
+              </a>
+            }
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Requirements summary -->
+        <mat-card class="summary-card">
+          <mat-card-content>
+            <h4>Quick Summary</h4>
+            @if (vacancy.requiredExperienceMin !== null || vacancy.requiredExperienceMax !== null) {
+              <div class="summary-item">
+                <mat-icon>trending_up</mat-icon>
+                <div>
+                  <span class="label">Experience</span>
+                  <span class="value">
+                    @if (vacancy.requiredExperienceMin && vacancy.requiredExperienceMax) {
+                      {{ vacancy.requiredExperienceMin }} - {{ vacancy.requiredExperienceMax }} years
+                    } @else if (vacancy.requiredExperienceMin) {
+                      {{ vacancy.requiredExperienceMin }}+ years
+                    } @else {
+                      Up to {{ vacancy.requiredExperienceMax }} years
+                    }
+                  </span>
+                </div>
+              </div>
+            }
+            @if (vacancy.requiredQualification) {
+              <div class="summary-item">
+                <mat-icon>school</mat-icon>
+                <div>
+                  <span class="label">Qualification</span>
+                  <span class="value">{{ vacancy.requiredQualification }}</span>
+                </div>
+              </div>
+            }
+            @if (vacancy.requiredSpecialization) {
+              <div class="summary-item">
+                <mat-icon>psychology</mat-icon>
+                <div>
+                  <span class="label">Specialization</span>
+                  <span class="value">{{ vacancy.requiredSpecialization }}</span>
+                </div>
+              </div>
+            }
+            @if (vacancy.requiredNationality) {
+              <div class="summary-item">
+                <mat-icon>flag</mat-icon>
+                <div>
+                  <span class="label">Nationality</span>
+                  <span class="value">{{ vacancy.requiredNationality }}</span>
+                </div>
+              </div>
+            }
+            <div class="summary-item">
+              <mat-icon>badge</mat-icon>
+              <div>
+                <span class="label">Requisition #</span>
+                <span class="value">{{ vacancy.requisitionNumber }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  }
+
+  @if (!loading && !vacancy) {
+    <div class="empty-state">
+      <mat-icon>error_outline</mat-icon>
+      <h3>Job not found</h3>
+      <p>This position may no longer be available.</p>
+      <a mat-raised-button color="primary" routerLink="/jobs">Browse All Jobs</a>
+    </div>
+  }
+</div>

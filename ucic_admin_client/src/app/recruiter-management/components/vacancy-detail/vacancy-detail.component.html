@@ -1,0 +1,184 @@
+@if (isLoading) {
+<div class="loading-overlay">
+  <mat-spinner diameter="48"></mat-spinner>
+</div>
+}
+
+@if (!isLoading && vacancy) {
+<div class="vacancy-detail">
+
+  <!-- Header -->
+  <div class="detail-header">
+    <button mat-icon-button (click)="goBack()" matTooltip="Back to list">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="header-info">
+      <h2>{{ vacancy.jobTitle }}</h2>
+      <span class="status-chip" [ngClass]="getStatusClass(vacancy.publishStatus)">
+        {{ getStatusLabel(vacancy.publishStatus) }}
+      </span>
+      @if (vacancy.publishStatus === 1 && vacancy.pendingApprovalStep) {
+        <span class="status-chip status-info-approval" matTooltip="Current step in the approval chain">
+          {{ vacancy.pendingApprovalStepName || 'Pending Approval' }}
+        </span>
+      }
+    </div>
+    <span class="spacer"></span>
+    <div class="header-actions">
+      <button mat-stroked-button (click)="editVacancy()" [disabled]="vacancy.publishStatus >= 2">
+        <mat-icon>edit</mat-icon> Edit
+      </button>
+      <button mat-stroked-button color="primary" (click)="viewApplications()">
+        <mat-icon>people</mat-icon> Applications
+      </button>
+
+      <!-- Approval Workflow Buttons -->
+      @if (canSubmitForApproval) {
+        <button mat-flat-button color="primary" (click)="submitForApproval()" [disabled]="isProcessing">
+          <mat-icon>send</mat-icon> Submit for Approval
+        </button>
+      }
+      @if (canApproveOrReject) {
+        <button mat-flat-button style="background-color: #4caf50; color: white;" (click)="approveVacancy()" [disabled]="isProcessing">
+          <mat-icon>check_circle</mat-icon> Approve
+        </button>
+        <button mat-flat-button color="warn" (click)="rejectVacancy()" [disabled]="isProcessing">
+          <mat-icon>cancel</mat-icon> Reject
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Key Info Card -->
+  <mat-card appearance="outlined" class="info-card">
+    <mat-card-header>
+      <mat-card-title>Vacancy Information</mat-card-title>
+      <mat-card-subtitle>{{ vacancy.requisitionNumber || 'No Requisition #' }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Department</label>
+          <p>{{ vacancy.departmentName }}</p>
+        </div>
+        <div class="info-item">
+          <label>Location</label>
+          <p>{{ vacancy.location }}</p>
+        </div>
+        <div class="info-item">
+          <label>Job Grade</label>
+          <p>{{ vacancy.jobGrade || '—' }}</p>
+        </div>
+        <div class="info-item">
+          <label>Positions</label>
+          <p>{{ vacancy.filledPositions || 0 }} / {{ vacancy.numberOfPositions }} filled</p>
+        </div>
+        <div class="info-item">
+          <label>Work Type</label>
+          <p>{{ getWorkTypeLabel(vacancy.workType) }}</p>
+        </div>
+        <div class="info-item">
+          <label>Work Location</label>
+          <p>{{ getWorkLocationLabel(vacancy.workLocation) }}</p>
+        </div>
+        <div class="info-item">
+          <label>Salary Range</label>
+          <p>{{ vacancy.salaryRangeMin | number:'1.0-0' }} – {{ vacancy.salaryRangeMax | number:'1.0-0' }} {{
+            vacancy.currency }}</p>
+        </div>
+        <div class="info-item">
+          <label>Experience Required</label>
+          <p>{{ vacancy.requiredExperienceMin }} – {{ vacancy.requiredExperienceMax }} years</p>
+        </div>
+        <div class="info-item">
+          <label>Required Nationality</label>
+          <p>{{ vacancy.requiredNationality || 'Any' }}</p>
+        </div>
+        <div class="info-item">
+          <label>Required Specialization</label>
+          <p>{{ vacancy.requiredSpecialization || 'Any' }}</p>
+        </div>
+        <div class="info-item">
+          <label>Required Qualification</label>
+          <p>{{ vacancy.requiredQualification || 'Any' }}</p>
+        </div>
+        <div class="info-item">
+          <label>Published Date</label>
+          <p>{{ vacancy.publishedDate ? (vacancy.publishedDate | date:'mediumDate') : '—' }}</p>
+        </div>
+        <div class="info-item">
+          <label>Closing Date</label>
+          <p>{{ vacancy.closingDate | date:'mediumDate' }}</p>
+        </div>
+        <div class="info-item">
+          <label>Created Date</label>
+          <p>{{ vacancy.createdDate | date:'mediumDate' }}</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Description Card -->
+  <mat-card appearance="outlined" class="desc-card">
+    <mat-card-header>
+      <mat-card-title>Job Description</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="desc-section">
+        <h4>Description</h4>
+        <p class="desc-text">{{ vacancy.jobDescription }}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="desc-section">
+        <h4>Qualifications</h4>
+        <p class="desc-text">{{ vacancy.qualifications }}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="desc-section">
+        <h4>Requirements</h4>
+        <p class="desc-text">{{ vacancy.requirements }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Match Weights Card -->
+  <mat-card appearance="outlined" class="weights-card">
+    <mat-card-header>
+      <mat-card-title>AI Match Weights</mat-card-title>
+      <mat-card-subtitle>Weights used for candidate matching (total should equal 100)</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="weights-grid">
+        <div class="weight-item">
+          <span class="weight-label">Specialization</span>
+          <span class="weight-value">{{ vacancy.weightSpecialization }}%</span>
+        </div>
+        <div class="weight-item">
+          <span class="weight-label">Experience</span>
+          <span class="weight-value">{{ vacancy.weightExperience }}%</span>
+        </div>
+        <div class="weight-item">
+          <span class="weight-label">Qualification</span>
+          <span class="weight-value">{{ vacancy.weightQualification }}%</span>
+        </div>
+        <div class="weight-item">
+          <span class="weight-label">Nationality</span>
+          <span class="weight-value">{{ vacancy.weightNationality }}%</span>
+        </div>
+        <div class="weight-item">
+          <span class="weight-label">Location</span>
+          <span class="weight-value">{{ vacancy.weightLocation }}%</span>
+        </div>
+        <div class="weight-item">
+          <span class="weight-label">Certifications</span>
+          <span class="weight-value">{{ vacancy.weightCertifications }}%</span>
+        </div>
+      </div>
+      <div class="match-threshold">
+        <span>Match Threshold: <strong>{{ vacancy.matchThreshold }}%</strong></span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+}

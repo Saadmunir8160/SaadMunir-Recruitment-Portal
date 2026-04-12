@@ -1,0 +1,225 @@
+.shop-progress {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progress-header {
+  text-align: center;
+  margin-bottom: 30px;
+  
+  h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 0 8px 0;
+  }
+  
+  p {
+    color: #6c757d;
+    margin: 0;
+  }
+}
+
+.steps-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  
+  &.completed {
+    .step-circle {
+      background: #28a745;
+      border-color: #28a745;
+      color: white;
+    }
+    
+    .step-content h4 {
+      color: #28a745;
+    }
+  }
+  
+  &.active {
+    .step-circle {
+      background: #007bff;
+      border-color: #007bff;
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
+    }
+    
+    .step-content h4 {
+      color: #007bff;
+      font-weight: 600;
+    }
+  }
+  
+  &.disabled {
+    .step-circle {
+      background: #f8f9fa;
+      border-color: #e9ecef;
+      color: #6c757d;
+    }
+    
+    .step-content {
+      opacity: 0.6;
+    }
+  }
+}
+
+.step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #e9ecef;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+  
+  .material-icons {
+    font-size: 24px;
+  }
+  
+  .step-number {
+    font-weight: 600;
+    font-size: 18px;
+  }
+}
+
+.step-content {
+  text-align: center;
+  max-width: 120px;
+  
+  h4 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #2c3e50;
+    margin: 0 0 4px 0;
+    transition: color 0.3s ease;
+  }
+  
+  .step-description {
+    font-size: 12px;
+    color: #6c757d;
+    line-height: 1.3;
+  }
+}
+
+.step-connector {
+  position: absolute;
+  top: 25px;
+  left: calc(50% + 25px);
+  right: calc(-50% + 25px);
+  height: 2px;
+  z-index: 1;
+  
+  .connector-line {
+    height: 100%;
+    background: #e9ecef;
+    transition: background 0.3s ease;
+    
+    &.completed {
+      background: #28a745;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .steps-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .step-item {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    margin-bottom: 20px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  .step-circle {
+    margin-bottom: 0;
+    margin-right: 16px;
+    flex-shrink: 0;
+  }
+  
+  .step-content {
+    text-align: left;
+    max-width: none;
+    flex: 1;
+  }
+  
+  .step-connector {
+    position: absolute;
+    left: 25px;
+    top: calc(50px + 12px);
+    bottom: calc(-20px + 12px);
+    width: 2px;
+    height: auto;
+    right: auto;
+    
+    .connector-line {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .shop-progress {
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .progress-header {
+    margin-bottom: 20px;
+    
+    h3 {
+      font-size: 20px;
+    }
+  }
+  
+  .step-circle {
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+    
+    .material-icons {
+      font-size: 20px;
+    }
+    
+    .step-number {
+      font-size: 16px;
+    }
+  }
+  
+  .step-content {
+    h4 {
+      font-size: 14px;
+    }
+    
+    .step-description {
+      font-size: 11px;
+    }
+  }
+}
