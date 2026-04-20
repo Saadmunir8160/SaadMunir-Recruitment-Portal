@@ -1,0 +1,587 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Update Profile</h1>
+    <button mat-stroked-button (click)="cancelUpdate()" *ngIf="step === 'choice'">
+      <mat-icon>close</mat-icon> Cancel
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="spinner-overlay">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  }
+
+  @if (!loading) {
+    <!-- STEP 1: Choice -->
+    @if (step === 'choice') {
+      <mat-card class="choice-card">
+        <mat-card-content>
+          <h2 class="choice-title">How would you like to update your profile?</h2>
+          <div class="choice-grid">
+            <mat-card class="choice-item" (click)="chooseUploadCv()">
+              <mat-card-content>
+                <mat-icon class="choice-icon">cloud_upload</mat-icon>
+                <h3>Upload New CV</h3>
+                <p>Update your profile by uploading a new CV. Our AI will parse and update your information automatically.</p>
+                <button mat-raised-button color="primary" type="button">
+                  <mat-icon>arrow_forward</mat-icon> Upload CV
+                </button>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="choice-item" (click)="chooseEditProfile()">
+              <mat-card-content>
+                <mat-icon class="choice-icon">edit</mat-icon>
+                <h3>Edit Profile Manually</h3>
+                <p>Update your profile information manually by editing the existing fields.</p>
+                <button mat-raised-button color="primary" type="button">
+                  <mat-icon>arrow_forward</mat-icon> Edit Details
+                </button>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <!-- STEP 2: CV Upload -->
+    @if (step === 'cv-upload') {
+      <mat-card class="upload-card">
+        <mat-card-header class="card-header">
+          <mat-icon class="header-icon">cloud_upload</mat-icon>
+          <h2>Upload New CV</h2>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div class="cv-drop-zone" [class.has-file]="!!cvFile" (click)="cvFileInput.click()">
+            @if (!cvFile) {
+              <mat-icon class="drop-icon">cloud_upload</mat-icon>
+              <span class="drop-text">Click to select your CV</span>
+              <span class="drop-hint">PDF, DOC or DOCX - Max 10 MB</span>
+            } @else {
+              <mat-icon class="drop-icon success">check_circle</mat-icon>
+              <span class="drop-text file-chosen">{{ cvFile.name }}</span>
+              <span class="drop-hint">{{ formatFileSize(cvFile.size) }} - Click to change</span>
+            }
+            <input #cvFileInput type="file" hidden accept=".pdf,.doc,.docx" (change)="onCvFileSelected($event)">
+          </div>
+
+          @if (parsing) {
+            <div class="parsing-status">
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+              <span>Analyzing your CV with AI...</span>
+            </div>
+          }
+
+          @if (cvAnalyzed) {
+            <div class="analyzed-badge">
+              <mat-icon>auto_awesome</mat-icon>
+              CV analyzed successfully! Review the updated information below.
+            </div>
+          }
+
+          <div class="step-nav">
+            <button mat-button (click)="goBack()">Back</button>
+            <button mat-raised-button color="primary" (click)="analyzeCv()" [disabled]="!cvFile || parsing">
+              @if (!parsing) { <mat-icon>auto_awesome</mat-icon> }
+              @if (parsing) { <mat-spinner diameter="18"></mat-spinner> }
+              <span>{{ parsing ? 'Analyzing...' : 'Analyze CV' }}</span>
+            </button>
+            @if (cvAnalyzed) {
+              <button mat-raised-button (click)="proceedToEdit()">
+                <mat-icon>arrow_forward</mat-icon> Review & Edit
+              </button>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <!-- STEP 3: Edit Profile -->
+    @if (step === 'edit') {
+      <mat-card class="edit-card">
+        <mat-card-header class="card-header">
+          <mat-icon class="header-icon">edit</mat-icon>
+          <h2>Update Profile Information</h2>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <mat-tab-group>
+            <mat-tab label="Personal Info">
+              <div class="tab-content">
+                <form [formGroup]="personalForm">
+                  <div class="section-title">
+                    <mat-icon>person</mat-icon>
+                    <span>Personal Information</span>
+                  </div>
+
+                  <div class="form-grid">
+                    <mat-form-field appearance="outline" [class.mandatory-invalid]="isMandatoryFieldInvalid('fullName')">
+                      <mat-label>Full Name *</mat-label>
+                      <input matInput formControlName="fullName">
+                      @if ((personalForm.get('fullName')?.touched || personalForm.get('fullName')?.dirty) && getMandatoryFieldError('fullName')) {
+                        <mat-error>{{ getMandatoryFieldError('fullName') }}</mat-error>
+                      }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" [class.mandatory-invalid]="isMandatoryFieldInvalid('email')">
+                      <mat-label>Email *</mat-label>
+                      <input matInput formControlName="email" type="email">
+                      @if ((personalForm.get('email')?.touched || personalForm.get('email')?.dirty) && getMandatoryFieldError('email')) {
+                        <mat-error>{{ getMandatoryFieldError('email') }}</mat-error>
+                      }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" [class.mandatory-invalid]="isMandatoryFieldInvalid('mobileNumber')">
+                      <mat-label>Mobile Number *</mat-label>
+                      <input matInput formControlName="mobileNumber">
+                      @if ((personalForm.get('mobileNumber')?.touched || personalForm.get('mobileNumber')?.dirty) && getMandatoryFieldError('mobileNumber')) {
+                        <mat-error>{{ getMandatoryFieldError('mobileNumber') }}</mat-error>
+                      }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>National ID</mat-label>
+                      <input matInput formControlName="nationalId">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>ID Type</mat-label>
+                      <mat-select formControlName="idType">
+                        <mat-option [value]="0">National ID</mat-option>
+                        <mat-option [value]="1">Iqama</mat-option>
+                        <mat-option [value]="2">Passport</mat-option>
+                        <mat-option [value]="3">Border Number</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>Gender</mat-label>
+                      <mat-select formControlName="gender">
+                        <mat-option [value]="0">Male</mat-option>
+                        <mat-option [value]="1">Female</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>Date of Birth</mat-label>
+                      <input matInput [matDatepicker]="dobPicker" formControlName="dateOfBirth">
+                      <mat-datepicker-toggle matIconSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                      <mat-datepicker #dobPicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" [class.mandatory-invalid]="(personalForm.get('nationalityId')?.hasError('parsedNotMatched') || personalForm.get('nationalityId')?.hasError('parsedMissing')) && (personalForm.get('nationalityId')?.touched || personalForm.get('nationalityId')?.dirty)">
+                      <mat-label>Nationality</mat-label>
+                      <mat-select formControlName="nationalityId" (selectionChange)="onNationalitySelected($event.value)">
+                        <mat-option [value]="null">Select nationality</mat-option>
+                        @for (item of nationalities; track item.id) {
+                          <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                        }
+                      </mat-select>
+                      @if ((personalForm.get('nationalityId')?.touched || personalForm.get('nationalityId')?.dirty) && getPersonalLookupError('nationalityId')) {
+                        <mat-error>{{ getPersonalLookupError('nationalityId') }}</mat-error>
+                      }
+                    </mat-form-field>
+
+                  </div>
+
+                  <div class="section-title" style="margin-top: 24px;">
+                    <mat-icon>home</mat-icon>
+                    <span>National Address</span>
+                  </div>
+
+                  <div class="form-grid">
+                    <mat-form-field appearance="outline" [class.mandatory-invalid]="isMandatoryFieldInvalid('residenceCountryId')">
+                      <mat-label>Residence Country *</mat-label>
+                      <mat-select formControlName="residenceCountryId" (selectionChange)="onResidenceCountryChange($event.value)">
+                        <mat-option [value]="null">Select country</mat-option>
+                        @for (item of countries; track item.id) {
+                          <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                        }
+                      </mat-select>
+                      @if ((personalForm.get('residenceCountryId')?.touched || personalForm.get('residenceCountryId')?.dirty) && getPersonalLookupError('residenceCountryId')) {
+                        <mat-error>{{ getPersonalLookupError('residenceCountryId') }}</mat-error>
+                      }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" [class.mandatory-invalid]="(personalForm.get('residenceRegionId')?.hasError('parsedNotMatched') || personalForm.get('residenceRegionId')?.hasError('parsedMissing')) && (personalForm.get('residenceRegionId')?.touched || personalForm.get('residenceRegionId')?.dirty)">
+                      <mat-label>Region (Optional)</mat-label>
+                      <mat-select formControlName="residenceRegionId" (selectionChange)="onRegionSelected($event.value)" [disabled]="!personalForm.get('residenceCountryId')?.value">
+                        <mat-option [value]="null">Select region</mat-option>
+                        @for (item of regions; track item.id) {
+                          <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" [class.mandatory-invalid]="isMandatoryFieldInvalid('residenceCityId')">
+                      <mat-label>Residence City *</mat-label>
+                      <mat-select formControlName="residenceCityId" (selectionChange)="onCitySelected($event.value)" [disabled]="!personalForm.get('residenceCountryId')?.value">
+                        <mat-option [value]="null">Select city</mat-option>
+                        @for (item of cities; track item.id) {
+                          <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                        }
+                      </mat-select>
+                      @if (!personalForm.get('residenceCountryId')?.value) {
+                        <mat-hint>Select country first</mat-hint>
+                      }
+                      @if ((personalForm.get('residenceCityId')?.touched || personalForm.get('residenceCityId')?.dirty) && getMandatoryFieldError('residenceCityId')) {
+                        <mat-error>{{ getMandatoryFieldError('residenceCityId') }}</mat-error>
+                      }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" [class.mandatory-invalid]="(personalForm.get('residenceDistrictId')?.hasError('parsedNotMatched') || personalForm.get('residenceDistrictId')?.hasError('parsedMissing')) && (personalForm.get('residenceDistrictId')?.touched || personalForm.get('residenceDistrictId')?.dirty)">
+                      <mat-label>District</mat-label>
+                      <mat-select formControlName="residenceDistrictId" (selectionChange)="onResidenceDistrictChange($event.value)" [disabled]="!personalForm.get('residenceCityId')?.value">
+                        <mat-option [value]="null">Select district</mat-option>
+                        @for (item of districts; track item.id) {
+                          <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                        }
+                      </mat-select>
+                      @if (!personalForm.get('residenceCityId')?.value) {
+                        <mat-hint>Select city first</mat-hint>
+                      }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" [class.mandatory-invalid]="(personalForm.get('residenceDistrictCodeId')?.hasError('parsedNotMatched') || personalForm.get('residenceDistrictCodeId')?.hasError('parsedMissing')) && (personalForm.get('residenceDistrictCodeId')?.touched || personalForm.get('residenceDistrictCodeId')?.dirty)">
+                      <mat-label>Additional Number</mat-label>
+                      <mat-select formControlName="residenceDistrictCodeId" (selectionChange)="onDistrictCodeChange($event.value)" [disabled]="!personalForm.get('residenceDistrictId')?.value">
+                        <mat-option [value]="null">Select additional number</mat-option>
+                        @for (item of districtCodes; track item.id) {
+                          <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                        }
+                      </mat-select>
+                      @if (!personalForm.get('residenceDistrictId')?.value) {
+                        <mat-hint>Select district first</mat-hint>
+                      }
+                      @if ((personalForm.get('residenceDistrictCodeId')?.touched || personalForm.get('residenceDistrictCodeId')?.dirty) && getPersonalLookupError('residenceDistrictCodeId')) {
+                        <mat-error>{{ getPersonalLookupError('residenceDistrictCodeId') }}</mat-error>
+                      }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>Postal Code</mat-label>
+                      <input matInput formControlName="postalCode" maxlength="20">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>Building Number</mat-label>
+                      <input matInput formControlName="buildingNumber" maxlength="100">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="full-span">
+                      <mat-label>Street</mat-label>
+                      <input matInput formControlName="street" maxlength="200">
+                    </mat-form-field>
+                  </div>
+                </form>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Education">
+              <div class="tab-content">
+                <mat-card>
+                  <mat-card-content>
+                    <div class="section-header">
+                      <h3>Education</h3>
+                      <button mat-stroked-button color="primary" type="button" (click)="addEducation()">
+                        <mat-icon>add</mat-icon> Add Education
+                      </button>
+                    </div>
+                    @if (educations.length === 0) {
+                      <div class="empty-state small">
+                        <mat-icon>school</mat-icon>
+                        <p>No education records added yet.</p>
+                      </div>
+                    }
+                    <mat-accordion [formGroup]="educationForm">
+                      <ng-container formArrayName="educations">
+                        @for (edu of educations.controls; track $index; let i = $index) {
+                          <mat-expansion-panel [formGroupName]="i">
+                            <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                {{ getEducationGroup(i).get('qualification')?.value || 'New Education' }}
+                                @if (getEducationGroup(i).get('institution')?.value) {
+                                  - {{ getEducationGroup(i).get('institution')?.value }}
+                                }
+                              </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="form-grid">
+                              <mat-form-field appearance="outline" [class.mandatory-invalid]="hasEducationLookupIssue(i, 'qualificationTypeId')">
+                                <mat-label>Qualification Type</mat-label>
+                                <mat-select formControlName="qualificationTypeId" (selectionChange)="onEducationQualificationTypeChange($event.value, i)">
+                                  <mat-option [value]="null">Select type</mat-option>
+                                  @for (item of qualificationTypes; track item.id) {
+                                    <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                                  }
+                                </mat-select>
+                                @if ((getEducationGroup(i).get('qualificationTypeId')?.touched || getEducationGroup(i).get('qualificationTypeId')?.dirty) && getEducationLookupError(i, 'qualificationTypeId')) {
+                                  <mat-error>{{ getEducationLookupError(i, 'qualificationTypeId') }}</mat-error>
+                                }
+                              </mat-form-field>
+                              @if (!isCertificateType(getEducationGroup(i).get('qualificationTypeId')?.value)) {
+                                <mat-form-field appearance="outline" [class.mandatory-invalid]="hasEducationLookupIssue(i, 'degreeId')">
+                                  <mat-label>Degree</mat-label>
+                                  <mat-select formControlName="degreeId" (selectionChange)="onEducationDegreeChange($event.value, i)">
+                                    <mat-option [value]="null">Select degree</mat-option>
+                                    @for (item of degrees; track item.id) {
+                                      <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                                    }
+                                  </mat-select>
+                                  @if ((getEducationGroup(i).get('degreeId')?.touched || getEducationGroup(i).get('degreeId')?.dirty) && getEducationLookupError(i, 'degreeId')) {
+                                    <mat-error>{{ getEducationLookupError(i, 'degreeId') }}</mat-error>
+                                  }
+                                </mat-form-field>
+                              } @else {
+                                <mat-form-field appearance="outline" [class.mandatory-invalid]="hasEducationLookupIssue(i, 'certificateId')">
+                                  <mat-label>Certificate</mat-label>
+                                  <mat-select formControlName="certificateId" (selectionChange)="onEducationCertificateChange($event.value, i)">
+                                    <mat-option [value]="null">Select certificate</mat-option>
+                                    @for (item of certificates; track item.id) {
+                                      <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                                    }
+                                  </mat-select>
+                                  @if ((getEducationGroup(i).get('certificateId')?.touched || getEducationGroup(i).get('certificateId')?.dirty) && getEducationLookupError(i, 'certificateId')) {
+                                    <mat-error>{{ getEducationLookupError(i, 'certificateId') }}</mat-error>
+                                  }
+                                </mat-form-field>
+                              }
+                              <mat-form-field appearance="outline" [class.mandatory-invalid]="hasEducationLookupIssue(i, 'majorFieldOfStudyId')">
+                                <mat-label>Major / Field of Study</mat-label>
+                                <mat-select formControlName="majorFieldOfStudyId" (selectionChange)="onEducationMajorSelected($event.value, i)">
+                                  <mat-option [value]="null">Select major</mat-option>
+                                  @for (item of majors; track item.id) {
+                                    <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                                  }
+                                </mat-select>
+                                @if ((getEducationGroup(i).get('majorFieldOfStudyId')?.touched || getEducationGroup(i).get('majorFieldOfStudyId')?.dirty) && getEducationLookupError(i, 'majorFieldOfStudyId')) {
+                                  <mat-error>{{ getEducationLookupError(i, 'majorFieldOfStudyId') }}</mat-error>
+                                }
+                              </mat-form-field>
+                              <mat-form-field appearance="outline" [class.mandatory-invalid]="hasEducationLookupIssue(i, 'institutionId')">
+                                <mat-label>Institution / University</mat-label>
+                                <mat-select formControlName="institutionId" (selectionChange)="onEducationInstitutionSelected($event.value, i)">
+                                  <mat-option [value]="null">Select institution</mat-option>
+                                  @for (item of getInstitutionsForCountry(getEducationGroup(i).get('countryId')?.value); track item.id) {
+                                    <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                                  }
+                                </mat-select>
+                                @if ((getEducationGroup(i).get('institutionId')?.touched || getEducationGroup(i).get('institutionId')?.dirty) && getEducationLookupError(i, 'institutionId')) {
+                                  <mat-error>{{ getEducationLookupError(i, 'institutionId') }}</mat-error>
+                                }
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Graduation Year</mat-label>
+                                <input matInput formControlName="graduationYear" type="number">
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Grade / GPA</mat-label>
+                                <input matInput formControlName="gradeOrGPA">
+                              </mat-form-field>
+                              <mat-form-field appearance="outline" [class.mandatory-invalid]="hasEducationLookupIssue(i, 'countryId')">
+                                <mat-label>Country</mat-label>
+                                <mat-select formControlName="countryId" (selectionChange)="onEducationCountrySelected($event.value, i)">
+                                  <mat-option [value]="null">Select country</mat-option>
+                                  @for (item of countries; track item.id) {
+                                    <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                                  }
+                                </mat-select>
+                                @if ((getEducationGroup(i).get('countryId')?.touched || getEducationGroup(i).get('countryId')?.dirty) && getEducationLookupError(i, 'countryId')) {
+                                  <mat-error>{{ getEducationLookupError(i, 'countryId') }}</mat-error>
+                                }
+                              </mat-form-field>
+                            </div>
+                            <mat-action-row>
+                              <button mat-button color="warn" type="button" (click)="removeEducation(i)">
+                                <mat-icon>delete</mat-icon> Remove
+                              </button>
+                            </mat-action-row>
+                          </mat-expansion-panel>
+                        }
+                      </ng-container>
+                    </mat-accordion>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Experience">
+              <div class="tab-content">
+                <mat-card>
+                  <mat-card-content>
+                    <div class="section-header">
+                      <h3>Work Experience</h3>
+                      <button mat-stroked-button color="primary" type="button" (click)="addExperience()">
+                        <mat-icon>add</mat-icon> Add Experience
+                      </button>
+                    </div>
+                    @if (experiences.length === 0) {
+                      <div class="empty-state small">
+                        <mat-icon>work</mat-icon>
+                        <p>No work experience added yet.</p>
+                      </div>
+                    }
+                    <mat-accordion [formGroup]="experienceForm">
+                      <ng-container formArrayName="experiences">
+                        @for (exp of experiences.controls; track $index; let i = $index) {
+                          <mat-expansion-panel [formGroupName]="i">
+                            <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                {{ getExperienceGroup(i).get('jobTitle')?.value || 'New Experience' }}
+                                @if (getExperienceGroup(i).get('employer')?.value) {
+                                  at {{ getExperienceGroup(i).get('employer')?.value }}
+                                }
+                              </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="form-grid">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Job Title</mat-label>
+                                <input matInput formControlName="jobTitle">
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Employer</mat-label>
+                                <input matInput formControlName="employer">
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Start Date</mat-label>
+                                <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+                                <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #startPicker></mat-datepicker>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>End Date</mat-label>
+                                <input matInput [matDatepicker]="endPicker" formControlName="endDate" [disabled]="getExperienceGroup(i).get('isCurrent')?.value">
+                                <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #endPicker></mat-datepicker>
+                              </mat-form-field>
+                              <div class="checkbox-field">
+                                <mat-checkbox formControlName="isCurrent">Currently working here</mat-checkbox>
+                              </div>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Salary</mat-label>
+                                <input matInput formControlName="salary" type="number">
+                              </mat-form-field>
+                              <mat-form-field appearance="outline" [class.mandatory-invalid]="hasExperienceLookupIssue(i, 'currencyId')">
+                                <mat-label>Currency</mat-label>
+                                <mat-select formControlName="currencyId" (selectionChange)="onExperienceCurrencyChange($event.value, i)">
+                                  <mat-option [value]="null">Select currency</mat-option>
+                                  @for (c of currencies; track c.id) {
+                                    <mat-option [value]="c.id">{{ getLookupDisplayName(c) }}</mat-option>
+                                  }
+                                </mat-select>
+                                @if ((getExperienceGroup(i).get('currencyId')?.touched || getExperienceGroup(i).get('currencyId')?.dirty) && getExperienceLookupError(i, 'currencyId')) {
+                                  <mat-error>{{ getExperienceLookupError(i, 'currencyId') }}</mat-error>
+                                }
+                              </mat-form-field>
+                              <mat-form-field appearance="outline" [class.mandatory-invalid]="hasExperienceLookupIssue(i, 'countryId')">
+                                <mat-label>Country</mat-label>
+                                <mat-select formControlName="countryId" (selectionChange)="onExperienceCountrySelected($event.value, i)">
+                                  <mat-option [value]="null">Select country</mat-option>
+                                  @for (item of countries; track item.id) {
+                                    <mat-option [value]="item.id">{{ getLookupDisplayName(item) }}</mat-option>
+                                  }
+                                </mat-select>
+                                @if ((getExperienceGroup(i).get('countryId')?.touched || getExperienceGroup(i).get('countryId')?.dirty) && getExperienceLookupError(i, 'countryId')) {
+                                  <mat-error>{{ getExperienceLookupError(i, 'countryId') }}</mat-error>
+                                }
+                              </mat-form-field>
+                              <mat-form-field appearance="outline" class="full-span">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput formControlName="description" rows="3"></textarea>
+                              </mat-form-field>
+                            </div>
+                            <mat-action-row>
+                              <button mat-button color="warn" type="button" (click)="removeExperience(i)">
+                                <mat-icon>delete</mat-icon> Remove
+                              </button>
+                            </mat-action-row>
+                          </mat-expansion-panel>
+                        }
+                      </ng-container>
+                    </mat-accordion>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Documents">
+              <div class="tab-content">
+                <mat-card>
+                  <mat-card-content>
+                    <div class="section-header">
+                      <h3>Documents</h3>
+                      <button mat-stroked-button color="primary" type="button" (click)="docFileInput.click()">
+                        <mat-icon>upload_file</mat-icon> Upload Document
+                      </button>
+                      <input #docFileInput type="file" hidden accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" (change)="onFileSelected($event)">
+                    </div>
+
+                    @if (showUploadForm) {
+                      <div class="upload-form">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Document Type</mat-label>
+                          <mat-select [(value)]="selectedDocType">
+                            @for (type of docTypes; track type.value) {
+                              <mat-option [value]="type.value">{{ type.label }}</mat-option>
+                            }
+                          </mat-select>
+                        </mat-form-field>
+                        <span class="file-name">{{ selectedFile?.name }}</span>
+                        <button mat-raised-button color="primary" type="button" (click)="uploadDocument()" [disabled]="uploading">
+                          @if (uploading) {
+                            <mat-spinner diameter="20"></mat-spinner>
+                          } @else {
+                            Upload
+                          }
+                        </button>
+                        <button mat-button type="button" (click)="cancelUpload()">Cancel</button>
+                      </div>
+                    }
+
+                    @if (documents.length === 0) {
+                      <div class="empty-state small">
+                        <mat-icon>folder_open</mat-icon>
+                        <p>No documents uploaded yet. Upload your CV and relevant certificates.</p>
+                      </div>
+                    }
+
+                    @for (doc of documents; track doc.candidateDocumentId) {
+                      <div class="document-item">
+                        <div class="doc-info">
+                          <mat-icon class="doc-icon">description</mat-icon>
+                          <div>
+                            <div class="doc-name">{{ doc.fileName || 'Document' }}</div>
+                            <div class="doc-meta">
+                              <span class="doc-type">{{ getDocTypeName(doc.documentType) }}</span>
+                              <span class="doc-date">{{ doc.uploadedDate | date:'mediumDate' }}</span>
+                              @if (doc.fileSize) {
+                                <span class="doc-size">{{ formatFileSize(doc.fileSize) }}</span>
+                              }
+                            </div>
+                          </div>
+                        </div>
+                        <button mat-icon-button color="warn" type="button" (click)="deleteDocument(doc.candidateDocumentId)">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </div>
+                    }
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+
+          <div class="step-nav">
+            <button mat-button (click)="goBack()">Back</button>
+            <button mat-raised-button color="primary" (click)="saveUpdate()" [disabled]="saving">
+              @if (!saving) { <mat-icon>save</mat-icon> }
+              @if (saving) { <mat-spinner diameter="18"></mat-spinner> }
+              <span>{{ saving ? 'Saving...' : 'Save Changes' }}</span>
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  }
+</div>

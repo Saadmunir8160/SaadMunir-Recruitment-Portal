@@ -25,8 +25,11 @@ public class Candidate : BaseEntity
 
     public DateOnly? DateOfBirth { get; set; }
 
+    // --- UPDATED: Lookup IDs for Service Compatibility ---
+    public long? NationalityId { get; set; }
+    
     [MaxLength(100)]
-    public string? Nationality { get; set; }
+    public string? Nationality { get; set; } // Kept for name storage if needed
 
     [Required, MaxLength(50)]
     public string MobileNumber { get; set; } = string.Empty;
@@ -36,6 +39,11 @@ public class Candidate : BaseEntity
 
     [MaxLength(500)]
     public string? NationalAddress { get; set; }
+
+    // --- UPDATED: Residence Lookup IDs ---
+    public long? ResidenceCountryId { get; set; }
+    public long? ResidenceCityId { get; set; }
+    public long? ResidenceDistrictId { get; set; }
 
     [MaxLength(100)]
     public string? ResidenceCity { get; set; }

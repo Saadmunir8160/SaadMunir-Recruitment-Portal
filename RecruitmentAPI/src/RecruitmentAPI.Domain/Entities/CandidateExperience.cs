@@ -27,10 +27,16 @@ public class CandidateExperience : BaseEntity
     [Column(TypeName = "decimal(18,2)")]
     public decimal? Salary { get; set; }
 
+    // --- UPDATED FOR LOOKUP RESOLVER ---
+    public long? CurrencyId { get; set; } 
+
     [MaxLength(10)]
     public string Currency { get; set; } = "SAR";
 
     public string? Description { get; set; }
+
+    // --- UPDATED FOR LOOKUP RESOLVER ---
+    public long? CountryId { get; set; }
 
     [MaxLength(100)]
     public string? Country { get; set; }

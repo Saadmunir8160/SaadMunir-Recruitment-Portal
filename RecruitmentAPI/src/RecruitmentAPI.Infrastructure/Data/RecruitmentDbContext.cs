@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RecruitmentAPI.Domain.Entities;
+using RecruitmentAPI.Domain.Entities.Lookups;
 
 namespace RecruitmentAPI.Infrastructure.Data;
 
@@ -36,6 +37,19 @@ public class RecruitmentDbContext : DbContext
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
+    // Lookups
+    public DbSet<Nationality> Nationalities => Set<Nationality>();
+    public DbSet<Country> Countries => Set<Country>();
+    public DbSet<Region> Regions => Set<Region>();
+    public DbSet<City> Cities => Set<City>();
+    public DbSet<District> Districts => Set<District>();
+    public DbSet<DistrictCode> DistrictCodes => Set<DistrictCode>();
+    public DbSet<Degree> Degrees => Set<Degree>();
+    public DbSet<Certificate> Certificates => Set<Certificate>();
+    public DbSet<MajorFieldOfStudy> MajorFieldsOfStudy => Set<MajorFieldOfStudy>();
+    public DbSet<Institution> Institutions => Set<Institution>();
+    public DbSet<Currency> Currencies => Set<Currency>();
+    public DbSet<QualificationType> QualificationTypes => Set<QualificationType>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

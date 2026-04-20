@@ -1,0 +1,261 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>{{ t('profileDetails') }}</h1>
+    <div class="header-actions">
+      <button mat-stroked-button [class.active-lang]="lookupDisplayLanguage === 'en'" (click)="setLookupLanguage('en')">EN</button>
+      <button mat-stroked-button [class.active-lang]="lookupDisplayLanguage === 'ar'" (click)="setLookupLanguage('ar')">AR</button>
+      <button mat-stroked-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon> {{ t('back') }}
+      </button>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="spinner-overlay">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  }
+
+  @if (!loading && profileMissing) {
+    <mat-card class="detail-card">
+      <mat-card-content>
+        <div class="info-item" style="align-items: center; text-align: center; gap: 12px; padding: 24px 8px;">
+          <mat-icon style="font-size: 44px; width: 44px; height: 44px; color: #1976d2;">person_add</mat-icon>
+          <h2 style="margin: 0;">{{ t('noProfileFound') }}</h2>
+          <p style="margin: 0; color: #64748b;">{{ t('createProfilePrompt') }}</p>
+          <button mat-raised-button color="primary" (click)="goToCreate()">
+            <mat-icon>edit</mat-icon>
+            {{ t('createProfile') }}
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (!loading && candidate) {
+    <div class="details-container">
+      <!-- Personal Information Section -->
+      <mat-card class="detail-card">
+        <mat-card-header class="card-header">
+          <mat-icon class="header-icon">person</mat-icon>
+          <h2>{{ t('personalInfo') }}</h2>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">{{ t('fullName') }}</span>
+              <span class="value">{{ candidate.fullName || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('email') }}</span>
+              <span class="value">{{ candidate.email || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('mobileNumber') }}</span>
+              <span class="value">{{ candidate.mobileNumber || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('gender') }}</span>
+              <span class="value">{{ getGenderLabel(candidate.gender) }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('dateOfBirth') }}</span>
+              <span class="value">{{ formatDate(candidate.dateOfBirth) }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('nationalId') }}</span>
+              <span class="value">{{ candidate.nationalId || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('idType') }}</span>
+              <span class="value">{{ getIdTypeLabel(candidate.idType) }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('nationality') }}</span>
+              <span class="value">{{ getNationalityDisplay() }}</span>
+            </div>
+            <div class="info-item full-span">
+              <span class="label">{{ t('nationalAddress') }}</span>
+              <span class="value">{{ candidate.nationalAddress || '-' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Residence Information Section -->
+      <mat-card class="detail-card">
+        <mat-card-header class="card-header">
+          <mat-icon class="header-icon">home</mat-icon>
+          <h2>{{ t('residenceInfo') }}</h2>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">{{ t('residenceCountry') }}</span>
+              <span class="value">{{ getResidenceCountryDisplay() }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('region') }}</span>
+              <span class="value">{{ getRegionDisplay() }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('city') }}</span>
+              <span class="value">{{ candidate.residenceCity || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('district') }}</span>
+              <span class="value">{{ getDistrictDisplay() }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('additionalNumber') }}</span>
+              <span class="value">{{ getDistrictCodeDisplay() }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('postalCode') }}</span>
+              <span class="value">{{ candidate.postalCode || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ t('buildingNumber') }}</span>
+              <span class="value">{{ candidate.buildingNumber || '-' }}</span>
+            </div>
+            <div class="info-item full-span">
+              <span class="label">{{ t('street') }}</span>
+              <span class="value">{{ candidate.street || '-' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Education Section -->
+      @if ((candidate.educations || []).length > 0) {
+        <mat-card class="detail-card">
+          <mat-card-header class="card-header">
+            <mat-icon class="header-icon">school</mat-icon>
+            <h2>{{ t('education') }} ({{ candidate.educations.length || 0 }})</h2>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            @for (edu of candidate.educations; track $index; let i = $index) {
+              <div class="section-item">
+                <div class="item-header">
+                  <span class="item-title">{{ edu.qualification }}</span>
+                  @if (i < (candidate.educations.length || 0) - 1) {
+                    <mat-divider class="item-divider"></mat-divider>
+                  }
+                </div>
+                <div class="info-grid small">
+                  <div class="info-item">
+                    <span class="label">{{ t('institution') }}</span>
+                    <span class="value">{{ edu.institution || '-' }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">{{ t('major') }}</span>
+                    <span class="value">{{ edu.major || '-' }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">{{ t('graduationYear') }}</span>
+                    <span class="value">{{ edu.graduationYear || '-' }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">{{ t('gradeGpa') }}</span>
+                    <span class="value">{{ edu.gradeOrGPA || '-' }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">{{ t('country') }}</span>
+                    <span class="value">{{ edu.country || '-' }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+
+      <!-- Experience Section -->
+      @if ((candidate.experiences || []).length > 0) {
+        <mat-card class="detail-card">
+          <mat-card-header class="card-header">
+            <mat-icon class="header-icon">work</mat-icon>
+            <h2>{{ t('workExperience') }} ({{ candidate.experiences.length || 0 }})</h2>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            @for (exp of candidate.experiences; track $index; let i = $index) {
+              <div class="section-item">
+                <div class="item-header">
+                  <span class="item-title">{{ exp.jobTitle }} @if (exp.employer) { at {{ exp.employer }} }</span>
+                  @if (i < (candidate.experiences.length || 0) - 1) {
+                    <mat-divider class="item-divider"></mat-divider>
+                  }
+                </div>
+                <div class="info-grid small">
+                  <div class="info-item">
+                    <span class="label">{{ t('startDate') }}</span>
+                    <span class="value">{{ formatDate(exp.startDate) }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">{{ t('endDate') }}</span>
+                    <span class="value">{{ exp.isCurrent ? t('currentlyWorking') : formatDate(exp.endDate) }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">{{ t('salary') }}</span>
+                    <span class="value">{{ exp.salary ? (exp.salary + ' ' + (exp.currency || 'SAR')) : '-' }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">{{ t('country') }}</span>
+                    <span class="value">{{ exp.country || '-' }}</span>
+                  </div>
+                  @if (exp.description) {
+                    <div class="info-item full-span">
+                      <span class="label">{{ t('description') }}</span>
+                      <span class="value">{{ exp.description }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+
+      <!-- Documents Section -->
+      @if ((candidate.documents || []).length > 0) {
+        <mat-card class="detail-card">
+          <mat-card-header class="card-header">
+            <mat-icon class="header-icon">folder_open</mat-icon>
+            <h2>{{ t('documents') }} ({{ candidate.documents.length || 0 }})</h2>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <div class="documents-list">
+              @for (doc of candidate.documents; track doc.candidateDocumentId) {
+                <div class="doc-item">
+                  <mat-icon class="doc-icon">description</mat-icon>
+                  <div class="doc-info">
+                    <div class="doc-name">{{ doc.fileName }}</div>
+                    <div class="doc-meta">
+                      <span>{{ doc.documentTypeName }}</span>
+                      <span>{{ formatFileSize(doc.fileSize || 0) }}</span>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+
+      <!-- Action Buttons -->
+      <div class="action-row">
+        <button mat-raised-button color="primary" (click)="goToUpdate()" class="update-btn">
+          <mat-icon>edit</mat-icon> {{ t('updateProfile') }}
+        </button>
+        <button mat-stroked-button (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon> {{ t('backToJobs') }}
+        </button>
+      </div>
+    </div>
+  }
+</div>
